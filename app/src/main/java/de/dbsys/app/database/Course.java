@@ -10,6 +10,8 @@ package de.dbsys.app.database;
 
 public class Course {
 
-
+    public String getName() {
+        return null;
+    }
 
 }

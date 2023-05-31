@@ -9,37 +9,63 @@ Author:             Luke Grasser
 package de.dbsys.app.database;
 
 import java.sql.*;
+import java.util.Stack;
 
 public class DatabaseConnector {
 
-    public static Connection connect() {
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection("jdbc:sqlite:../../../public/studentDB");
-            System.out.println("Connection established.");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (conn == null) {
-                new SQLException().getMessage();
-                return null;
-            }
-            return conn;
-        }
-    }
+    private static Connection conn;
 
-    public static void close(Connection conn) {
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void main(String[] args) {
+    public DatabaseConnector() throws SQLException {
         connect();
+    }
+
+    public void connect() throws SQLException {
+        conn = DriverManager.getConnection("jdbc:sqlite:app/public/studentDB.db");
+        Statement stmt = conn.createStatement();
+        // Create necessary tables in case they don't exist
+        stmt.execute(
+                "create table if not exists kurs" +
+                        "(" +
+                        "    kName text not null" +
+                        "        constraint kurs_pk" +
+                        "            primary key," +
+                        "    raum  text" +
+                        ");"
+        );
+        stmt.execute(
+                "create table if not exists student" +
+                        "(" +
+                        "    mNr        integer not null" +
+                        "        constraint student_pk" +
+                        "            primary key," +
+                        "    name       text    not null," +
+                        "    vName      text    not null," +
+                        "    firma      text    not null," +
+                        "    fk_kurs    text" +
+                        "        constraint student_kurs_kName_fk" +
+                        "            references kurs" +
+                        "            on update set null on delete set null," +
+                        "    javaSkills integer" +
+                        ");"
+        );
+        stmt.close();
+        System.out.println("Connection established.");
+    }
+
+    public void close(Connection conn) throws SQLException {
+        if (conn != null) {
+            conn.close();
+        } else {
+            throw new SQLException("Connection is null.");
+        }
+    }
+
+    public Connection getConn() {
+        return conn;
+    }
+
+    public void main(String[] args) {
+
     }
 
 }
