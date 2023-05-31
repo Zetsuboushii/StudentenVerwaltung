@@ -40,7 +40,7 @@ public class Student {
             System.err.println(this.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        System.out.println("Values successfully inserted");
+        System.out.println("Values successfully inserted.");
     }
 
     public void delete(Connection conn) {
@@ -51,8 +51,10 @@ public class Student {
             stmt.executeUpdate();
             stmt.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.err.println(this.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
         }
+        System.out.println("Student successfully deleted.");
     }
 
     public void edit_mNr(Connection conn, int mNr) {
@@ -129,13 +131,4 @@ public class Student {
         }
         System.out.println("Values updated.");
     }
-
-
-
-    public static void main(String[] args) throws SQLException {
-        DatabaseConnector dbc = new DatabaseConnector();
-        Connection conn = dbc.getConn();
-        new Student(5745312, "Richard", "Riesmeier", "DBSystel", 4).edit_mNr(conn, 6738425);
-    }
-
 }

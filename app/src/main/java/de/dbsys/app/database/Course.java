@@ -8,10 +8,37 @@ Author:             Luke Grasser
 
 package de.dbsys.app.database;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class Course {
 
-    public String getName() {
-        return null;
+    private String cName, room;
+
+    public Course(String cName) {
+        this.cName = cName;
     }
 
+    public void createCourse(Connection conn) {
+        try {
+            String sql = "INSERT INTO course (cName) VALUES (?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, cName);
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException e) {
+            System.err.println(this.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Values successfully inserted.");
+    }
+
+    public String getcName() {
+        return cName;
+    }
+
+    public String getRoom() {
+        return room;
+    }
 }
