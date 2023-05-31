@@ -27,7 +27,7 @@ public class Student {
 
     public void createStudent(Connection conn) {
         try {
-            String sql = "INSERT INTO student (mNr, name, vName, firma, javaSkills) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO student (mNr, sname, fname, company, javaSkill) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, mNr);
             stmt.setString(2, sname);
@@ -69,6 +69,68 @@ public class Student {
         }
         System.out.println("Values updated.");
     }
+
+    public void edit_fname(Connection conn, String fname) {
+        try {
+            String sql = "UPDATE student SET fname = ? WHERE mNr = " + this.mNr;
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, fname);
+            stmt.executeUpdate();
+            stmt.close();
+            this.fname = fname;
+        } catch (SQLException e) {
+            System.err.println(this.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Values updated.");
+    }
+
+    public void edit_name(Connection conn, String sname) {
+        try {
+            String sql = "UPDATE student SET sname = ? WHERE mNr = " + this.mNr;
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, sname);
+            stmt.executeUpdate();
+            stmt.close();
+            this.sname = sname;
+        } catch (SQLException e) {
+            System.err.println(this.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Values updated.");
+    }
+
+    public void edit_company(Connection conn, String company) {
+        try {
+            String sql = "UPDATE student SET company = ? WHERE mNr = " + this.mNr;
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, company);
+            stmt.executeUpdate();
+            stmt.close();
+            this.company = company;
+        } catch (SQLException e) {
+            System.err.println(this.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Values updated.");
+    }
+
+    public void edit_javaSkill(Connection conn, int javaSkill) {
+        try {
+            String sql = "UPDATE student SET javaSkill = ? WHERE mNr = " + this.mNr;
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, javaSkill);
+            stmt.executeUpdate();
+            stmt.close();
+            this.javaSkill = javaSkill;
+        } catch (SQLException e) {
+            System.err.println(this.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Values updated.");
+    }
+
+
 
     public static void main(String[] args) throws SQLException {
         DatabaseConnector dbc = new DatabaseConnector();
