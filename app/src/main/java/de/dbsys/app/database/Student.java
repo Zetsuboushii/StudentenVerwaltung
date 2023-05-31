@@ -57,7 +57,7 @@ public class Student {
         System.out.println("Student successfully deleted.");
     }
 
-    public void edit_mNr(Connection conn, int mNr) {
+    public void editmNr(Connection conn, int mNr) {
         try {
             String sql = "UPDATE student SET mNr = ? WHERE mNr = " + this.mNr;
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -72,7 +72,7 @@ public class Student {
         System.out.println("Values updated.");
     }
 
-    public void edit_fname(Connection conn, String fname) {
+    public void editfname(Connection conn, String fname) {
         try {
             String sql = "UPDATE student SET fname = ? WHERE mNr = " + this.mNr;
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -87,7 +87,7 @@ public class Student {
         System.out.println("Values updated.");
     }
 
-    public void edit_name(Connection conn, String sname) {
+    public void editsname(Connection conn, String sname) {
         try {
             String sql = "UPDATE student SET sname = ? WHERE mNr = " + this.mNr;
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -102,7 +102,7 @@ public class Student {
         System.out.println("Values updated.");
     }
 
-    public void edit_company(Connection conn, String company) {
+    public void editCompany(Connection conn, String company) {
         try {
             String sql = "UPDATE student SET company = ? WHERE mNr = " + this.mNr;
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -117,7 +117,7 @@ public class Student {
         System.out.println("Values updated.");
     }
 
-    public void edit_javaSkill(Connection conn, int javaSkill) {
+    public void editJavaSkill(Connection conn, int javaSkill) {
         try {
             String sql = "UPDATE student SET javaSkill = ? WHERE mNr = " + this.mNr;
             PreparedStatement stmt = conn.prepareStatement(sql);
