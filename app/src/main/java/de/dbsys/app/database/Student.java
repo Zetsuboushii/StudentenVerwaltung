@@ -35,6 +35,7 @@ public class Student {
             stmt.setString(4, company);
             stmt.setInt(5, javaSkill);
             stmt.executeUpdate();
+            stmt.close();
         } catch (SQLException e) {
             System.err.println(this.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
@@ -42,8 +43,16 @@ public class Student {
         System.out.println("Values successfully inserted");
     }
 
-    public void delete() {
-
+    public void delete(Connection conn) {
+        try {
+            String sql = "DELETE FROM student WHERE mNr = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, this.mNr);
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void edit_mNr(Connection conn, int mNr) {
@@ -52,6 +61,8 @@ public class Student {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, mNr);
             stmt.executeUpdate();
+            stmt.close();
+            this.mNr = mNr;
         } catch (SQLException e) {
             System.err.println(this.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
