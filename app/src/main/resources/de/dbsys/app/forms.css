@@ -1,0 +1,10 @@
+.form-vbox {
+    -fx-spacing: 20;
+}
+.form-button-spacing {
+    -fx-spacing: 12;
+}
+
+.form-label-to-field-spacing {
+    -fx-spacing: 14;
+}
