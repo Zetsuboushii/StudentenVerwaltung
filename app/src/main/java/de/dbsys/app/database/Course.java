@@ -14,6 +14,8 @@ import java.sql.SQLException;
 
 public class Course {
 
+    // TODO Crawl DB for existing objects
+
     private String cName, room;
 
     public Course(String cName) {

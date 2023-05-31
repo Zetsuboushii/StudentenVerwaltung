@@ -12,6 +12,8 @@ import java.sql.*;
 
 public class Student {
 
+    // TODO Crawl DB for existing objects
+
     private int mNr;
     private String fname, sname, company;
     private Course course;
@@ -125,6 +127,21 @@ public class Student {
             stmt.executeUpdate();
             stmt.close();
             this.javaSkill = javaSkill;
+        } catch (SQLException e) {
+            System.err.println(this.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Values updated.");
+    }
+
+    public void editCourse(Connection conn, Course course) {
+        try {
+            String sql = "UPDATE student SET fk_course = ? WHERE mNr = " + this.mNr;
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, course.getcName());
+            stmt.executeUpdate();
+            stmt.close();
+            this.course = course;
         } catch (SQLException e) {
             System.err.println(this.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
