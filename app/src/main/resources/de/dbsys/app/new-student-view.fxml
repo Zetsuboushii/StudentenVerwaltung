@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="de.dbsys.app.NewStudentViewController"
+      prefHeight="400.0" prefWidth="600.0" styleClass="padded,form-vbox" stylesheets="@main.css,@forms.css">
+    <VBox VBox.vgrow="ALWAYS" spacing="15" styleClass="form-vbox">
+        <TextField promptText="Vorname" fx:id="tfFirstName" />
+        <TextField promptText="Nachname" fx:id="tfLastName" />
+        <ComboBox promptText="Kurse" fx:id="cbClass" />
+        <TextField promptText="Firma" fx:id="tfCompany" />
+        <HBox styleClass="form-label-to-field-spacing">
+            <Label text="Java Skills" />
+            <Slider fx:id="slJavaExp" />
+        </HBox>
+    </VBox>
+    <HBox alignment="CENTER_RIGHT" styleClass="form-button-spacing">
+        <Button text="Cancel" onAction="#onCancel" />
+        <Button text="Save" onAction="#onSave" />
+    </HBox>
+</VBox>
