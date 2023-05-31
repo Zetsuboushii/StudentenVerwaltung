@@ -34,6 +34,36 @@ public class Course {
         System.out.println("Values successfully inserted.");
     }
 
+    public void editCname(Connection conn, String cName) {
+        try {
+            String sql = "UPDATE course SET cName = ? WHERE cName = " + this.cName;
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, cName);
+            stmt.executeUpdate();
+            stmt.close();
+            this.cName = cName;
+        } catch (SQLException e) {
+            System.err.println(this.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Values updated.");
+    }
+
+    public void editRoom(Connection conn, String room) {
+        try {
+            String sql = "UPDATE course SET room = ? WHERE cName = " + this.cName;
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, room);
+            stmt.executeUpdate();
+            stmt.close();
+            this.room = room;
+        } catch (SQLException e) {
+            System.err.println(this.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println("Values updated.");
+    }
+
     public String getcName() {
         return cName;
     }

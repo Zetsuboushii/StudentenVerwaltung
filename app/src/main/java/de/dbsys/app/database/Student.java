@@ -57,7 +57,7 @@ public class Student {
         System.out.println("Student successfully deleted.");
     }
 
-    public void editmNr(Connection conn, int mNr) {
+    public void editMnr(Connection conn, int mNr) {
         try {
             String sql = "UPDATE student SET mNr = ? WHERE mNr = " + this.mNr;
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -72,7 +72,7 @@ public class Student {
         System.out.println("Values updated.");
     }
 
-    public void editfname(Connection conn, String fname) {
+    public void editFname(Connection conn, String fname) {
         try {
             String sql = "UPDATE student SET fname = ? WHERE mNr = " + this.mNr;
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -87,7 +87,7 @@ public class Student {
         System.out.println("Values updated.");
     }
 
-    public void editsname(Connection conn, String sname) {
+    public void editSname(Connection conn, String sname) {
         try {
             String sql = "UPDATE student SET sname = ? WHERE mNr = " + this.mNr;
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -130,5 +130,29 @@ public class Student {
             System.exit(0);
         }
         System.out.println("Values updated.");
+    }
+
+    public int getmNr() {
+        return mNr;
+    }
+
+    public String getSname() {
+        return sname;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public int getJavaSkill() {
+        return javaSkill;
     }
 }
