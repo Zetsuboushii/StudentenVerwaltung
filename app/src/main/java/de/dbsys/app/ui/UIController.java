@@ -1,4 +1,4 @@
-package de.dbsys.app;
+package de.dbsys.app.ui;
 
 import javafx.stage.Stage;
 

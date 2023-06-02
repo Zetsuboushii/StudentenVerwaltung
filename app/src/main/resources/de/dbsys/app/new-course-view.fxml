@@ -5,12 +5,9 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="de.dbsys.app.NewCourseViewController"
+      fx:controller="de.dbsys.app.ui.views.NewCourseViewController"
       prefHeight="400.0" prefWidth="600.0" styleClass="padded,form-vbox" stylesheets="@main.css,@forms.css">
-    <VBox styleClass="form-vbox">
-        <TextField promptText="Name" fx:id="tfCourseName" />
-        <TextField promptText="Raum" fx:id="tfRoom" />
-    </VBox>
+    <fx:include source="course-form-fields.fxml" />
     <HBox alignment="CENTER_RIGHT" styleClass="form-button-spacing" >
         <Button text="Cancel" onAction="#onCancel" />
         <Button text="Save" onAction="#onSave" />

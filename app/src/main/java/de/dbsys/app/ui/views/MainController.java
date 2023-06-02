@@ -1,6 +1,7 @@
-package de.dbsys.app;
+package de.dbsys.app.ui.views;
 
-import de.dbsys.app.utils.UILoader;
+import de.dbsys.app.ui.GenericUIController;
+import de.dbsys.app.ui.utils.UILoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;

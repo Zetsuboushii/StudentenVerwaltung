@@ -1,4 +1,4 @@
-package de.dbsys.app;
+package de.dbsys.app.ui;
 
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -21,6 +21,7 @@ public abstract class GenericUIController implements  UIController{
     }
 
     protected void handleException(Exception exc) {
+        exc.printStackTrace();
         new Alert(Alert.AlertType.ERROR, "Ein Fehler ist aufgetreten: " + exc).show();
     }
 }

@@ -1,5 +1,6 @@
-package de.dbsys.app;
+package de.dbsys.app.ui.views;
 
+import de.dbsys.app.ui.GenericUIController;
 import javafx.fxml.FXML;
 
 public class NewCourseViewController extends GenericUIController {
