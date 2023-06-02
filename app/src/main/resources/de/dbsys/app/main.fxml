@@ -6,7 +6,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuItem?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="de.dbsys.app.MainController">
+      fx:controller="de.dbsys.app.ui.views.MainController">
   <MenuBar useSystemMenuBar="true">
     <Menu text="Neu">
       <MenuItem text="Studierende:r" onAction="#neuerStudierender"/>

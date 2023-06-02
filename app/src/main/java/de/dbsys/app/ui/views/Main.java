@@ -1,6 +1,6 @@
-package de.dbsys.app;
+package de.dbsys.app.ui.views;
 
-import de.dbsys.app.utils.UILoader;
+import de.dbsys.app.ui.utils.UILoader;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

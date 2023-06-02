@@ -1,9 +1,10 @@
-package de.dbsys.app;
+package de.dbsys.app.ui.views;
 
+import de.dbsys.app.ui.GenericUIController;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
-public class NewStudentViewController extends  GenericUIController {
+public class NewStudentViewController extends GenericUIController {
     @FXML
     private void onCancel() {
         stage.close();

@@ -5,5 +5,9 @@ module de.dbsys.app {
 
 
     opens de.dbsys.app to javafx.fxml;
-    exports de.dbsys.app;
+    exports de.dbsys.app.ui;
+    opens de.dbsys.app.ui to javafx.fxml;
+    exports de.dbsys.app.ui.views;
+    opens de.dbsys.app.ui.views to javafx.fxml;
+    exports de.dbsys.app.database;
 }

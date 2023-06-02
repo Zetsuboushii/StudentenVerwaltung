@@ -1,6 +1,6 @@
-package de.dbsys.app.utils;
+package de.dbsys.app.ui.utils;
 
-import de.dbsys.app.GenericUIController;
+import de.dbsys.app.ui.GenericUIController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
