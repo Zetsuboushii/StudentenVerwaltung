@@ -49,6 +49,15 @@ public class Course {
     }
 
     /**
+     * Deletes Database entry in table course
+     * @param dbc
+     */
+    public void deleteCourse(DatabaseConnector dbc) {
+        String sql = "DELETE FROM course WHERE cname = ?";
+        dbc.delete(sql, this.cName);
+    }
+
+    /**
      * Edits course name of entry by its course name and updates java object values
      *
      * @param dbc
