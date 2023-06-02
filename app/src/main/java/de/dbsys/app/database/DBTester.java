@@ -22,6 +22,8 @@ public class DBTester {
         Student s2 = new Student(1357924, "Richard", "Riesmeier", "DB Systel", 4);
         s2.createStudent(conn);
 
+        s1.editFname(conn, "Knickemann");
+
         Course c1 = new Course("TINF22AI1");
         c1.createCourse(conn);
 
@@ -32,8 +34,6 @@ public class DBTester {
         System.out.println(s2.getmNr() + ": " + s2.getSname() + " " + s2.getFname() + " " + "\n\tKurs: " + s2.getCourse().getcName());
 
         c1.editRoom(conn, "185C");
-
-        s1.editFname(conn, "Knickemann");
 
         s2.delete(conn);
 

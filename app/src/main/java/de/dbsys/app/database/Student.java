@@ -12,21 +12,13 @@ import java.sql.*;
 
 public class Student {
 
-    // TODO Crawl DB for existing objects
+    // On creating a new student, the reference to course can be set afterwards.
 
     private int mNr;
     private String fname, sname, company;
     private Course course;
     private int javaSkill;
 
-    /**
-     * Creates new Student Object
-     * @param mNr       Matrikelnumber
-     * @param fname     Firstname
-     * @param sname     Surname
-     * @param company   Company
-     * @param javaSkill Java Skill
-     */
     public Student(int mNr, String fname, String sname, String company, int javaSkill) {
         this.mNr = mNr;
         this.fname = fname;
@@ -35,11 +27,22 @@ public class Student {
         this.javaSkill = javaSkill;
     }
 
+    public Student(int mNr, String fname, String sname, String company, Course course, int javaSkill) {
+        this.mNr = mNr;
+        this.fname = fname;
+        this.sname = sname;
+        this.company = company;
+        this.course = course;
+        this.javaSkill = javaSkill;
+    }
+
     /**
-     * Creates new Database entry in table student w/o course reference
-     * @param conn  Established DB connection
+     * Creates new Database entry in table student. If course is set prior, the function also invokes editCourse().
+     *
+     * @param conn Established DB connection
      */
     public void createStudent(Connection conn) {
+
         try {
             String sql = "INSERT INTO student (mNr, sname, fname, company, javaSkill) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -50,6 +53,9 @@ public class Student {
             stmt.setInt(5, javaSkill);
             stmt.executeUpdate();
             stmt.close();
+            if (course != null) {
+                this.editCourse(conn, course);
+            }
         } catch (SQLException e) {
             System.err.println(this.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
@@ -59,7 +65,8 @@ public class Student {
 
     /**
      * Deletes Database entry in table student
-     * @param conn  Established DB connection
+     *
+     * @param conn Established DB connection
      */
     public void delete(Connection conn) {
         try {
@@ -77,8 +84,9 @@ public class Student {
 
     /**
      * Edits matriculation no. of entry by its matriculation no. and updates Java Object values
-     * @param conn  Established DB connection
-     * @param mNr   Matriculation no.
+     *
+     * @param conn Established DB connection
+     * @param mNr  Matriculation no.
      */
     public void editMnr(Connection conn, int mNr) {
         try {
@@ -97,6 +105,7 @@ public class Student {
 
     /**
      * Edits firstname of entry by its matriculation no. and updates Java Object values
+     *
      * @param conn  Established connection
      * @param fname Firstname
      */
@@ -117,6 +126,7 @@ public class Student {
 
     /**
      * Edits surname of entry by its matriculation no. and updates Java Object values
+     *
      * @param conn  Established DB connection
      * @param sname Surname
      */
@@ -137,8 +147,9 @@ public class Student {
 
     /**
      * Edits company of entry by its matriculation no. and updates Java Object values
-     * @param conn      Established DB connection
-     * @param company   Company
+     *
+     * @param conn    Established DB connection
+     * @param company Company
      */
     public void editCompany(Connection conn, String company) {
         try {
@@ -157,6 +168,7 @@ public class Student {
 
     /**
      * Edits Java Skill of entry by its matriculation no. and updates Java Object values
+     *
      * @param conn      Established DB connection
      * @param javaSkill Java Skill
      */
@@ -177,8 +189,9 @@ public class Student {
 
     /**
      * Edits course of entry by its matriculation no. and updates Java Object values
-     * @param conn      Established DB connection
-     * @param course    Course name
+     *
+     * @param conn   Established DB connection
+     * @param course Course name
      */
     public void editCourse(Connection conn, Course course) {
         try {
