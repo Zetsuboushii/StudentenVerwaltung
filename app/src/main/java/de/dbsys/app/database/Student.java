@@ -19,6 +19,14 @@ public class Student {
     private Course course;
     private int javaSkill;
 
+    /**
+     * Creates new Student Object
+     * @param mNr       Matrikelnumber
+     * @param fname     Firstname
+     * @param sname     Surname
+     * @param company   Company
+     * @param javaSkill Java Skill
+     */
     public Student(int mNr, String fname, String sname, String company, int javaSkill) {
         this.mNr = mNr;
         this.fname = fname;
@@ -27,6 +35,10 @@ public class Student {
         this.javaSkill = javaSkill;
     }
 
+    /**
+     * Creates new Database entry in table student w/o course reference
+     * @param conn  Established DB connection
+     */
     public void createStudent(Connection conn) {
         try {
             String sql = "INSERT INTO student (mNr, sname, fname, company, javaSkill) VALUES (?, ?, ?, ?, ?)";
@@ -45,6 +57,10 @@ public class Student {
         System.out.println("Values successfully inserted.");
     }
 
+    /**
+     * Deletes Database entry in table student
+     * @param conn  Established DB connection
+     */
     public void delete(Connection conn) {
         try {
             String sql = "DELETE FROM student WHERE mNr = ?";
@@ -59,6 +75,11 @@ public class Student {
         System.out.println("Student successfully deleted.");
     }
 
+    /**
+     * Edits matriculation no. of entry by its matriculation no. and updates Java Object values
+     * @param conn  Established DB connection
+     * @param mNr   Matriculation no.
+     */
     public void editMnr(Connection conn, int mNr) {
         try {
             String sql = "UPDATE student SET mNr = ? WHERE mNr = " + this.mNr;
@@ -74,6 +95,11 @@ public class Student {
         System.out.println("Values updated.");
     }
 
+    /**
+     * Edits firstname of entry by its matriculation no. and updates Java Object values
+     * @param conn  Established connection
+     * @param fname Firstname
+     */
     public void editFname(Connection conn, String fname) {
         try {
             String sql = "UPDATE student SET fname = ? WHERE mNr = " + this.mNr;
@@ -89,6 +115,11 @@ public class Student {
         System.out.println("Values updated.");
     }
 
+    /**
+     * Edits surname of entry by its matriculation no. and updates Java Object values
+     * @param conn  Established DB connection
+     * @param sname Surname
+     */
     public void editSname(Connection conn, String sname) {
         try {
             String sql = "UPDATE student SET sname = ? WHERE mNr = " + this.mNr;
@@ -104,6 +135,11 @@ public class Student {
         System.out.println("Values updated.");
     }
 
+    /**
+     * Edits company of entry by its matriculation no. and updates Java Object values
+     * @param conn      Established DB connection
+     * @param company   Company
+     */
     public void editCompany(Connection conn, String company) {
         try {
             String sql = "UPDATE student SET company = ? WHERE mNr = " + this.mNr;
@@ -119,6 +155,11 @@ public class Student {
         System.out.println("Values updated.");
     }
 
+    /**
+     * Edits Java Skill of entry by its matriculation no. and updates Java Object values
+     * @param conn      Established DB connection
+     * @param javaSkill Java Skill
+     */
     public void editJavaSkill(Connection conn, int javaSkill) {
         try {
             String sql = "UPDATE student SET javaSkill = ? WHERE mNr = " + this.mNr;
@@ -134,6 +175,11 @@ public class Student {
         System.out.println("Values updated.");
     }
 
+    /**
+     * Edits course of entry by its matriculation no. and updates Java Object values
+     * @param conn      Established DB connection
+     * @param course    Course name
+     */
     public void editCourse(Connection conn, Course course) {
         try {
             String sql = "UPDATE student SET fk_course = ? WHERE mNr = " + this.mNr;
