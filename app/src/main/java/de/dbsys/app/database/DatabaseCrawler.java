@@ -29,7 +29,7 @@ public class DatabaseCrawler {
             String company = rs.getString("company");
             Course course = new Course(rs.getString("fk_course"));
             int javaSkill = rs.getInt("javaSkill");
-            if (company != null) {
+            if (course != null) {
                 ex_students.add(new Student(mNr, sname, fname, company, course, javaSkill));
             } else {
                 ex_students.add(new Student(mNr, sname, fname, company, javaSkill));
@@ -40,8 +40,25 @@ public class DatabaseCrawler {
         return ex_students;
     }
 
-    public ArrayList<Course> selectAllCourses(Connection connection) throws SQLException {
+    public ArrayList<Course> selectAllCourses(Connection conn) throws SQLException {
         ArrayList<Course> ex_courses = new ArrayList<>();
+
+        String sql = "SELECT cname, room FROM course";
+
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+
+        // Loop through the result set
+        while (rs.next()) {
+            String cName = rs.getString("cname");
+            String room = rs.getString("room");
+            if (room != null) {
+                ex_courses.add(new Course(cName, room));
+            } else {
+                ex_courses.add(new Course(cName));
+            }
+            System.out.println("Received data for course " + cName + "\n");
+        }
 
         return ex_courses;
     }
