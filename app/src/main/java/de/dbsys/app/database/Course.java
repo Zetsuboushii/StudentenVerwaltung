@@ -22,6 +22,10 @@ public class Course {
         this.cName = cName;
     }
 
+    /**
+     * creates a new database entry in table course
+     * @param conn  Established DB connection
+     */
     public void createCourse(Connection conn) {
         try {
             String sql = "INSERT INTO course (cName) VALUES (?)";
@@ -36,6 +40,11 @@ public class Course {
         System.out.println("Values successfully inserted.");
     }
 
+    /**
+     * Edits course name of entry by its course name and updates java object values
+     * @param conn
+     * @param cName
+     */
     public void editCname(Connection conn, String cName) {
         try {
             String sql = "UPDATE course SET cName = ? WHERE cName = " + this.cName;
@@ -51,6 +60,11 @@ public class Course {
         System.out.println("Values updated.");
     }
 
+    /**
+     * Edits room of entry by its course name java object values
+     * @param conn
+     * @param room
+     */
     public void editRoom(Connection conn, String room) {
         try {
             String sql = "UPDATE course SET room = ? WHERE cName = " + this.cName;
