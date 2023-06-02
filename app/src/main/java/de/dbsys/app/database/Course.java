@@ -28,9 +28,10 @@ public class Course {
 
     /**
      * creates a new database entry in table course. If room is set prior, the function also invokes editRoom().
-     * @param conn  Established DB connection
+     *
+     * @param conn Established DB connection
      */
-    public void createCourse(Connection conn) {
+    public void createCourse(DatabaseConnector dbc, Connection conn) {
         try {
             String sql = "INSERT INTO course (cName) VALUES (?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -38,7 +39,7 @@ public class Course {
             stmt.executeUpdate();
             stmt.close();
             if (room != null) {
-                this.editRoom(conn, room);
+                this.editRoom(dbc, room);
             }
         } catch (SQLException e) {
             System.err.println(this.getClass().getName() + ": " + e.getMessage());
@@ -49,44 +50,26 @@ public class Course {
 
     /**
      * Edits course name of entry by its course name and updates java object values
-     * @param conn
+     *
+     * @param dbc
      * @param cName
      */
-    public void editCname(Connection conn, String cName) {
-        try {
-            String sql = "UPDATE course SET cName = ? WHERE cName IS ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, cName);
-            stmt.setString(2, this.cName);
-            stmt.executeUpdate();
-            stmt.close();
-            this.cName = cName;
-        } catch (SQLException e) {
-            System.err.println(this.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-        System.out.println("Values updated.");
+    public void editCname(DatabaseConnector dbc, String cName) {
+        String sql = "UPDATE course SET cName = ? WHERE cName IS ?";
+        dbc.update(sql, this.cName, cName);
+        this.cName = cName;
     }
 
     /**
      * Edits room of entry by its course name java object values
-     * @param conn
+     *
+     * @param dbc
      * @param room
      */
-    public void editRoom(Connection conn, String room) {
-        try {
-            String sql = "UPDATE course SET room = ? WHERE cName IS ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, room);
-            stmt.setString(2, this.cName);
-            stmt.executeUpdate();
-            stmt.close();
-            this.room = room;
-        } catch (SQLException e) {
-            System.err.println(this.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-        System.out.println("Values updated.");
+    public void editRoom(DatabaseConnector dbc, String room) {
+        String sql = "UPDATE course SET room = ? WHERE cName IS ?";
+        dbc.update(sql, cName, room);
+        this.room = room;
     }
 
     public String getcName() {
