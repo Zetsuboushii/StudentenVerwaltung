@@ -12,11 +12,15 @@ import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.database.entities.Student;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DBTester {
 
     public static void main(String[] args) throws SQLException {
+
+
+
         DatabaseConnector dbc = new DatabaseConnector();
         Connection conn = dbc.getConn();
 
