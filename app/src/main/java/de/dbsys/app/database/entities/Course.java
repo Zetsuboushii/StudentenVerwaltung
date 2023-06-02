@@ -6,7 +6,9 @@ Used IDE:           IntelliJ IDEA
 Author:             Luke Grasser
 /--------------------------------------------------*/
 
-package de.dbsys.app.database;
+package de.dbsys.app.database.entities;
+
+import de.dbsys.app.database.DatabaseConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,6 +1,6 @@
 package de.dbsys.app.ui.views;
 
-import de.dbsys.app.database.Course;
+import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.ui.GenericUIController;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;

@@ -8,6 +8,9 @@ Author:             Luke Grasser
 
 package de.dbsys.app.database;
 
+import de.dbsys.app.database.entities.Course;
+import de.dbsys.app.database.entities.Student;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
