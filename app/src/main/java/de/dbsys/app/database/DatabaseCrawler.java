@@ -17,7 +17,7 @@ public class DatabaseCrawler {
     private ArrayList<Course> ex_courses = new ArrayList<>();
 
     public void selectAll(Connection conn) throws SQLException {
-        String sql = "SELECT mNr, sname, fname, company, fk_course, javaSkill FROM student";
+        String sql = "SELECT s.mNr, s.sname, s.fname, s.company, s.fk_course, s.javaSkill, c.cName, c.room FROM student s, course c";
 
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
@@ -30,11 +30,22 @@ public class DatabaseCrawler {
             String company = rs.getString("company");
             Course course = new Course(rs.getString("fk_course"));
             int javaSkill = rs.getInt("javaSkill");
+
             if (company != null) {
                 ex_students.add(new Student(mNr, sname, fname, company, course, javaSkill));
             } else {
                 ex_students.add(new Student(mNr, sname, fname, company, javaSkill));
             }
+
+            String cName = rs.getString("cName");
+            String room = rs.getString("room");
+
+            if (room != null) {
+                ex_courses.add(new Course(cName, room));
+            } else {
+                ex_courses.add(new Course(cName));
+            }
+
             System.out.println("Received data for student " + mNr + "\n");
         }
 

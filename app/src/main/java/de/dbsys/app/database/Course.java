@@ -14,16 +14,20 @@ import java.sql.SQLException;
 
 public class Course {
 
-    // TODO Crawl DB for existing objects
-
+    // On creating a new course, the room can be set afterwards.
     private String cName, room;
 
     public Course(String cName) {
         this.cName = cName;
     }
 
+    public Course(String cName, String room) {
+        this.cName = cName;
+        this.room = room;
+    }
+
     /**
-     * creates a new database entry in table course
+     * creates a new database entry in table course. If room is set prior, the function also invokes editRoom().
      * @param conn  Established DB connection
      */
     public void createCourse(Connection conn) {
@@ -33,6 +37,9 @@ public class Course {
             stmt.setString(1, cName);
             stmt.executeUpdate();
             stmt.close();
+            if (room != null) {
+                this.editRoom(conn, room);
+            }
         } catch (SQLException e) {
             System.err.println(this.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
