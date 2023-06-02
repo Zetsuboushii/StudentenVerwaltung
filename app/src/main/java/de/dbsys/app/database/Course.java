@@ -47,9 +47,10 @@ public class Course {
      */
     public void editCname(Connection conn, String cName) {
         try {
-            String sql = "UPDATE course SET cName = ? WHERE cName = " + this.cName;
+            String sql = "UPDATE course SET cName = ? WHERE cName IS ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, cName);
+            stmt.setString(2, this.cName);
             stmt.executeUpdate();
             stmt.close();
             this.cName = cName;
@@ -67,9 +68,10 @@ public class Course {
      */
     public void editRoom(Connection conn, String room) {
         try {
-            String sql = "UPDATE course SET room = ? WHERE cName = " + this.cName;
+            String sql = "UPDATE course SET room = ? WHERE cName IS ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, room);
+            stmt.setString(2, this.cName);
             stmt.executeUpdate();
             stmt.close();
             this.room = room;
