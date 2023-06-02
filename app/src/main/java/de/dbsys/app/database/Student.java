@@ -41,8 +41,7 @@ public class Student {
      *
      * @param conn Established DB connection
      */
-    public void createStudent(Connection conn) {
-
+    public void createStudent(DatabaseConnector dbc, Connection conn) {
         try {
             String sql = "INSERT INTO student (mNr, sname, fname, company, javaSkill) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -54,7 +53,7 @@ public class Student {
             stmt.executeUpdate();
             stmt.close();
             if (course != null) {
-                this.editCourse(conn, course);
+                this.editCourse(dbc, course);
             }
         } catch (SQLException e) {
             System.err.println(this.getClass().getName() + ": " + e.getMessage());
@@ -66,146 +65,83 @@ public class Student {
     /**
      * Deletes Database entry in table student
      *
-     * @param conn Established DB connection
+     * @param dbc Established DBC
      */
-    public void delete(Connection conn) {
-        try {
-            String sql = "DELETE FROM student WHERE mNr = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, this.mNr);
-            stmt.executeUpdate();
-            stmt.close();
-        } catch (SQLException e) {
-            System.err.println(this.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-        System.out.println("Student successfully deleted.");
+    public void deleteStudent(DatabaseConnector dbc) {
+        String sql = "DELETE FROM student WHERE mNr = ?";
+        dbc.delete(sql, this.mNr);
     }
 
     /**
      * Edits matriculation no. of entry by its matriculation no. and updates Java Object values
      *
-     * @param conn Established DB connection
-     * @param mNr  Matriculation no.
+     * @param dbc Established DBC
+     * @param mNr Matriculation no.
      */
-    public void editMnr(Connection conn, int mNr) {
-        try {
-            String sql = "UPDATE student SET mNr = ? WHERE mNr = " + this.mNr;
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, mNr);
-            stmt.executeUpdate();
-            stmt.close();
-            this.mNr = mNr;
-        } catch (SQLException e) {
-            System.err.println(this.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-        System.out.println("Values updated.");
+    public void editMnr(DatabaseConnector dbc, int mNr) {
+        String sql = "UPDATE student SET mNr = ? WHERE mNr = ?";
+        dbc.update(sql, this.mNr, mNr);
+        this.mNr = mNr;
     }
 
     /**
      * Edits firstname of entry by its matriculation no. and updates Java Object values
      *
-     * @param conn  Established connection
+     * @param dbc   Established DBC
      * @param fname Firstname
      */
-    public void editFname(Connection conn, String fname) {
-        try {
-            String sql = "UPDATE student SET fname = ? WHERE mNr = " + this.mNr;
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, fname);
-            stmt.executeUpdate();
-            stmt.close();
-            this.fname = fname;
-        } catch (SQLException e) {
-            System.err.println(this.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-        System.out.println("Values updated.");
+    public void editFname(DatabaseConnector dbc, String fname) {
+        String sql = "UPDATE student SET fname = ? WHERE mNr = ?";
+        dbc.update(sql, mNr, fname);
+        this.fname = fname;
     }
 
     /**
      * Edits surname of entry by its matriculation no. and updates Java Object values
      *
-     * @param conn  Established DB connection
+     * @param dbc   Established DBC
      * @param sname Surname
      */
-    public void editSname(Connection conn, String sname) {
-        try {
-            String sql = "UPDATE student SET sname = ? WHERE mNr = " + this.mNr;
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, sname);
-            stmt.executeUpdate();
-            stmt.close();
-            this.sname = sname;
-        } catch (SQLException e) {
-            System.err.println(this.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-        System.out.println("Values updated.");
+    public void editSname(DatabaseConnector dbc, String sname) {
+        String sql = "UPDATE student SET sname = ? WHERE mNr = ?";
+        dbc.update(sql, mNr, sname);
+        this.sname = sname;
     }
 
     /**
      * Edits company of entry by its matriculation no. and updates Java Object values
      *
-     * @param conn    Established DB connection
+     * @param dbc     Established DBC
      * @param company Company
      */
-    public void editCompany(Connection conn, String company) {
-        try {
-            String sql = "UPDATE student SET company = ? WHERE mNr = " + this.mNr;
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, company);
-            stmt.executeUpdate();
-            stmt.close();
-            this.company = company;
-        } catch (SQLException e) {
-            System.err.println(this.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-        System.out.println("Values updated.");
+    public void editCompany(DatabaseConnector dbc, String company) {
+        String sql = "UPDATE student SET company = ? WHERE mNr = ?";
+        dbc.update(sql, mNr, company);
+        this.company = company;
     }
 
     /**
      * Edits Java Skill of entry by its matriculation no. and updates Java Object values
      *
-     * @param conn      Established DB connection
+     * @param dbc       Established DBC
      * @param javaSkill Java Skill
      */
-    public void editJavaSkill(Connection conn, int javaSkill) {
-        try {
-            String sql = "UPDATE student SET javaSkill = ? WHERE mNr = " + this.mNr;
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, javaSkill);
-            stmt.executeUpdate();
-            stmt.close();
-            this.javaSkill = javaSkill;
-        } catch (SQLException e) {
-            System.err.println(this.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-        System.out.println("Values updated.");
+    public void editJavaSkill(DatabaseConnector dbc, int javaSkill) {
+        String sql = "UPDATE student SET javaSkill = ? WHERE mNr = ?";
+        dbc.update(sql, mNr, javaSkill);
+        this.javaSkill = javaSkill;
     }
 
     /**
      * Edits course of entry by its matriculation no. and updates Java Object values
      *
-     * @param conn   Established DB connection
+     * @param dbc    Established DB connector
      * @param course Course name
      */
-    public void editCourse(Connection conn, Course course) {
-        try {
-            String sql = "UPDATE student SET fk_course = ? WHERE mNr = " + this.mNr;
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, course.getcName());
-            stmt.executeUpdate();
-            stmt.close();
-            this.course = course;
-        } catch (SQLException e) {
-            System.err.println(this.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-        System.out.println("Values updated.");
+    public void editCourse(DatabaseConnector dbc, Course course) {
+        String sql = "UPDATE student SET fk_course = ? WHERE mNr = ?";
+        dbc.update(sql, mNr, course.getcName());
+        this.course = course;
     }
 
     public int getmNr() {
