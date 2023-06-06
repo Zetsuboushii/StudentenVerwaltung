@@ -11,8 +11,8 @@
     <TextField promptText="Nachname" fx:id="tfLastName" />
     <ComboBox promptText="Kurse" fx:id="cbClass" />
     <TextField promptText="Firma" fx:id="tfCompany" />
-    <HBox styleClass="form-label-to-field-spacing">
+    <HBox HBox.hgrow="ALWAYS" styleClass="form-label-to-field-spacing">
         <Label text="Java Skills" />
-        <Slider fx:id="slJavaExp" />
+        <Slider fx:id="slJavaExp" min="1.0" max="10.0" blockIncrement="1.0" majorTickUnit="1.0" minorTickCount="0" snapToTicks="true" showTickMarks="true" showTickLabels="true"/>
     </HBox>
 </VBox>
