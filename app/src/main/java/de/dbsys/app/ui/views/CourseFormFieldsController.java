@@ -31,13 +31,14 @@ public class CourseFormFieldsController extends GenericUIController {
         return new Pair<>(tfCourseName.getText(), tfRoom.getText());
     }
 
-    public void setCourseData(String course, String room) {
-        tfCourseName.setText(course);
-        tfRoom.setText(room);
+    public void setCourseData() {
+        tfCourseName.setText(course.getcName());
+        tfRoom.setText(course.getRoom());
     }
 
     public void setCourse(Course course) {
         this.course = course;
+        setCourseData();
     }
 
     @Override
@@ -97,5 +98,15 @@ public class CourseFormFieldsController extends GenericUIController {
             Student student = lvAssignedStudents.getItems().get(idx);
             lvAssignedStudents.getItems().remove(student);
         });
+    }
+
+    private void save() {
+        DatabaseConnector db = Main.getDb();
+        if (!tfRoom.getText().equals(course.getRoom())) {
+            course.editRoom(db, tfRoom.getText());
+        }
+        if (!tfCourseName.getText().equals(course.getcName())) {
+            course.editCname(db, tfCourseName.getText());
+        }
     }
 }
