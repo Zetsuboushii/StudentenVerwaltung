@@ -45,13 +45,21 @@ public class StudentFormFieldsController extends GenericUIController {
         }
     }
 
+    private int getCourseIdxInComboBox(List<Course> courses) {
+        try {
+            return courses.indexOf(student.getCourse()) + 1; // for 'Kein Kurs'
+        } catch (NoCourseException exc) {
+            return 0;
+        }
+    }
+
     public void populateCourses() throws SQLException {
         cbClass.getItems().clear();
         cbClass.getItems().add(new Course("Kein Kurs"));
-        cbClass.getSelectionModel().select(0);
         Connection conn = Main.getDb().getConn();
         DatabaseCrawler crawler = new DatabaseCrawler();
         List<Course> courses = crawler.selectAllCourses(conn);
+        cbClass.getSelectionModel().select(getCourseIdxInComboBox(courses));
         courses.forEach(course -> cbClass.getItems().add(course));
         if(student != null) {
             try {

@@ -2,9 +2,11 @@
 
 <?import javafx.scene.layout.*?>
 
-<AnchorPane HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx"
+<?import javafx.scene.control.Button?>
+<VBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="de.dbsys.app.ui.views.EditStudentViewController"
-            prefHeight="400.0" prefWidth="600.0" styleClass="form-label-to-field-spacing" stylesheets="@forms.css,@main.css">
-    <fx:include source="student-form-fields.fxml" />
-</AnchorPane>
+            prefHeight="400.0" prefWidth="600.0" styleClass="form-label-to-field-spacing,form-vbox" stylesheets="@forms.css,@main.css">
+    <fx:include fx:id="studentFormFields" source="student-form-fields.fxml" />
+    <Button text="Speichern" onAction="#onSave" />
+</VBox>

@@ -16,6 +16,7 @@ import javafx.util.Pair;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CourseFormFieldsController extends GenericUIController {
@@ -42,11 +43,11 @@ public class CourseFormFieldsController extends GenericUIController {
     public void setCourse(Course course) {
         this.course = course;
         setCourseData();
-    }
-
-    @Override
-    public void onBeforeShow(Stage stage) throws Exception {
-        loadStudents();
+        try {
+            loadStudents();
+        } catch (Exception exc) {
+            handleException(exc);
+        }
     }
 
     private void loadStudents() throws Exception {
@@ -54,7 +55,7 @@ public class CourseFormFieldsController extends GenericUIController {
         Connection con = Main.getDb().getConn();
         DatabaseCrawler crawler = new DatabaseCrawler();
         List<Student> allStudents = crawler.selectAllStudents(con);
-        List<Student> assignedStudents = crawler.selectAllStudents(con);
+        List<Student> assignedStudents = course.getStudents(con);
         List<Student> availableStudents = allStudents.stream()
                 .filter(s -> !assignedStudents.contains(s))
                 .toList();
@@ -75,7 +76,7 @@ public class CourseFormFieldsController extends GenericUIController {
         List<Integer> indizes = lvAvailableStudents.getSelectionModel().getSelectedIndices();
         // Assign student
         indizes.forEach(idx -> {
-            Student student = lvAssignedStudents.getItems().get(idx);
+            Student student = lvAvailableStudents.getItems().get(idx);
             lvAssignedStudents.getItems().add(student);
             try {
                 student.editCourse(db, course);
@@ -85,7 +86,7 @@ public class CourseFormFieldsController extends GenericUIController {
         });
         // Remove from available students
         indizes.forEach(idx -> {
-            Student student = lvAssignedStudents.getItems().get(idx);
+            Student student = lvAvailableStudents.getItems().get(idx);
             lvAvailableStudents.getItems().remove(student);
         });
     }
@@ -111,7 +112,7 @@ public class CourseFormFieldsController extends GenericUIController {
         });
     }
 
-    private void save() {
+    public void save() {
         DatabaseConnector db = Main.getDb();
         try {
             if (!tfRoom.getText().equals(course.getRoom())) {

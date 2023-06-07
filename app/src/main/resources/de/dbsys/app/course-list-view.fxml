@@ -14,5 +14,5 @@
         </HBox>
         <ListView fx:id="lvElements" VBox.vgrow="ALWAYS" />
     </VBox>
-    <fx:include fx:id="courseFormFields" source="course-form-fields.fxml" SplitPane.resizableWithParent="true" />
+    <fx:include fx:id="editCourseView" source="edit-course-view.fxml" SplitPane.resizableWithParent="true" />
 </SplitPane>

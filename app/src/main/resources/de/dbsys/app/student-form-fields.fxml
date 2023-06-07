@@ -3,10 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="root" VBox.vgrow="ALWAYS" spacing="15" xmlns="http://javafx.com/javafx"
+<VBox VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="de.dbsys.app.ui.views.StudentFormFieldsController"
-            prefHeight="400.0" prefWidth="600.0" styleClass="" stylesheets="@forms.css">
+            prefHeight="400.0" prefWidth="600.0" stylesheets="@forms.css">
     <GridPane styleClass="form-label-to-field-spacing">
         <Label GridPane.columnIndex="0" GridPane.rowIndex="0" text="Vorname" />
         <Label GridPane.columnIndex="0" GridPane.rowIndex="1" text="Nachname" />

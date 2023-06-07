@@ -21,7 +21,7 @@ public class CourseListViewController extends GenericUIController {
     private ComboBox<Comparator<Course>> cbSort;
     @FXML private ComboBox<String> cbFilter;
     @FXML private ListView<Course> lvElements;
-    @FXML private CourseFormFieldsController courseFormFieldsController;
+    @FXML private EditCourseViewController editCourseViewController;
 
     private final List<Comparator<Course>> comparators = List.of(
             new NameCourseComparator(),
@@ -46,7 +46,7 @@ public class CourseListViewController extends GenericUIController {
         cbSort.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> lvElements.getItems().sort(newValue)
         );
-        courseFormFieldsController.setVisible(false);
+        editCourseViewController.setVisible(false);
         try {
             populate();
         } catch (SQLException e) {
@@ -59,15 +59,15 @@ public class CourseListViewController extends GenericUIController {
         Course course = lvElements.getSelectionModel().getSelectedItem();
         if(course == null) {
             try {
-                courseFormFieldsController.setVisible(false);
+                editCourseViewController.setVisible(false);
             } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Kurse.\n" + e.getMessage()).show();
             }
             return;
         }
-        courseFormFieldsController.setCourse(course);
+        editCourseViewController.setCourse(course);
         try {
-            courseFormFieldsController.setVisible(true);
+            editCourseViewController.setVisible(true);
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Kurse.\n" + e.getMessage()).show();
         }

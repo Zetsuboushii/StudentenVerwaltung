@@ -24,7 +24,7 @@ public class StudentListViewController extends GenericUIController {
     @FXML private ComboBox<Comparator<Student>> cbSort;
     @FXML private ComboBox<Predicate<Student>> cbFilter;
     @FXML private ListView<Student> lvElements;
-    @FXML private StudentFormFieldsController studentFormFieldsController;
+    @FXML private EditStudentViewController editStudentViewController;
 
     private List<Student> students;
 
@@ -68,7 +68,7 @@ public class StudentListViewController extends GenericUIController {
                     lvElements.getItems().sort(cbSort.getSelectionModel().getSelectedItem());
                 }
         );
-        studentFormFieldsController.setVisible(false);
+        editStudentViewController.setVisible(false);
         try {
             populate();
         } catch (SQLException e) {
@@ -81,21 +81,21 @@ public class StudentListViewController extends GenericUIController {
         Student student = lvElements.getSelectionModel().getSelectedItem();
         if(student == null) {
             try {
-                studentFormFieldsController.setVisible(false);
+                editStudentViewController.setVisible(false);
             } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Studenten.\n" + e.getMessage()).show();
             }
             return;
         }
-        studentFormFieldsController.setStudent(student);
+        editStudentViewController.setStudent(student);
         try {
-            studentFormFieldsController.populate();
+            editStudentViewController.populate();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Studenten.\n" + e.getMessage()).show();
         }
         try {
-            studentFormFieldsController.setVisible(true);
-            studentFormFieldsController.populate();
+            editStudentViewController.setVisible(true);
+            editStudentViewController.populate();
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Studenten.\n" + e.getMessage()).show();
         }

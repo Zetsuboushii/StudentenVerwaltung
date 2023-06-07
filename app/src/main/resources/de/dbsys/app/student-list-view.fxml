@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -14,5 +11,5 @@
         </HBox>
         <ListView fx:id="lvElements" VBox.vgrow="ALWAYS" />
     </VBox>
-    <fx:include fx:id="studentFormFields" source="student-form-fields.fxml" SplitPane.resizableWithParent="true" />
+    <fx:include fx:id="editStudentView" source="edit-student-view.fxml" SplitPane.resizableWithParent="true" />
 </SplitPane>
