@@ -12,6 +12,9 @@ public abstract class GenericUIController implements  UIController{
     @Override
     public void onAfterShow(Stage stage) {}
 
+    public void setVisible(boolean visible) {
+    }
+
     public void setStage(Stage stage) {
         this.stage = stage;
     }

@@ -14,9 +14,19 @@ import java.io.IOException;
 
 
 public class MainController extends GenericUIController {
+    @FXML private StudentListViewController studentListViewController;
+    @FXML private CourseListViewController courseListViewController;
+
     @Override
     public void onBeforeShow(Stage stage) {
         registerKeyboardShortcuts();
+    }
+
+    @Override
+    public void onAfterShow(Stage stage) {
+        super.onAfterShow(stage);
+        studentListViewController.onAfterShow(stage);
+        courseListViewController.onAfterShow(stage);
     }
 
     private void registerKeyboardShortcuts() {

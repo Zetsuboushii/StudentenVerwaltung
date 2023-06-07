@@ -6,9 +6,8 @@ import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.database.entities.Student;
 import de.dbsys.app.ui.GenericUIController;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
@@ -17,6 +16,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class StudentFormFieldsController extends GenericUIController {
+    @FXML
+    private VBox root;
     @FXML
     private TextField tfFirstName;
     @FXML
@@ -68,8 +69,7 @@ public class StudentFormFieldsController extends GenericUIController {
             student.editJavaSkill(dbc, (int)slJavaExp.getValue());
         if(!Objects.equals(cbClass.getValue(), student.getCourse())) {
             if(cbClass.getValue().getcName().equals("Kein Kurs")) {
-                // TODO: student.editCourse(dbc, null);
-                // editCourse should accept null
+                student.editCourse(dbc, null);
             } else {
                 student.editCourse(dbc, cbClass.getValue());
             }
@@ -100,6 +100,11 @@ public class StudentFormFieldsController extends GenericUIController {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        root.setVisible(visible);
     }
 
     @Override

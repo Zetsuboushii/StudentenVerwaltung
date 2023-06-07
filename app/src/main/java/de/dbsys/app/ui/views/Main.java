@@ -1,5 +1,6 @@
 package de.dbsys.app.ui.views;
 
+import de.dbsys.app.database.DBTester;
 import de.dbsys.app.database.DatabaseConnector;
 import de.dbsys.app.ui.utils.UILoader;
 import javafx.application.Application;
@@ -22,6 +23,7 @@ public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
         db = new DatabaseConnector();
+        //DBTester.main(args);
         launch();
     }
 }
