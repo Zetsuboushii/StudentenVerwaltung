@@ -33,9 +33,9 @@ public class DatabaseCrawler {
             Course course = new Course(rs.getString("fk_course"));
             int javaSkill = rs.getInt("javaSkill");
             if (course != null) {
-                ex_students.add(new Student(mNr, sname, fname, company, course, javaSkill));
+                ex_students.add(new Student(mNr, fname, sname, company, course, javaSkill));
             } else {
-                ex_students.add(new Student(mNr, sname, fname, company, javaSkill));
+                ex_students.add(new Student(mNr, fname, sname, company, javaSkill));
             }
             System.out.println("Received data for student " + mNr + "\n");
         }
