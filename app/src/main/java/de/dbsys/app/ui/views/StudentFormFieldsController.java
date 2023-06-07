@@ -2,13 +2,13 @@ package de.dbsys.app.ui.views;
 
 import de.dbsys.app.database.DatabaseConnector;
 import de.dbsys.app.database.DatabaseCrawler;
+import de.dbsys.app.database.NoCourseException;
 import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.database.entities.Student;
 import de.dbsys.app.ui.GenericUIController;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class StudentFormFieldsController extends GenericUIController {
+    @FXML
+    private VBox root;
     @FXML
     private TextField tfFirstName;
     @FXML
@@ -48,8 +50,9 @@ public class StudentFormFieldsController extends GenericUIController {
         DatabaseCrawler crawler = new DatabaseCrawler();
         List<Course> courses = crawler.selectAllCourses(conn);
         courses.forEach(course -> cbClass.getItems().add(course));
-        if(student != null && student.getCourse() != null) {
+        try {
             cbClass.getSelectionModel().select(student.getCourse());
+        } catch (NoCourseException ignored) {
         }
     }
 
@@ -66,11 +69,16 @@ public class StudentFormFieldsController extends GenericUIController {
             student.editCompany(dbc, tfCompany.getText());
         if(student.getJavaSkill() != slJavaExp.getValue())
             student.editJavaSkill(dbc, (int)slJavaExp.getValue());
-        if(!Objects.equals(cbClass.getValue(), student.getCourse())) {
-            if(cbClass.getValue().getcName().equals("Kein Kurs")) {
-                // TODO: student.editCourse(dbc, null);
-                // editCourse should accept null
-            } else {
+        try {
+            if(!Objects.equals(cbClass.getValue(), student.getCourse())) {
+                if(cbClass.getValue().getcName().equals("Kein Kurs")) {
+                    student.editCourse(dbc, null);
+                } else {
+                    student.editCourse(dbc, cbClass.getValue());
+                }
+            }
+        } catch (NoCourseException ignored) {
+            if(cbClass.getValue() != null) {
                 student.editCourse(dbc, cbClass.getValue());
             }
         }
@@ -100,6 +108,11 @@ public class StudentFormFieldsController extends GenericUIController {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    @Override
+    public void setRootVisible(boolean visible) {
+        root.setVisible(visible);
     }
 
     @Override

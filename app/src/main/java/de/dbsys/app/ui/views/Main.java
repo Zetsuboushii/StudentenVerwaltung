@@ -5,14 +5,13 @@ import de.dbsys.app.ui.utils.UILoader;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 public class Main extends Application {
     public static DatabaseConnector db;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws Exception {
         UILoader.showFXML("main", "Studierenden-Verwaltung");
     }
 
@@ -22,6 +21,7 @@ public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
         db = new DatabaseConnector();
+        //DBTester.main(args);
         launch();
     }
 }
