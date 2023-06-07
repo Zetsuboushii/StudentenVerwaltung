@@ -13,7 +13,7 @@ public class Main extends Application {
     public static DatabaseConnector db;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws Exception {
         UILoader.showFXML("main", "Studierenden-Verwaltung");
     }
 

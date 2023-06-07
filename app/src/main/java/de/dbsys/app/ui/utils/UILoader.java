@@ -17,7 +17,7 @@ public class UILoader {
         return loader;
     }
 
-    public static <T extends GenericUIController> T loadFXMLOnStage(String fxmlPath, Stage stage, String title) throws IOException {
+    public static <T extends GenericUIController> T loadFXMLOnStage(String fxmlPath, Stage stage, String title) throws Exception {
         FXMLLoader loader = getFXMLLoader(fxmlPath);
         Parent root = loader.load();
 
@@ -27,7 +27,7 @@ public class UILoader {
         return loader.getController();
     }
 
-    public static <T extends GenericUIController> T showFXMLOnStage(String fxmlPath, Stage stage, String title) throws IOException {
+    public static <T extends GenericUIController> T showFXMLOnStage(String fxmlPath, Stage stage, String title) throws Exception {
         T controller = loadFXMLOnStage(fxmlPath, stage, title);
         controller.setStage(stage);
         controller.onBeforeShow(stage);
@@ -36,7 +36,7 @@ public class UILoader {
         return controller;
     }
 
-    public static <T extends GenericUIController> T showFXML(String fxmlPath, String title) throws IOException {
+    public static <T extends GenericUIController> T showFXML(String fxmlPath, String title) throws Exception {
         return showFXMLOnStage(fxmlPath, new Stage(), title);
     }
 }

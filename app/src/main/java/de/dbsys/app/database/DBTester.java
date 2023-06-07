@@ -49,6 +49,10 @@ public class DBTester {
 
         s2.deleteStudent(dbc);
 
+        s1.removeCourse(dbc);
+
+        System.out.println(s1.getmNr() + ": " + s1.getSname() + " " + s1.getFname() + " " + "\n\tKurs: " + s1.getCourse().getcName());
+
         conn.close();
     }
 }

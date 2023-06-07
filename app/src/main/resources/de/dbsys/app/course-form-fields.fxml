@@ -10,7 +10,13 @@
     <GridPane styleClass="form-label-to-field-spacing">
         <Label GridPane.columnIndex="0" GridPane.rowIndex="0" text="Name" />
         <Label GridPane.columnIndex="0" GridPane.rowIndex="1" text="Raum" />
-        <TextField GridPane.columnIndex="1" GridPane.rowIndex="0" promptText="Name" fx:id="tfCourseName" />
-        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="Raum" fx:id="tfRoom" />
+        <ListView GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.rowSpan="3" fx:id="lvAvailableStudents" />
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Button text="assign" fx:id="btnAssign" onAction="#onAssign"/>
+            <Button  text="unassign" fx:id="btnUnassign" onAction="#onUnassign"/>
+        </VBox>
+        <TextField GridPane.columnIndex="2" GridPane.rowIndex="0" promptText="Name" fx:id="tfCourseName" />
+        <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" promptText="Raum" fx:id="tfRoom" />
+        <ListView GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.rowSpan="3" fx:id="lvAssignedStudents" />
     </GridPane>
 </VBox>
