@@ -1,6 +1,5 @@
 package de.dbsys.app.ui.views;
 
-import de.dbsys.app.database.DatabaseCrawler;
 import de.dbsys.app.database.entities.Student;
 import de.dbsys.app.ui.GenericUIController;
 import javafx.fxml.FXML;
@@ -33,7 +32,6 @@ public class NewStudentViewController extends GenericUIController {
     public void onAfterShow(Stage stage) {
         studentFormFieldsController.onAfterShow(stage);
         try {
-            studentFormFieldsController.setStudent(new DatabaseCrawler().selectAllStudents(Main.getDb().getConn()).get(0));
             studentFormFieldsController.populate();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Fehler beim Laden des Studenten.").show();
