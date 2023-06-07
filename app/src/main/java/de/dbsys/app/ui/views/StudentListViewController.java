@@ -1,10 +1,13 @@
 package de.dbsys.app.ui.views;
 
 import de.dbsys.app.database.DatabaseCrawler;
+import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.database.entities.Student;
 import de.dbsys.app.ui.GenericUIController;
 import de.dbsys.app.ui.utils.comparators.FirstNameStudentComparator;
 import de.dbsys.app.ui.utils.comparators.LastNameStudentComparator;
+import de.dbsys.app.ui.utils.filters.CourseStudentFilter;
+import de.dbsys.app.ui.utils.filters.NoneStudentFilter;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -15,25 +18,37 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class StudentListViewController extends GenericUIController {
     @FXML private ComboBox<Comparator<Student>> cbSort;
-    @FXML private ComboBox<String> cbFilter;
+    @FXML private ComboBox<Predicate<Student>> cbFilter;
     @FXML private ListView<Student> lvElements;
     @FXML private StudentFormFieldsController studentFormFieldsController;
+
+    private List<Student> students;
 
     private final List<Comparator<Student>> comparators = List.of(
             new FirstNameStudentComparator(),
             new LastNameStudentComparator()
     );
 
+
     public void populate() throws SQLException {
+        students = new DatabaseCrawler().selectAllStudents(Main.getDb().getConn());
+
         cbSort.getItems().clear();
         cbSort.getItems().addAll(comparators);
         cbSort.getSelectionModel().select(0);
-        List<Student> students = new DatabaseCrawler().selectAllStudents(Main.getDb().getConn());
+
+        cbFilter.getItems().clear();
+        cbFilter.getItems().add(new NoneStudentFilter());
+        List<Course> courses = new DatabaseCrawler().selectAllCourses(Main.getDb().getConn());
+        cbFilter.getItems().addAll(courses.stream().map(CourseStudentFilter::new).toList());
+        cbFilter.getSelectionModel().select(0);
+
         lvElements.getItems().clear();
-        lvElements.getItems().addAll(students);
+        lvElements.getItems().addAll(students.stream().filter(cbFilter.getSelectionModel().getSelectedItem()).toList());
         lvElements.getItems().sort(cbSort.getSelectionModel().getSelectedItem());
     }
 
@@ -45,6 +60,13 @@ public class StudentListViewController extends GenericUIController {
         );
         cbSort.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> lvElements.getItems().sort(newValue)
+        );
+        cbFilter.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    lvElements.getItems().clear();
+                    lvElements.getItems().addAll(students.stream().filter(cbFilter.getSelectionModel().getSelectedItem()).toList());
+                    lvElements.getItems().sort(cbSort.getSelectionModel().getSelectedItem());
+                }
         );
         studentFormFieldsController.setVisible(false);
         try {
@@ -73,6 +95,7 @@ public class StudentListViewController extends GenericUIController {
         }
         try {
             studentFormFieldsController.setVisible(true);
+            studentFormFieldsController.populate();
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Studenten.\n" + e.getMessage()).show();
         }
