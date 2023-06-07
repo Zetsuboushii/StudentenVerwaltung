@@ -1,15 +1,32 @@
 package de.dbsys.app.ui.views;
 
+import de.dbsys.app.database.DatabaseConnector;
+import de.dbsys.app.database.DatabaseCrawler;
+import de.dbsys.app.database.entities.Course;
+import de.dbsys.app.database.entities.Student;
 import de.dbsys.app.ui.GenericUIController;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
 public class CourseFormFieldsController extends GenericUIController {
+    private Course course;
     @FXML
     private TextField tfCourseName;
     @FXML
     private TextField tfRoom;
+    @FXML
+    private ListView<Student> lvAvailableStudents;
+    @FXML
+    private ListView<Student> lvAssignedStudents;
     public Pair<String, String> getCourseData() {
         return new Pair<>(tfCourseName.getText(), tfRoom.getText());
     }
@@ -17,5 +34,68 @@ public class CourseFormFieldsController extends GenericUIController {
     public void setCourseData(String course, String room) {
         tfCourseName.setText(course);
         tfRoom.setText(room);
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    @Override
+    public void onBeforeShow(Stage stage) throws Exception {
+        loadStudents();
+    }
+
+    private void loadStudents() throws Exception {
+        initListViews();
+        Connection con = Main.getDb().getConn();
+        DatabaseCrawler crawler = new DatabaseCrawler();
+        List<Student> allStudents = crawler.selectAllStudents(con);
+        List<Student> assignedStudents = crawler.selectAllStudents(con);
+        List<Student> availableStudents = allStudents.stream()
+                .filter(s -> !assignedStudents.contains(s))
+                .toList();
+        lvAvailableStudents.getItems().addAll(availableStudents);
+        lvAssignedStudents.getItems().addAll(assignedStudents);
+    }
+
+    private void initListViews() {
+        lvAvailableStudents.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        lvAvailableStudents.getItems().clear();
+        lvAssignedStudents.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        lvAssignedStudents.getItems().clear();
+    }
+
+    @FXML
+    private void onAssign() {
+        DatabaseConnector db = Main.getDb();
+        List<Integer> indizes = lvAvailableStudents.getSelectionModel().getSelectedIndices();
+        // Assign student
+        indizes.forEach(idx -> {
+            Student student = lvAssignedStudents.getItems().get(idx);
+            lvAssignedStudents.getItems().add(student);
+            student.editCourse(db, course);
+        });
+        // Remove from available students
+        indizes.forEach(idx -> {
+            Student student = lvAssignedStudents.getItems().get(idx);
+            lvAvailableStudents.getItems().remove(student);
+        });
+    }
+
+    @FXML
+    private void onUnassign() {
+        DatabaseConnector db = Main.getDb();
+        List<Integer> indizes = lvAssignedStudents.getSelectionModel().getSelectedIndices();
+        // Unassign student
+        indizes.forEach(idx -> {
+            Student student = lvAssignedStudents.getItems().get(idx);
+            student.editCourse(db, null);
+            lvAvailableStudents.getItems().add(student);
+        });
+        // Remove from assigned students
+        indizes.forEach(idx -> {
+            Student student = lvAssignedStudents.getItems().get(idx);
+            lvAssignedStudents.getItems().remove(student);
+        });
     }
 }

@@ -7,10 +7,10 @@ public abstract class GenericUIController implements  UIController{
     protected Stage stage;
 
     @Override
-    public void onBeforeShow(Stage stage) {}
+    public void onBeforeShow(Stage stage) throws Exception {}
 
     @Override
-    public void onAfterShow(Stage stage) {}
+    public void onAfterShow(Stage stage) throws Exception {}
 
     public void setStage(Stage stage) {
         this.stage = stage;

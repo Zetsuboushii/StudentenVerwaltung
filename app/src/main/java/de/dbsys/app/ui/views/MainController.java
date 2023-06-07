@@ -32,7 +32,7 @@ public class MainController extends GenericUIController {
     private void editAStudent() {
         try {
             UILoader.showFXML("edit-student-view", "Edit student");
-        } catch (IOException exc) {
+        } catch (Exception exc) {
             handleException(exc);
         }
     }
@@ -57,7 +57,7 @@ public class MainController extends GenericUIController {
     public void neuerStudierender() {
         try {
             UILoader.showFXML("new-student-view", "Neue:r Studierende:r");
-        } catch (IOException exc) {
+        } catch (Exception exc) {
             handleException(exc);
         }
     }
@@ -66,7 +66,7 @@ public class MainController extends GenericUIController {
     public void neuerKurs() {
         try {
             UILoader.showFXML("new-course-view", "Neuer Kurs");
-        } catch (IOException exc) {
+        } catch (Exception exc) {
             handleException(exc);
         }
     }
