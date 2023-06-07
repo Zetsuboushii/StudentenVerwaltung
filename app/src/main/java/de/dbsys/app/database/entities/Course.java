@@ -106,7 +106,7 @@ public class Course {
             String company = rs.getString("company");
             Course course = new Course(rs.getString("fk_course"));
             int javaSkill = rs.getInt("javaSkill");
-            l.add(new Student(mNr, sname, fname, company, course, javaSkill));
+            l.add(new Student(mNr, fname, sname, company, course, javaSkill));
         }
 
         return l;
