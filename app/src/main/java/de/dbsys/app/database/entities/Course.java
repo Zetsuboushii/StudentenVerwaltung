@@ -75,7 +75,7 @@ public class Course {
      */
     public void editRoom(DatabaseConnector dbc, String room) throws SQLException {
         String sql = "UPDATE course SET room = ? WHERE cName IS ?";
-
+        // TODO: save to db
         this.room = room;
     }
 
