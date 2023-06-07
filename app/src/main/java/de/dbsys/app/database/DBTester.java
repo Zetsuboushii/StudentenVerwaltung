@@ -51,7 +51,7 @@ public class DBTester {
         }
 
         System.out.println(c1.getcName() + ": " + c1.getRoom());
-        c1.editRoom(conn, "200C");
+        c1.editRoom(dbc, "200C");
         System.out.println(c1.getcName() + ": " + c1.getRoom());
 
         c1.editCname(dbc, "Tinfo");
@@ -68,8 +68,15 @@ public class DBTester {
 
         s1.removeCourse(dbc);
 
-        System.out.println(s1.getmNr() + ": " + s1.getSname() + " " + s1.getFname() + " " + "\n\tKurs: " + s1.getCourse().getcName());
-
+        boolean exHappend = false;
+        try{
+            System.out.println(s1.getmNr() + ": " + s1.getSname() + " " + s1.getFname() + " " + "\n\tKurs: " + s1.getCourse().getcName());
+        }catch (NoCourseException e){
+            exHappend = true;
+        }
+        if(!exHappend){
+            throw new RuntimeException("NO COURSE EXCEPTION NOT TRIGGERED");
+        }
 
         conn.close();
     }

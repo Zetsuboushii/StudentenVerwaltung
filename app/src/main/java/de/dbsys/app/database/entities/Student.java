@@ -145,7 +145,7 @@ public class Student {
      */
     public void editCourse(DatabaseConnector dbc, Course course) {
         String sql = "UPDATE student SET fk_course = ? WHERE mNr = ?";
-        dbc.update(sql, mNr, course.getcName());
+        dbc.update(sql, mNr, course == null ? null : course.getcName());
         this.course = course;
     }
 

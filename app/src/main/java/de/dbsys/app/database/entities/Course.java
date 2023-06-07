@@ -41,7 +41,7 @@ public class Course {
             stmt.executeUpdate();
             stmt.close();
             if (room != null) {
-                this.editRoom(conn, room);
+                this.editRoom(dbc, room);
             }
         } catch (SQLException e) {
             System.err.println(this.getClass().getName() + ": " + e.getMessage());
@@ -77,7 +77,7 @@ public class Course {
      * @param dbc
      * @param room
      */
-    public void editRoom(Connection conn, String room) {
+    public void editRoom(DatabaseConnector dbc, String room) {
         String sql = "UPDATE course SET room = ? WHERE cName IS ?";
 
         this.room = room;
