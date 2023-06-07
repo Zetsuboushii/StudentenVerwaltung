@@ -6,13 +6,18 @@
 <VBox VBox.vgrow="ALWAYS" spacing="15" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="de.dbsys.app.ui.views.StudentFormFieldsController"
-            prefHeight="400.0" prefWidth="600.0" styleClass="form-vbox" stylesheets="@forms.css">
-    <TextField promptText="Vorname" fx:id="tfFirstName" />
-    <TextField promptText="Nachname" fx:id="tfLastName" />
-    <ComboBox promptText="Kurse" fx:id="cbClass" />
-    <TextField promptText="Firma" fx:id="tfCompany" />
-    <HBox styleClass="form-label-to-field-spacing">
-        <Label text="Java Skills" />
-        <Slider fx:id="slJavaExp" />
-    </HBox>
+            prefHeight="400.0" prefWidth="600.0" styleClass="" stylesheets="@forms.css">
+    <GridPane styleClass="form-label-to-field-spacing">
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="0" text="Vorname" />
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="1" text="Nachname" />
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="2" text="Kurse" />
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="3" text="Firma" />
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="4" text="Java Skills" />
+
+        <TextField GridPane.columnIndex="1" GridPane.rowIndex="0" promptText="Vorname" fx:id="tfFirstName" />
+        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="Nachname" fx:id="tfLastName" />
+        <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="Kurse" fx:id="cbClass" />
+        <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" promptText="Firma" fx:id="tfCompany" />
+        <Slider GridPane.columnIndex="1" GridPane.rowIndex="4" fx:id="slJavaExp" min="1.0" max="10.0" blockIncrement="1.0" majorTickUnit="1.0" minorTickCount="0" snapToTicks="true" showTickMarks="true" showTickLabels="true"/>
+    </GridPane>
 </VBox>

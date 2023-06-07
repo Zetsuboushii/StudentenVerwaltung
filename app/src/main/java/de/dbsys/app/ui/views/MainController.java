@@ -10,6 +10,8 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.Mnemonic;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 
 public class MainController extends GenericUIController {
     @Override
@@ -20,6 +22,19 @@ public class MainController extends GenericUIController {
     private void registerKeyboardShortcuts() {
         registerNewStudentKeyboardShortcut();
         registerNewCourseKeyboardShortcut();
+
+        KeyCodeCombination editStudent = new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN);
+        Button btn = new Button("");
+        btn.setOnAction(e -> editAStudent());
+        stage.getScene().addMnemonic(new Mnemonic(btn, editStudent));
+    }
+
+    private void editAStudent() {
+        try {
+            UILoader.showFXML("edit-student-view", "Edit student");
+        } catch (IOException exc) {
+            handleException(exc);
+        }
     }
 
     private void registerNewStudentKeyboardShortcut() {
@@ -42,7 +57,7 @@ public class MainController extends GenericUIController {
     public void neuerStudierender() {
         try {
             UILoader.showFXML("new-student-view", "Neue:r Studierende:r");
-        } catch (Exception exc) {
+        } catch (IOException exc) {
             handleException(exc);
         }
     }
@@ -51,7 +66,7 @@ public class MainController extends GenericUIController {
     public void neuerKurs() {
         try {
             UILoader.showFXML("new-course-view", "Neuer Kurs");
-        } catch (Exception exc) {
+        } catch (IOException exc) {
             handleException(exc);
         }
     }
