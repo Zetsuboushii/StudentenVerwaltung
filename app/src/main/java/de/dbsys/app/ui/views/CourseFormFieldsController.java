@@ -6,19 +6,20 @@ import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.database.entities.Student;
 import de.dbsys.app.ui.GenericUIController;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 public class CourseFormFieldsController extends GenericUIController {
     private Course course;
+    @FXML
+    private VBox root;
     @FXML
     private TextField tfCourseName;
     @FXML
@@ -97,5 +98,10 @@ public class CourseFormFieldsController extends GenericUIController {
             Student student = lvAssignedStudents.getItems().get(idx);
             lvAssignedStudents.getItems().remove(student);
         });
+    }
+
+    @Override
+    public void setRootVisible(boolean visible) {
+        root.setVisible(visible);
     }
 }

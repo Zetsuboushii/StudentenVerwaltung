@@ -2,8 +2,8 @@ package de.dbsys.app.ui.views;
 
 import de.dbsys.app.database.DatabaseCrawler;
 import de.dbsys.app.database.entities.Course;
-import de.dbsys.app.database.entities.Student;
 import de.dbsys.app.ui.GenericUIController;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
@@ -27,13 +27,35 @@ public class CourseListViewController extends GenericUIController {
     }
 
     @Override
-    public void onAfterShow(Stage stage) {
+    public void onAfterShow(Stage stage) throws Exception {
         super.onAfterShow(stage);
+        lvElements.getSelectionModel().getSelectedItems().addListener(
+                (ListChangeListener<Course>) c -> onSelectionChanged()
+        );
+        courseFormFieldsController.setVisible(false);
         try {
             populate();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Kurse.\n" + e.getMessage()).show();
         }
 
+    }
+
+    private void onSelectionChanged() {
+        Course course = lvElements.getSelectionModel().getSelectedItem();
+        if(course == null) {
+            try {
+                courseFormFieldsController.setVisible(false);
+            } catch (Exception e) {
+                new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Kurse.\n" + e.getMessage()).show();
+            }
+            return;
+        }
+        courseFormFieldsController.setCourse(course);
+        try {
+            courseFormFieldsController.setVisible(true);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Kurse.\n" + e.getMessage()).show();
+        }
     }
 }

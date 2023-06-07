@@ -3,11 +3,7 @@ package de.dbsys.app.ui.views;
 import de.dbsys.app.database.DatabaseCrawler;
 import de.dbsys.app.database.entities.Student;
 import de.dbsys.app.ui.GenericUIController;
-import de.dbsys.app.ui.UIController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
@@ -30,12 +26,12 @@ public class StudentListViewController extends GenericUIController {
     }
 
     @Override
-    public void onAfterShow(Stage stage) {
+    public void onAfterShow(Stage stage) throws Exception {
+        super.onAfterShow(stage);
         lvElements.getSelectionModel().getSelectedItems().addListener(
                 (ListChangeListener<Student>) c -> onSelectionChanged()
         );
         studentFormFieldsController.setVisible(false);
-        super.onAfterShow(stage);
         try {
             populate();
         } catch (SQLException e) {
@@ -47,7 +43,11 @@ public class StudentListViewController extends GenericUIController {
     private void onSelectionChanged() {
         Student student = lvElements.getSelectionModel().getSelectedItem();
         if(student == null) {
-            studentFormFieldsController.setVisible(false);
+            try {
+                studentFormFieldsController.setVisible(false);
+            } catch (Exception e) {
+                new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Studenten.\n" + e.getMessage()).show();
+            }
             return;
         }
         studentFormFieldsController.setStudent(student);
@@ -56,6 +56,10 @@ public class StudentListViewController extends GenericUIController {
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Studenten.\n" + e.getMessage()).show();
         }
-        studentFormFieldsController.setVisible(true);
+        try {
+            studentFormFieldsController.setVisible(true);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Studenten.\n" + e.getMessage()).show();
+        }
     }
 }

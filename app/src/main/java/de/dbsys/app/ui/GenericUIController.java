@@ -12,7 +12,13 @@ public abstract class GenericUIController implements  UIController{
     @Override
     public void onAfterShow(Stage stage) throws Exception {}
 
-    public void setVisible(boolean visible) {
+    public void setVisible(boolean visible) throws Exception {
+        onBeforeShow(null);
+        setRootVisible(visible);
+        onAfterShow(null);
+    }
+
+    public void setRootVisible(boolean visible) {
     }
 
     public void setStage(Stage stage) {

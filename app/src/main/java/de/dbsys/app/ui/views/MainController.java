@@ -10,8 +10,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.Mnemonic;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 
 public class MainController extends GenericUIController {
     @FXML private StudentListViewController studentListViewController;
@@ -23,7 +21,7 @@ public class MainController extends GenericUIController {
     }
 
     @Override
-    public void onAfterShow(Stage stage) {
+    public void onAfterShow(Stage stage) throws Exception {
         super.onAfterShow(stage);
         studentListViewController.onAfterShow(stage);
         courseListViewController.onAfterShow(stage);
