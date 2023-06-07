@@ -10,9 +10,9 @@ package de.dbsys.app.database.entities;
 
 import de.dbsys.app.database.DatabaseConnector;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Course {
 
@@ -79,7 +79,7 @@ public class Course {
      */
     public void editRoom(DatabaseConnector dbc, String room) {
         String sql = "UPDATE course SET room = ? WHERE cName IS ?";
-        dbc.update(sql, cName, room);
+
         this.room = room;
     }
 
@@ -92,5 +92,28 @@ public class Course {
 
     public String getRoom() {
         return room;
+    }
+
+    public List<Student> getStudents(Connection conn) throws SQLException{
+        String sql = "SELECT mNr, sname, fname, company, fk_course, javaSkill FROM student WHERE fk_course = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1,cName);
+        ResultSet rs = stmt.executeQuery();
+
+        List<Student> l = new ArrayList<>();
+
+        // Loop through the result set
+        while (rs.next()) {
+            int mNr = rs.getInt("mNr");
+            String sname = rs.getString("sname");
+            String fname = rs.getString("fname");
+            String company = rs.getString("company");
+            Course course = new Course(rs.getString("fk_course"));
+            int javaSkill = rs.getInt("javaSkill");
+            l.add(new Student(mNr, sname, fname, company, course, javaSkill));
+        }
+
+        return l;
+
     }
 }

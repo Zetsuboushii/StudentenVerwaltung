@@ -46,13 +46,14 @@ public class Student {
      */
     public void createStudent(DatabaseConnector dbc, Connection conn) {
         try {
-            String sql = "INSERT INTO student (mNr, sname, fname, company, javaSkill) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO student (mNr, sname, fname, company, javaSkill, fk_course) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, mNr);
             stmt.setString(2, sname);
             stmt.setString(3, fname);
             stmt.setString(4, company);
             stmt.setInt(5, javaSkill);
+            stmt.setString(6, null);
             stmt.executeUpdate();
             stmt.close();
             if (course != null) {
@@ -60,6 +61,7 @@ public class Student {
             }
         } catch (SQLException e) {
             System.err.println(this.getClass().getName() + ": " + e.getMessage());
+            e.printStackTrace();
             System.exit(0);
         }
         System.out.println("Values successfully inserted.");
@@ -143,7 +145,7 @@ public class Student {
      */
     public void editCourse(DatabaseConnector dbc, Course course) {
         String sql = "UPDATE student SET fk_course = ? WHERE mNr = ?";
-        dbc.update(sql, mNr, course.getcName());
+        dbc.update(sql, mNr, course == null ? null : course.getcName());
         this.course = course;
     }
 

@@ -19,7 +19,9 @@ public class DatabaseConnector {
     }
 
     public void connect() throws SQLException {
-        conn = DriverManager.getConnection("jdbc:sqlite:public/studentDB.db");
+        conn = DriverManager.getConnection("jdbc:sqlite:app/public/studentDB.db");
+        conn.createStatement().execute("PRAGMA foreign_keys = ON");
+
         System.out.println("Connection established.");
     }
 
