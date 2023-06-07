@@ -146,6 +146,12 @@ public class Student {
         this.course = course;
     }
 
+    public void removeCourse(DatabaseConnector dbc) {
+        String sql = "UPDATE student SET fk_course = ? WHERE mNr = ?";
+        dbc.update(sql,mNr,null);
+        this.course = null;
+    }
+
     public int getmNr() {
         return mNr;
     }
@@ -163,6 +169,9 @@ public class Student {
     }
 
     public Course getCourse() {
+        if (course == null) {
+            throw new NullPointerException("No Course");
+        }
         return course;
     }
 

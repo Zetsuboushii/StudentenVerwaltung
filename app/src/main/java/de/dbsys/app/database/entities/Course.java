@@ -84,6 +84,9 @@ public class Course {
     }
 
     public String getcName() {
+        if (cName == null) {
+            return "Empty Course";
+        }
         return cName;
     }
 
