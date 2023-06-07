@@ -7,6 +7,7 @@ import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.database.entities.Student;
 import de.dbsys.app.ui.GenericUIController;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -64,27 +65,31 @@ public class StudentFormFieldsController extends GenericUIController {
         if(!isComplete() || student == null) {
             throw new IllegalStateException("Formular ist nicht vollständig.");
         }
-        DatabaseConnector dbc = Main.getDb();
-        if(!Objects.equals(tfFirstName.getText(), student.getFname()))
-            student.editFname(dbc, tfFirstName.getText());
-        if(!Objects.equals(tfLastName.getText(), student.getSname()))
-            student.editSname(dbc, tfLastName.getText());
-        if(!Objects.equals(tfCompany.getText(), student.getCompany()))
-            student.editCompany(dbc, tfCompany.getText());
-        if(student.getJavaSkill() != slJavaExp.getValue())
-            student.editJavaSkill(dbc, (int)slJavaExp.getValue());
         try {
-            if(!Objects.equals(cbClass.getValue(), student.getCourse())) {
-                if(cbClass.getValue().getcName().equals("Kein Kurs")) {
-                    student.editCourse(dbc, null);
-                } else {
+            DatabaseConnector dbc = Main.getDb();
+            if (!Objects.equals(tfFirstName.getText(), student.getFname()))
+                student.editFname(dbc, tfFirstName.getText());
+            if (!Objects.equals(tfLastName.getText(), student.getSname()))
+                student.editSname(dbc, tfLastName.getText());
+            if (!Objects.equals(tfCompany.getText(), student.getCompany()))
+                student.editCompany(dbc, tfCompany.getText());
+            if (student.getJavaSkill() != slJavaExp.getValue())
+                student.editJavaSkill(dbc, (int) slJavaExp.getValue());
+            try {
+                if (!Objects.equals(cbClass.getValue(), student.getCourse())) {
+                    if (cbClass.getValue().getcName().equals("Kein Kurs")) {
+                        student.editCourse(dbc, null);
+                    } else {
+                        student.editCourse(dbc, cbClass.getValue());
+                    }
+                }
+            } catch (NoCourseException ignored) {
+                if (cbClass.getValue() != null) {
                     student.editCourse(dbc, cbClass.getValue());
                 }
             }
-        } catch (NoCourseException ignored) {
-            if(cbClass.getValue() != null) {
-                student.editCourse(dbc, cbClass.getValue());
-            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Ein Fehler ist beim Ändern aufgetreten.\n" + e.getMessage()).show();
         }
     }
 

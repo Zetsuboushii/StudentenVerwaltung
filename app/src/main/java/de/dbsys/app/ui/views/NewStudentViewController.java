@@ -19,12 +19,16 @@ public class NewStudentViewController extends GenericUIController {
     @FXML
     private void onSave() {
         if(!studentFormFieldsController.isComplete()) {
-            new Alert(Alert.AlertType.ERROR, "Bitte das Formular vollständig ausfüllen.").show();
+            new Alert(Alert.AlertType.WARNING, "Bitte das Formular vollständig ausfüllen.").show();
             return;
         }
         Student student = studentFormFieldsController.toNewStudent();
-        // TODO: Alert failure
-        student.createStudent(Main.getDb(), Main.getDb().getConn());
+        try {
+            student.createStudent(Main.getDb(), Main.getDb().getConn());
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Ein Fehler beim Erstellen ist aufgetreten.\n" + e.getMessage()).show();
+            return;
+        }
         stage.close();
     }
 

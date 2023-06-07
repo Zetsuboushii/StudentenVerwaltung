@@ -6,6 +6,7 @@ import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.database.entities.Student;
 import de.dbsys.app.ui.GenericUIController;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public class CourseFormFieldsController extends GenericUIController {
@@ -75,7 +77,11 @@ public class CourseFormFieldsController extends GenericUIController {
         indizes.forEach(idx -> {
             Student student = lvAssignedStudents.getItems().get(idx);
             lvAssignedStudents.getItems().add(student);
-            student.editCourse(db, course);
+            try {
+                student.editCourse(db, course);
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR, "Ein Fehler bei der Änderunge ist aufgetreten.\n"+ e.getMessage()).show();
+            }
         });
         // Remove from available students
         indizes.forEach(idx -> {
@@ -91,7 +97,11 @@ public class CourseFormFieldsController extends GenericUIController {
         // Unassign student
         indizes.forEach(idx -> {
             Student student = lvAssignedStudents.getItems().get(idx);
-            student.editCourse(db, null);
+            try {
+                student.editCourse(db, null);
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR, "Ein Fehler beim Ändern ist aufgetreten.\n" + e.getMessage()).show();
+            }
             lvAvailableStudents.getItems().add(student);
         });
         // Remove from assigned students
@@ -103,11 +113,15 @@ public class CourseFormFieldsController extends GenericUIController {
 
     private void save() {
         DatabaseConnector db = Main.getDb();
-        if (!tfRoom.getText().equals(course.getRoom())) {
-            course.editRoom(db, tfRoom.getText());
-        }
-        if (!tfCourseName.getText().equals(course.getcName())) {
-            course.editCname(db, tfCourseName.getText());
+        try {
+            if (!tfRoom.getText().equals(course.getRoom())) {
+                course.editRoom(db, tfRoom.getText());
+            }
+            if (!tfCourseName.getText().equals(course.getcName())) {
+                course.editCname(db, tfCourseName.getText());
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Ein Fehler beim Speichern ist aufgetreten.\n" + e.getMessage()).show();
         }
     }
 
