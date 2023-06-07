@@ -6,5 +6,6 @@
 }
 
 .form-label-to-field-spacing {
-    -fx-spacing: 14;
+    -fx-spacing: 25;
+    -fx-hgap: 25;
 }
