@@ -7,7 +7,9 @@ import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.database.entities.Student;
 import de.dbsys.app.ui.GenericUIController;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -50,9 +52,11 @@ public class StudentFormFieldsController extends GenericUIController {
         DatabaseCrawler crawler = new DatabaseCrawler();
         List<Course> courses = crawler.selectAllCourses(conn);
         courses.forEach(course -> cbClass.getItems().add(course));
-        try {
-            cbClass.getSelectionModel().select(student.getCourse());
-        } catch (NoCourseException ignored) {
+        if(student != null) {
+            try {
+                cbClass.getSelectionModel().select(student.getCourse());
+            } catch (NoCourseException ignored) {
+            }
         }
     }
 
@@ -89,9 +93,9 @@ public class StudentFormFieldsController extends GenericUIController {
             throw new IllegalStateException("Formular ist nicht vollständig.");
         }
         if(cbClass.getValue().getcName().equals("Kein Kurs")) {
-            return new Student(0, tfFirstName.getText(), tfLastName.getText(), tfCompany.getText(), (int) slJavaExp.getValue());
+            return new Student((int)(Math.random()*10000), tfFirstName.getText(), tfLastName.getText(), tfCompany.getText(), (int) slJavaExp.getValue());
         }
-        return new Student(0, tfFirstName.getText(), tfLastName.getText(), tfCompany.getText(), cbClass.getValue(), (int) slJavaExp.getValue());
+        return new Student((int)(Math.random()*10000), tfFirstName.getText(), tfLastName.getText(), tfCompany.getText(), cbClass.getValue(), (int) slJavaExp.getValue());
     }
 
     public boolean isComplete() {
