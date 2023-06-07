@@ -13,6 +13,7 @@ import de.dbsys.app.database.DatabaseConnector;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Course {
 
@@ -115,6 +116,19 @@ public class Course {
 
         return l;
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return Objects.equals(cName, course.cName) && Objects.equals(room, course.room);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cName, room);
     }
 
     @Override

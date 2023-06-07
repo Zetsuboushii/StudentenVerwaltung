@@ -12,6 +12,7 @@ import de.dbsys.app.database.DatabaseConnector;
 import de.dbsys.app.database.NoCourseException;
 
 import java.sql.*;
+import java.util.Objects;
 
 public class Student {
 
@@ -180,6 +181,20 @@ public class Student {
 
     public int getJavaSkill() {
         return javaSkill;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return mNr == student.mNr && javaSkill == student.javaSkill && Objects.equals(fname, student.fname) && Objects.equals(sname, student.sname) && Objects.equals(company, student.company) && Objects.equals(course, student.course);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mNr, fname, sname, company, course, javaSkill);
     }
 
     @Override
