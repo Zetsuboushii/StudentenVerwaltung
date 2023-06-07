@@ -20,7 +20,42 @@ public class DatabaseConnector {
 
     public void connect() throws SQLException {
         conn = DriverManager.getConnection("jdbc:sqlite:app/public/studentDB.db");
+
+        String courseDDL =
+                """
+                create table if not exists course
+                (
+                    cName text not null
+                        constraint course_pk
+                            primary key
+                        unique,
+                    room  text
+                );
+                """;
+        String studentDDL =
+                """
+                         create table if not exists student
+                        (
+                            mNr       integer not null
+                                constraint student_pk
+                                    primary key
+                                unique,
+                            sname     text    not null,
+                            fname     text    not null,
+                            company   text    not null,
+                            fk_course text default null
+                                constraint student_course_cName_fk
+                                    references course
+                                    on update cascade on delete set null,
+                            javaSkill integer
+                        );
+                """;
+
+
+
         conn.createStatement().execute("PRAGMA foreign_keys = ON");
+        conn.createStatement().execute(courseDDL);
+        conn.createStatement().execute(studentDDL);
 
         System.out.println("Connection established.");
     }
