@@ -9,6 +9,7 @@ Author:             Luke Grasser
 package de.dbsys.app.database.entities;
 
 import de.dbsys.app.database.DatabaseConnector;
+import de.dbsys.app.database.NoCourseException;
 
 import java.sql.*;
 
@@ -168,9 +169,9 @@ public class Student {
         return company;
     }
 
-    public Course getCourse() {
+    public Course getCourse() throws NoCourseException {
         if (course == null) {
-            throw new NullPointerException("No Course");
+            throw new NoCourseException();
         }
         return course;
     }
