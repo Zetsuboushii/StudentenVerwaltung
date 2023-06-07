@@ -116,4 +116,12 @@ public class Course {
         return l;
 
     }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "cName='" + cName + '\'' +
+                ", room='" + room + '\'' +
+                '}';
+    }
 }

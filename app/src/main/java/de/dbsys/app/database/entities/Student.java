@@ -181,4 +181,13 @@ public class Student {
     public int getJavaSkill() {
         return javaSkill;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "mNr=" + mNr +
+                ", fname='" + fname + '\'' +
+                ", sname='" + sname +
+                '}';
+    }
 }
