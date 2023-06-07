@@ -34,8 +34,7 @@ public class Course {
      *
      * @param conn Established DB connection
      */
-    public void createCourse(DatabaseConnector dbc, Connection conn) {
-        try {
+    public void createCourse(DatabaseConnector dbc, Connection conn) throws SQLException {
             String sql = "INSERT INTO course (cName) VALUES (?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, cName);
@@ -44,10 +43,6 @@ public class Course {
             if (room != null) {
                 this.editRoom(dbc, room);
             }
-        } catch (SQLException e) {
-            System.err.println(this.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
         System.out.println("Values successfully inserted.");
     }
 
@@ -55,7 +50,7 @@ public class Course {
      * Deletes Database entry in table course
      * @param dbc
      */
-    public void deleteCourse(DatabaseConnector dbc) {
+    public void deleteCourse(DatabaseConnector dbc) throws SQLException{
         String sql = "DELETE FROM course WHERE cname = ?";
         dbc.delete(sql, this.cName);
     }
@@ -66,7 +61,7 @@ public class Course {
      * @param dbc
      * @param cName
      */
-    public void editCname(DatabaseConnector dbc, String cName) {
+    public void editCname(DatabaseConnector dbc, String cName) throws SQLException {
         String sql = "UPDATE course SET cName = ? WHERE cName IS ?";
         dbc.update(sql, this.cName, cName);
         this.cName = cName;
@@ -78,7 +73,7 @@ public class Course {
      * @param dbc
      * @param room
      */
-    public void editRoom(DatabaseConnector dbc, String room) {
+    public void editRoom(DatabaseConnector dbc, String room) throws SQLException {
         String sql = "UPDATE course SET room = ? WHERE cName IS ?";
 
         this.room = room;

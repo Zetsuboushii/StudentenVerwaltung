@@ -68,8 +68,7 @@ public class DatabaseConnector {
         }
     }
 
-    public boolean update(String sql, Object pk, Object val) {
-        try {
+    public boolean update(String sql, Object pk, Object val) throws SQLException {
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             if (val instanceof String) {
@@ -86,16 +85,11 @@ public class DatabaseConnector {
 
             stmt.executeUpdate();
             stmt.close();
-        } catch (SQLException e) {
-            System.err.println(this.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
         System.out.println("Values updated.");
         return true;
     }
 
-    public boolean delete(String sql, Object pk) {
-        try {
+    public boolean delete(String sql, Object pk) throws SQLException {
             PreparedStatement stmt = conn.prepareStatement(sql);
             if (pk instanceof Integer) {
                 stmt.setInt(1, (int) pk);
@@ -104,10 +98,6 @@ public class DatabaseConnector {
             }
             stmt.executeUpdate();
             stmt.close();
-        } catch (SQLException e) {
-            System.err.println(this.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
         System.out.println("Student successfully deleted.");
         return true;
     }
