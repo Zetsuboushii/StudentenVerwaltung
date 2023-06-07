@@ -198,10 +198,6 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "mNr=" + mNr +
-                ", fname='" + fname + '\'' +
-                ", sname='" + sname +
-                '}';
+        return fname + " " + sname;
     }
 }

@@ -128,9 +128,6 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" +
-                "cName='" + cName + '\'' +
-                ", room='" + room + '\'' +
-                '}';
+        return cName;
     }
 }
