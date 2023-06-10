@@ -11,12 +11,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class CourseFormFieldsController extends GenericUIController {
@@ -33,6 +31,13 @@ public class CourseFormFieldsController extends GenericUIController {
     private ListView<Student> lvAssignedStudents;
     public Pair<String, String> getCourseData() {
         return new Pair<>(tfCourseName.getText(), tfRoom.getText());
+    }
+    
+    public void populate() throws Exception {
+        if(course != null) {
+            setCourseData();
+        }
+        loadStudents();
     }
 
     public void setCourseData() {
@@ -55,7 +60,12 @@ public class CourseFormFieldsController extends GenericUIController {
         Connection con = Main.getDb().getConn();
         DatabaseCrawler crawler = new DatabaseCrawler();
         List<Student> allStudents = crawler.selectAllStudents(con);
-        List<Student> assignedStudents = course.getStudents(con);
+        List<Student> assignedStudents;
+        if(course != null) {
+            assignedStudents = course.getStudents(con);
+        } else {
+            assignedStudents = List.of();
+        }
         List<Student> availableStudents = allStudents.stream()
                 .filter(s -> !assignedStudents.contains(s))
                 .toList();
@@ -78,10 +88,12 @@ public class CourseFormFieldsController extends GenericUIController {
         indizes.forEach(idx -> {
             Student student = lvAvailableStudents.getItems().get(idx);
             lvAssignedStudents.getItems().add(student);
-            try {
-                student.editCourse(db, course);
-            } catch (SQLException e) {
-                new Alert(Alert.AlertType.ERROR, "Ein Fehler bei der Änderunge ist aufgetreten.\n"+ e.getMessage()).show();
+            if(course != null) {
+                try {
+                    student.editCourse(db, course);
+                } catch (SQLException e) {
+                    new Alert(Alert.AlertType.ERROR, "Ein Fehler bei der Änderunge ist aufgetreten.\n" + e.getMessage()).show();
+                }
             }
         });
         // Remove from available students
@@ -98,10 +110,12 @@ public class CourseFormFieldsController extends GenericUIController {
         // Unassign student
         indizes.forEach(idx -> {
             Student student = lvAssignedStudents.getItems().get(idx);
-            try {
-                student.editCourse(db, null);
-            } catch (SQLException e) {
-                new Alert(Alert.AlertType.ERROR, "Ein Fehler beim Ändern ist aufgetreten.\n" + e.getMessage()).show();
+            if(course != null) {
+                try {
+                    student.editCourse(db, null);
+                } catch (SQLException e) {
+                    new Alert(Alert.AlertType.ERROR, "Ein Fehler beim Ändern ist aufgetreten.\n" + e.getMessage()).show();
+                }
             }
             lvAvailableStudents.getItems().add(student);
         });
@@ -124,6 +138,30 @@ public class CourseFormFieldsController extends GenericUIController {
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Ein Fehler beim Speichern ist aufgetreten.\n" + e.getMessage()).show();
         }
+    }
+
+    public Course toNewCourse() {
+        if(!isComplete()) {
+            throw new IllegalStateException("Form incomplete");
+        }
+        return new Course(
+                tfCourseName.getText(),
+                tfRoom.getText()
+        );
+    }
+
+    public void assignAllStudents(Course course) throws SQLException {
+        if(!isComplete() || course == null) {
+            throw new IllegalStateException("Form incomplete");
+        }
+        for(Student s : lvAssignedStudents.getItems()) {
+            s.editCourse(Main.getDb(), course);
+        }
+    }
+
+    public boolean isComplete() {
+        return tfCourseName.getText() != null && !tfCourseName.getText().isBlank()
+                && tfRoom.getText() != null && !tfRoom.getText().isBlank();
     }
 
     @Override

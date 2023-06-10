@@ -51,7 +51,11 @@ public class CourseListViewController extends GenericUIController {
                 (ListChangeListener<Course>) c -> onSelectionChanged()
         );
         cbSort.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> lvElements.getItems().sort(newValue)
+                (observable, oldValue, newValue) -> {
+                    if(newValue != null) {
+                        lvElements.getItems().sort(newValue);
+                    }
+                }
         );
         editCourseViewController.setVisible(false);
         try {
