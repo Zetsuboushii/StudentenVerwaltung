@@ -66,10 +66,16 @@ public class StudentFormFieldsController extends GenericUIController {
         courses.forEach(course -> cbClass.getItems().add(course));
         if(student != null) {
             try {
+                // TODO: i shouldn't need this (if the database worked...)
+                if(student.getCourse() == null || Objects.equals(student.getCourse().getcName(), "Empty Course")) {
+                    throw new NoCourseException();
+                }
                 cbClass.getSelectionModel().select(student.getCourse());
+                return;
             } catch (NoCourseException ignored) {
             }
         }
+        cbClass.getSelectionModel().select(0);
     }
 
     public void updateStudent() throws IllegalStateException {

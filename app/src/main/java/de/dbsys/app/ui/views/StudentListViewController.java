@@ -7,6 +7,7 @@ import de.dbsys.app.ui.GenericUIController;
 import de.dbsys.app.ui.utils.comparators.FirstNameStudentComparator;
 import de.dbsys.app.ui.utils.comparators.LastNameStudentComparator;
 import de.dbsys.app.ui.utils.filters.CourseStudentFilter;
+import de.dbsys.app.ui.utils.filters.NoCourseStudentFilter;
 import de.dbsys.app.ui.utils.filters.NoneStudentFilter;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
@@ -57,6 +58,7 @@ public class StudentListViewController extends GenericUIController {
 
         cbFilter.getItems().clear();
         cbFilter.getItems().add(new NoneStudentFilter());
+        cbFilter.getItems().add(new NoCourseStudentFilter());
         List<Course> courses = new DatabaseCrawler().selectAllCourses(Main.getDb().getConn());
         cbFilter.getItems().addAll(courses.stream().map(CourseStudentFilter::new).toList());
         cbFilter.getSelectionModel().select(0);
