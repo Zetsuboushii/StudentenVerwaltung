@@ -29,6 +29,7 @@ public class NewStudentViewController extends GenericUIController {
             new Alert(Alert.AlertType.ERROR, "Ein Fehler beim Erstellen ist aufgetreten.\n" + e.getMessage()).show();
             return;
         }
+        Main.getMainController().reload();
         stage.close();
     }
 

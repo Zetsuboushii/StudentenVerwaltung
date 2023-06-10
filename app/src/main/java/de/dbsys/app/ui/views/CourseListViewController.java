@@ -19,7 +19,6 @@ import java.util.List;
 public class CourseListViewController extends GenericUIController {
     @FXML
     private ComboBox<Comparator<Course>> cbSort;
-    @FXML private ComboBox<String> cbFilter;
     @FXML private ListView<Course> lvElements;
     @FXML private EditCourseViewController editCourseViewController;
 
@@ -27,6 +26,14 @@ public class CourseListViewController extends GenericUIController {
             new NameCourseComparator(),
             new RoomCourseComparator()
     );
+
+    public void reload() {
+        try {
+            populate();
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Kurse.\n" + e.getMessage()).show();
+        }
+    }
 
     public void populate() throws SQLException {
         cbSort.getItems().clear();

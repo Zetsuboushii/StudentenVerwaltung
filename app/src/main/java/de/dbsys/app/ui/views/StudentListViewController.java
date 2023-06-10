@@ -33,9 +33,23 @@ public class StudentListViewController extends GenericUIController {
             new LastNameStudentComparator()
     );
 
+    public void reload() {
+        try {
+            populate();
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Studenten.\n" + e.getMessage()).show();
+        }
+    }
+
 
     public void populate() throws SQLException {
         students = new DatabaseCrawler().selectAllStudents(Main.getDb().getConn());
+
+        try {
+            editStudentViewController.setVisible(false);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Fehler beim aktualisiren der Elemente.\n" + e.getMessage()).show();
+        }
 
         cbSort.getItems().clear();
         cbSort.getItems().addAll(comparators);
@@ -59,13 +73,18 @@ public class StudentListViewController extends GenericUIController {
                 (ListChangeListener<Student>) c -> onSelectionChanged()
         );
         cbSort.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> lvElements.getItems().sort(newValue)
+                (observable, oldValue, newValue) -> {
+                    if(newValue != null)
+                        lvElements.getItems().sort(newValue);
+                }
         );
         cbFilter.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    lvElements.getItems().clear();
-                    lvElements.getItems().addAll(students.stream().filter(cbFilter.getSelectionModel().getSelectedItem()).toList());
-                    lvElements.getItems().sort(cbSort.getSelectionModel().getSelectedItem());
+                    if(newValue != null && cbSort.getSelectionModel().getSelectedItem() != null) {
+                        lvElements.getItems().clear();
+                        lvElements.getItems().addAll(students.stream().filter(newValue).toList());
+                        lvElements.getItems().sort(cbSort.getSelectionModel().getSelectedItem());
+                    }
                 }
         );
         editStudentViewController.setVisible(false);

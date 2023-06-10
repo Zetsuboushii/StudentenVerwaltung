@@ -27,6 +27,11 @@ public class MainController extends GenericUIController {
         courseListViewController.onAfterShow(stage);
     }
 
+    public void reload() {
+        studentListViewController.reload();
+        courseListViewController.reload();
+    }
+
     private void registerKeyboardShortcuts() {
         registerNewStudentKeyboardShortcut();
         registerNewCourseKeyboardShortcut();

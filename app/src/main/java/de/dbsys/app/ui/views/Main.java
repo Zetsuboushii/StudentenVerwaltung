@@ -8,15 +8,20 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 
 public class Main extends Application {
-    public static DatabaseConnector db;
+    private static DatabaseConnector db;
+    private static MainController mainController;
 
     @Override
     public void start(Stage stage) throws Exception {
-        UILoader.showFXML("main", "Studierenden-Verwaltung");
+        mainController = UILoader.showFXML("main", "Studierenden-Verwaltung");
     }
 
     public static DatabaseConnector getDb() {
         return db;
+    }
+
+    public static MainController getMainController() {
+        return mainController;
     }
 
     public static void main(String[] args) throws SQLException {

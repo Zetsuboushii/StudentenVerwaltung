@@ -46,6 +46,9 @@ public class StudentFormFieldsController extends GenericUIController {
     }
 
     private int getCourseIdxInComboBox(List<Course> courses) {
+        if(student == null) {
+            return -1;
+        }
         try {
             return courses.indexOf(student.getCourse()) + 1; // for 'Kein Kurs'
         } catch (NoCourseException exc) {

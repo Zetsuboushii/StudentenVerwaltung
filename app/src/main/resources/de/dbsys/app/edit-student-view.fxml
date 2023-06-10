@@ -8,5 +8,5 @@
             fx:controller="de.dbsys.app.ui.views.EditStudentViewController"
             prefHeight="400.0" prefWidth="600.0" styleClass="form-label-to-field-spacing,form-vbox" stylesheets="@forms.css,@main.css">
     <fx:include fx:id="studentFormFields" source="student-form-fields.fxml" />
-    <Button text="Speichern" onAction="#onSave" />
+    <Button fx:id="btSave" text="Speichern" onAction="#onSave" />
 </VBox>
