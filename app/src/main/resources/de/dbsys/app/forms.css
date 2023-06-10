@@ -9,3 +9,19 @@
     -fx-spacing: 25;
     -fx-hgap: 25;
 }
+
+.form-students-header {
+    -fx-padding: 20 0 0 0 ;
+}
+
+.button.invisible {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+.button.invisible:hover > .icon {
+    -fx-icon-color: #444444
+}
+.button.invisible:pressed > .icon {
+    -fx-icon-color: #aaaaaa
+}
