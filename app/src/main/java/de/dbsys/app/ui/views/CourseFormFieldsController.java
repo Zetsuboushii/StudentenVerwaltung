@@ -5,6 +5,9 @@ import de.dbsys.app.database.DatabaseCrawler;
 import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.database.entities.Student;
 import de.dbsys.app.ui.GenericUIController;
+import de.dbsys.app.ui.utils.comparators.FirstNameStudentComparator;
+import de.dbsys.app.ui.utils.comparators.NoCourseFirstStudentComparator;
+import de.dbsys.app.ui.utils.ui.StudentsListCellFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
@@ -62,13 +65,15 @@ public class CourseFormFieldsController extends GenericUIController {
         List<Student> allStudents = crawler.selectAllStudents(con);
         List<Student> assignedStudents;
         if(course != null) {
-            assignedStudents = course.getStudents(con);
+            assignedStudents = course.getStudents(con).stream().sorted(new FirstNameStudentComparator()).toList();
         } else {
             assignedStudents = List.of();
         }
         List<Student> availableStudents = allStudents.stream()
                 .filter(s -> !assignedStudents.contains(s))
+                .sorted(new NoCourseFirstStudentComparator())
                 .toList();
+        lvAvailableStudents.setCellFactory(new StudentsListCellFactory());
         lvAvailableStudents.getItems().addAll(availableStudents);
         lvAssignedStudents.getItems().addAll(assignedStudents);
     }
