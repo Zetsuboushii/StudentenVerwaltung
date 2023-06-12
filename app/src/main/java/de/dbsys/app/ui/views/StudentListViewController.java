@@ -9,6 +9,7 @@ import de.dbsys.app.ui.utils.comparators.LastNameStudentComparator;
 import de.dbsys.app.ui.utils.filters.CourseStudentFilter;
 import de.dbsys.app.ui.utils.filters.NoCourseStudentFilter;
 import de.dbsys.app.ui.utils.filters.NoneStudentFilter;
+import de.dbsys.app.ui.utils.ui.UiStyler;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -52,10 +53,12 @@ public class StudentListViewController extends GenericUIController {
             new Alert(Alert.AlertType.ERROR, "Fehler beim aktualisiren der Elemente.\n" + e.getMessage()).show();
         }
 
+        UiStyler.makeSortBox(cbSort);
         cbSort.getItems().clear();
         cbSort.getItems().addAll(comparators);
         cbSort.getSelectionModel().select(0);
 
+        UiStyler.makeFilterBox(cbFilter);
         cbFilter.getItems().clear();
         cbFilter.getItems().add(new NoneStudentFilter());
         cbFilter.getItems().add(new NoCourseStudentFilter());

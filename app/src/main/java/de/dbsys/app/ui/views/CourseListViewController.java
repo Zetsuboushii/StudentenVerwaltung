@@ -5,11 +5,10 @@ import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.ui.GenericUIController;
 import de.dbsys.app.ui.utils.comparators.NameCourseComparator;
 import de.dbsys.app.ui.utils.comparators.RoomCourseComparator;
+import de.dbsys.app.ui.utils.ui.UiStyler;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
@@ -39,6 +38,7 @@ public class CourseListViewController extends GenericUIController {
         cbSort.getItems().clear();
         cbSort.getItems().addAll(comparators);
         cbSort.getSelectionModel().select(0);
+        UiStyler.makeSortBox(cbSort);
         List<Course> courses = new DatabaseCrawler().selectAllCourses(Main.getDb().getConn());
         lvElements.getItems().clear();
         lvElements.getItems().addAll(courses);
