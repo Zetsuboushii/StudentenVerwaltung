@@ -7,7 +7,14 @@
 <VBox fx:id="root" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="de.dbsys.app.ui.views.CourseFormFieldsController" styleClass="form-vbox" stylesheets="@forms.css">
-    <GridPane styleClass="form-label-to-field-spacing">
+    <GridPane styleClass="form-label-to-field-spacing" VBox.vgrow="ALWAYS">
+        <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints vgrow="ALWAYS" />
+        </rowConstraints>
         <Label GridPane.columnIndex="0" GridPane.rowIndex="0" text="Name" />
         <TextField GridPane.columnIndex="2" GridPane.rowIndex="0" promptText="Name" fx:id="tfCourseName" />
         <Label GridPane.columnIndex="0" GridPane.rowIndex="1" text="Raum" />
@@ -21,11 +28,17 @@
                 <graphic>
                     <FontIcon iconLiteral="far-caret-square-right:32" styleClass="icon" />
                 </graphic>
+                <tooltip>
+                    <Tooltip text="Student zuweisen" />
+                </tooltip>
             </Button>
             <Button fx:id="btnUnassign" onAction="#onUnassign" styleClass="invisible" >
                 <graphic>
                     <FontIcon iconLiteral="far-caret-square-left:32" styleClass="icon" />
                 </graphic>
+                <tooltip>
+                    <Tooltip text="Student entfernen" />
+                </tooltip>
             </Button>
         </VBox>
     </GridPane>

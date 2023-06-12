@@ -4,10 +4,13 @@ import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.ui.GenericUIController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
 
 public class EditCourseViewController extends GenericUIController {
+    @FXML
+    private VBox root;
     @FXML
     private CourseFormFieldsController courseFormFieldsController;
     @FXML
@@ -31,5 +34,11 @@ public class EditCourseViewController extends GenericUIController {
 
     public void setCourse(Course course) {
         courseFormFieldsController.setCourse(course);
+    }
+
+    @Override
+    public void setRootVisible(boolean visible) {
+        super.setRootVisible(visible);
+        root.setVisible(visible);
     }
 }

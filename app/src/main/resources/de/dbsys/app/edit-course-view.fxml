@@ -3,10 +3,10 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.control.Button?>
-<VBox xmlns="http://javafx.com/javafx"
+<VBox fx:id="root" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="de.dbsys.app.ui.views.EditCourseViewController">
-    <fx:include source="course-form-fields.fxml" fx:id="courseFormFields" />
+    <fx:include source="course-form-fields.fxml" fx:id="courseFormFields" VBox.vgrow="ALWAYS" />
     <HBox>
         <Button text="Speichern" onAction="#onSave" />
         <Button text="Löschen" onAction="#onDelete" />
