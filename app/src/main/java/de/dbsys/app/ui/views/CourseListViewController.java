@@ -5,6 +5,7 @@ import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.ui.GenericUIController;
 import de.dbsys.app.ui.utils.comparators.NameCourseComparator;
 import de.dbsys.app.ui.utils.comparators.RoomCourseComparator;
+import de.dbsys.app.ui.utils.ui.CourseListCellFactory;
 import de.dbsys.app.ui.utils.ui.UiStyler;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
@@ -40,6 +41,8 @@ public class CourseListViewController extends GenericUIController {
         cbSort.getSelectionModel().select(0);
         UiStyler.makeSortBox(cbSort);
         List<Course> courses = new DatabaseCrawler().selectAllCourses(Main.getDb().getConn());
+
+        lvElements.setCellFactory(new CourseListCellFactory());
         lvElements.getItems().clear();
         lvElements.getItems().addAll(courses);
     }

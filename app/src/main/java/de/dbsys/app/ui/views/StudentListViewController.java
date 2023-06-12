@@ -9,6 +9,7 @@ import de.dbsys.app.ui.utils.comparators.LastNameStudentComparator;
 import de.dbsys.app.ui.utils.filters.CourseStudentFilter;
 import de.dbsys.app.ui.utils.filters.NoCourseStudentFilter;
 import de.dbsys.app.ui.utils.filters.NoneStudentFilter;
+import de.dbsys.app.ui.utils.ui.StudentsListCellFactory;
 import de.dbsys.app.ui.utils.ui.UiStyler;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
@@ -66,6 +67,7 @@ public class StudentListViewController extends GenericUIController {
         cbFilter.getItems().addAll(courses.stream().map(CourseStudentFilter::new).toList());
         cbFilter.getSelectionModel().select(0);
 
+        lvElements.setCellFactory(new StudentsListCellFactory(false));
         lvElements.getItems().clear();
         lvElements.getItems().addAll(students.stream().filter(cbFilter.getSelectionModel().getSelectedItem()).toList());
         lvElements.getItems().sort(cbSort.getSelectionModel().getSelectedItem());

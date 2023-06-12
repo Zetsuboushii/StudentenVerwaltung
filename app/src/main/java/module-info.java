@@ -2,6 +2,8 @@ module de.dbsys.app {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires org.kordamp.ikonli.javafx;
+    requires org.kordamp.ikonli.fontawesome5;
 
 
     opens de.dbsys.app to javafx.fxml;

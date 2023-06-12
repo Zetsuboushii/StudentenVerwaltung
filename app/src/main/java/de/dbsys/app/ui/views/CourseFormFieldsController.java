@@ -73,8 +73,9 @@ public class CourseFormFieldsController extends GenericUIController {
                 .filter(s -> !assignedStudents.contains(s))
                 .sorted(new NoCourseFirstStudentComparator())
                 .toList();
-        lvAvailableStudents.setCellFactory(new StudentsListCellFactory());
+        lvAvailableStudents.setCellFactory(new StudentsListCellFactory(true));
         lvAvailableStudents.getItems().addAll(availableStudents);
+        lvAssignedStudents.setCellFactory(new StudentsListCellFactory(false));
         lvAssignedStudents.getItems().addAll(assignedStudents);
     }
 
