@@ -12,7 +12,7 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import java.util.Objects;
 
 public class StudentsListCellFactory implements Callback<ListView<Student>, ListCell<Student>> {
-    private boolean indicateCourse;
+    private final boolean indicateCourse;
 
     public StudentsListCellFactory(boolean indicateCourse) {
         this.indicateCourse = indicateCourse;
@@ -26,6 +26,7 @@ public class StudentsListCellFactory implements Callback<ListView<Student>, List
                 super.updateItem(student, empty);
                 if (empty || student == null) {
                     setText(null);
+                    setGraphic(null);
                 } else {
                     FontIcon icon = new FontIcon("fas-user");
                     setGraphic(icon);
