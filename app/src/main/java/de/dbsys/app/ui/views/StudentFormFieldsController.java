@@ -110,6 +110,17 @@ public class StudentFormFieldsController extends GenericUIController {
         }
     }
 
+    public void deleteStudent() throws SQLException {
+        if(student == null) {
+            throw new IllegalStateException("Formular ist nicht vollständig.");
+        }
+        try {
+            student.deleteStudent(Main.getDb());
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Ein Fehler ist beim Löschen aufgetreten.\n" + e.getMessage()).show();
+        }
+    }
+
     public Student toNewStudent() throws IllegalStateException {
         if(!isComplete()) {
             throw new IllegalStateException("Formular ist nicht vollständig.");
