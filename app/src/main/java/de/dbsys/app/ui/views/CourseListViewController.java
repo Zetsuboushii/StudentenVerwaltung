@@ -3,6 +3,7 @@ package de.dbsys.app.ui.views;
 import de.dbsys.app.database.DatabaseCrawler;
 import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.ui.GenericUIController;
+import de.dbsys.app.ui.utils.comparators.DHBWRoomCourseComparator;
 import de.dbsys.app.ui.utils.comparators.NameCourseComparator;
 import de.dbsys.app.ui.utils.comparators.RoomCourseComparator;
 import de.dbsys.app.ui.utils.ui.CourseListCellFactory;
@@ -24,7 +25,8 @@ public class CourseListViewController extends GenericUIController {
 
     private final List<Comparator<Course>> comparators = List.of(
             new NameCourseComparator(),
-            new RoomCourseComparator()
+            new RoomCourseComparator(),
+            new DHBWRoomCourseComparator()
     );
 
     public void reload() {
