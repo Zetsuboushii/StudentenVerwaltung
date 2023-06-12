@@ -164,6 +164,13 @@ public class CourseFormFieldsController extends GenericUIController {
                 && tfRoom.getText() != null && !tfRoom.getText().isBlank();
     }
 
+    public void deleteCourse() throws SQLException {
+        if(course == null) {
+            throw new IllegalStateException("Form incomplete");
+        }
+        course.deleteCourse(Main.getDb());
+    }
+
     @Override
     public void setRootVisible(boolean visible) {
         root.setVisible(visible);
