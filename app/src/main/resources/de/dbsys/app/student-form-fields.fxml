@@ -5,8 +5,7 @@
 
 <VBox fx:id="root" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="de.dbsys.app.ui.views.StudentFormFieldsController"
-            prefHeight="400.0" prefWidth="600.0" stylesheets="@forms.css">
+            fx:controller="de.dbsys.app.ui.views.StudentFormFieldsController" stylesheets="@forms.css">
     <GridPane styleClass="form-label-to-field-spacing">
         <Label GridPane.columnIndex="0" GridPane.rowIndex="0" text="Vorname" />
         <Label GridPane.columnIndex="0" GridPane.rowIndex="1" text="Nachname" />

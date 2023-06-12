@@ -6,8 +6,8 @@
 }
 
 .form-label-to-field-spacing {
-    -fx-spacing: 25;
-    -fx-hgap: 25;
+    -fx-spacing: 5;
+    -fx-hgap: 5;
 }
 
 .form-students-header {
