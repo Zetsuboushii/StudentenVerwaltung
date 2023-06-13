@@ -35,6 +35,9 @@ public class StudentListViewController extends GenericUIController {
             new LastNameStudentComparator()
     );
 
+    /**
+     * Reloads the list view with all students from the database.
+     */
     public void reload() {
         try {
             populate();
@@ -44,7 +47,24 @@ public class StudentListViewController extends GenericUIController {
     }
 
 
+    /**
+     * Populates the list view with all students from the database.
+     * @throws SQLException if an error occurs while querying the database
+     */
     public void populate() throws SQLException {
+        loadStudents();
+
+        populateSortBox();
+        populateFilterBox();
+
+        populateList();
+    }
+
+    /**
+     * Populates the list view with all students from the database.
+     * @throws SQLException if an error occurs while querying the database
+     */
+    private void loadStudents() throws SQLException {
         students = new DatabaseCrawler().selectAllStudents(Main.getDb().getConn());
 
         try {
@@ -52,12 +72,23 @@ public class StudentListViewController extends GenericUIController {
         } catch (Exception e) {
             handleException(e, "Fehler beim Aktualisieren der Elemente: ");
         }
+    }
 
+    /**
+     * Populates the sort box with all comparators.
+     */
+    private void populateSortBox() {
         UiStyler.makeSortBox(cbSort);
         cbSort.getItems().clear();
         cbSort.getItems().addAll(comparators);
         cbSort.getSelectionModel().select(0);
+    }
 
+    /**
+     * Populates the filter box with all filters.
+     * @throws SQLException if an error occurs while querying the courses for filters
+     */
+    private void populateFilterBox() throws SQLException {
         UiStyler.makeFilterBox(cbFilter);
         cbFilter.getItems().clear();
         cbFilter.getItems().add(new NoneStudentFilter());
@@ -65,7 +96,12 @@ public class StudentListViewController extends GenericUIController {
         List<Course> courses = new DatabaseCrawler().selectAllCourses(Main.getDb().getConn());
         cbFilter.getItems().addAll(courses.stream().map(CourseStudentFilter::new).toList());
         cbFilter.getSelectionModel().select(0);
+    }
 
+    /**
+     * Populates the list view with all students.
+     */
+    private void populateList() {
         lvElements.setCellFactory(new StudentsListCellFactory(false));
         lvElements.getItems().clear();
         lvElements.getItems().addAll(students.stream().filter(cbFilter.getSelectionModel().getSelectedItem()).toList());
@@ -102,6 +138,9 @@ public class StudentListViewController extends GenericUIController {
 
     }
 
+    /**
+     * Sets the selected student in the edit student view and shows or hides it appropriately.
+     */
     private void onSelectionChanged() {
         Student student = lvElements.getSelectionModel().getSelectedItem();
         if(student == null) {

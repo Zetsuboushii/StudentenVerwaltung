@@ -34,6 +34,10 @@ public class StudentFormFieldsController extends GenericUIController {
 
     private Student student;
 
+    /**
+     * Loads all required data from the database and populates form fields if a student is set.
+     * @throws SQLException if an error occurs while loading data from the database
+     */
     public void populate() throws SQLException {
         populateCourses();
         if (student != null) {
@@ -44,24 +48,17 @@ public class StudentFormFieldsController extends GenericUIController {
         }
     }
 
-    private int getCourseIdxInComboBox(List<Course> courses) {
-        if(student == null) {
-            return -1;
-        }
-        try {
-            return courses.indexOf(student.getCourse()) + 1; // for 'Kein Kurs'
-        } catch (NoCourseException exc) {
-            return 0;
-        }
-    }
-
+    /**
+     * Loads all courses from the database and populates the course combobox, selecting the appropriate course.
+     * @throws SQLException if an error occurs while loading data from the database
+     */
     public void populateCourses() throws SQLException {
         cbClass.getItems().clear();
         cbClass.getItems().add(new Course("Kein Kurs"));
+        cbClass.getSelectionModel().select(0);
         Connection conn = Main.getDb().getConn();
         DatabaseCrawler crawler = new DatabaseCrawler();
         List<Course> courses = crawler.selectAllCourses(conn);
-        cbClass.getSelectionModel().select(getCourseIdxInComboBox(courses));
         courses.forEach(course -> cbClass.getItems().add(course));
         if(student != null) {
             try {
@@ -77,6 +74,10 @@ public class StudentFormFieldsController extends GenericUIController {
         cbClass.getSelectionModel().select(0);
     }
 
+    /**
+     * Updates the student in the database with all changes values.
+     * @throws IllegalStateException if the form is incomplete or no student is set
+     */
     public void updateStudent() throws IllegalStateException {
         if(!isComplete() || student == null) {
             throw new IllegalStateException("Formular ist nicht vollständig.");
@@ -109,6 +110,10 @@ public class StudentFormFieldsController extends GenericUIController {
         }
     }
 
+    /**
+     * Deletes the student from the database.
+     * @throws IllegalStateException if no student is set
+     */
     public void deleteStudent() throws SQLException {
         if(student == null) {
             throw new IllegalStateException("Formular ist nicht vollständig.");
@@ -116,6 +121,11 @@ public class StudentFormFieldsController extends GenericUIController {
         student.deleteStudent(Main.getDb());
     }
 
+    /**
+     * Creates a new student with all values from the form.
+     * @return the new student
+     * @throws IllegalStateException if the form is incomplete
+     */
     public Student toNewStudent() throws IllegalStateException {
         if(!isComplete()) {
             throw new IllegalStateException("Formular ist nicht vollständig.");
@@ -126,6 +136,10 @@ public class StudentFormFieldsController extends GenericUIController {
         return new Student((int)(Math.random()*10000), tfFirstName.getText(), tfLastName.getText(), tfCompany.getText(), cbClass.getValue(), (int) slJavaExp.getValue());
     }
 
+    /**
+     * Checks if the form is complete.
+     * @return true if the form is complete, false otherwise
+     */
     public boolean isComplete() {
         return
                 tfFirstName.getText() != null && !tfFirstName.getText().isEmpty()
