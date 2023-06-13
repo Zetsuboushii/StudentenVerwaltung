@@ -140,6 +140,7 @@ public class StudentFormFieldsController extends GenericUIController {
      * Checks if the form is complete.
      * @return true if the form is complete, false otherwise
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isComplete() {
         return
                 tfFirstName.getText() != null && !tfFirstName.getText().isEmpty()

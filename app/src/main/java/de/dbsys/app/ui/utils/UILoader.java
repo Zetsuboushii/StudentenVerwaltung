@@ -10,7 +10,7 @@ import java.net.URL;
 
 public class UILoader {
     /**
-     * Gets the FXMLLoader for the given fxml file..
+     * Gets the FXMLLoader for the given fxml filer.
      * @param fxmlPath The path to the fxml file from the resources directory without the file extension.
      * @return The FXMLLoader.
      */

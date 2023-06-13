@@ -13,7 +13,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.util.Pair;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -184,6 +183,7 @@ public class CourseFormFieldsController extends GenericUIController {
      * Checks if the form is complete.
      * @return True if the form is complete, false otherwise.
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isComplete() {
         return tfCourseName.getText() != null && !tfCourseName.getText().isBlank()
                 && tfRoom.getText() != null && !tfRoom.getText().isBlank();
