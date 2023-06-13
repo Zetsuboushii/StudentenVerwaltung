@@ -15,18 +15,6 @@ public class MainController extends GenericUIController {
     @FXML private StudentListViewController studentListViewController;
     @FXML private CourseListViewController courseListViewController;
 
-    @Override
-    public void onBeforeShow(Stage stage) {
-        registerKeyboardShortcuts();
-    }
-
-    @Override
-    public void onAfterShow(Stage stage) throws Exception {
-        super.onAfterShow(stage);
-        studentListViewController.onAfterShow(stage);
-        courseListViewController.onAfterShow(stage);
-    }
-
     /**
      * Reloads the list views with all students and courses from the database.
      */
@@ -94,5 +82,22 @@ public class MainController extends GenericUIController {
         } catch (Exception exc) {
             handleException(exc);
         }
+    }
+
+    @Override
+    public void onBeforeShow(Stage stage) {
+        registerKeyboardShortcuts();
+    }
+
+    @Override
+    public void onAfterShow(Stage stage) throws Exception {
+        super.onAfterShow(stage);
+        studentListViewController.onAfterShow(stage);
+        courseListViewController.onAfterShow(stage);
+    }
+
+    @Override
+    protected void setRootVisible(boolean visible) {
+        throw new UnsupportedOperationException("Not supported on controllers that are directly loaded onto scenes.");
     }
 }

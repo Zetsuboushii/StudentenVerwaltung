@@ -42,4 +42,9 @@ public class NewCourseViewController extends GenericUIController {
         courseFormFieldsController.populate();
         stage.minWidthProperty().setValue(400);
     }
+
+    @Override
+    protected void setRootVisible(boolean visible) {
+        throw new UnsupportedOperationException("Not supported on controllers that are directly loaded onto scenes.");
+    }
 }

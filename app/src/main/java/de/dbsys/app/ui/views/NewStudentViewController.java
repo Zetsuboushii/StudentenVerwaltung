@@ -43,4 +43,9 @@ public class NewStudentViewController extends GenericUIController {
         }
         stage.minWidthProperty().setValue(400);
     }
+
+    @Override
+    protected void setRootVisible(boolean visible) {
+        throw new UnsupportedOperationException("Not supported on controllers that are directly loaded onto scenes.");
+    }
 }

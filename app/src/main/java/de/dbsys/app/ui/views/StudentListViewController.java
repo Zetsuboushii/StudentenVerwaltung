@@ -15,6 +15,7 @@ import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SplitPane;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class StudentListViewController extends GenericUIController {
+    @FXML private SplitPane root;
     @FXML private ComboBox<Comparator<Student>> cbSort;
     @FXML private ComboBox<Predicate<Student>> cbFilter;
     @FXML private ListView<Student> lvElements;
@@ -168,5 +170,10 @@ public class StudentListViewController extends GenericUIController {
         } catch (Exception e) {
             handleException(e, "Fehler beim Laden der Studenten: ");
         }
+    }
+
+    @Override
+    protected void setRootVisible(boolean visible) {
+        root.setVisible(visible);
     }
 }

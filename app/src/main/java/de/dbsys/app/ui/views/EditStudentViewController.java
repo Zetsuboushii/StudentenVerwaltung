@@ -5,10 +5,13 @@ import de.dbsys.app.ui.GenericUIController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
 
 public class EditStudentViewController extends GenericUIController {
+    @FXML
+    private VBox root;
     @FXML
     private Button btSave;
     @FXML
@@ -48,5 +51,10 @@ public class EditStudentViewController extends GenericUIController {
             handleException(e, "Fehler beim Löschen des Studenten: ");
         }
         Main.getMainController().reload();
+    }
+
+    @Override
+    protected void setRootVisible(boolean visible) {
+        root.setVisible(visible);
     }
 }

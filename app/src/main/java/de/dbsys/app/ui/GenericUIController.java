@@ -30,8 +30,7 @@ public abstract class GenericUIController implements  UIController{
      * Sets the components root element visible. Used by the setVisible method.
      * @param visible Whether the component should be visible or not.
      */
-    protected void setRootVisible(boolean visible) {
-    }
+    protected abstract void setRootVisible(boolean visible);
 
     public void setStage(Stage stage) {
         this.stage = stage;

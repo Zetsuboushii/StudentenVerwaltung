@@ -18,6 +18,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class CourseListViewController extends GenericUIController {
+    @FXML private SplitPane root;
     @FXML
     private ComboBox<Comparator<Course>> cbSort;
     @FXML private ListView<Course> lvElements;
@@ -117,5 +118,10 @@ public class CourseListViewController extends GenericUIController {
         } catch (Exception e) {
             handleException(e, "Fehler beim Laden der Kurse: ");
         }
+    }
+
+    @Override
+    protected void setRootVisible(boolean visible) {
+        root.setVisible(visible);
     }
 }

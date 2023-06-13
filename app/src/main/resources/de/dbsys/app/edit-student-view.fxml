@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.control.Button?>
-<VBox xmlns="http://javafx.com/javafx"
+<VBox fx:id="root" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="de.dbsys.app.ui.views.EditStudentViewController" styleClass="form-label-to-field-spacing,form-vbox" stylesheets="@forms.css,@main.css">
     <fx:include fx:id="studentFormFields" source="student-form-fields.fxml" VBox.vgrow="ALWAYS" />

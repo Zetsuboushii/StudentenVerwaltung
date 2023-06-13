@@ -32,7 +32,6 @@ public class EditCourseViewController extends GenericUIController {
 
     @Override
     public void setRootVisible(boolean visible) {
-        super.setRootVisible(visible);
         root.setVisible(visible);
     }
 }
