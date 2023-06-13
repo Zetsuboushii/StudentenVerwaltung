@@ -29,11 +29,22 @@ public abstract class GenericUIController implements  UIController{
         return stage;
     }
 
+    /**
+     * Show the exception in an alert.
+     *
+     * @param exc Exception to show
+     * @param message Custom error message used to introduce the user to the exception
+     */
     protected void handleException(Exception exc, String message) {
         exc.printStackTrace();
         new Alert(Alert.AlertType.ERROR, message + exc).show();
     }
 
+    /**
+     * Show the exception in an alert.
+     *
+     * @param exc Exception to show
+     */
     protected void handleException(Exception exc) {
         handleException(exc, "Ein Fehler ist aufgetreten: ");
     }
