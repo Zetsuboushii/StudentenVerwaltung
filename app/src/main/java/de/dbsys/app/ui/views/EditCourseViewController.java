@@ -6,8 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 
-import java.sql.SQLException;
-
 public class EditCourseViewController extends GenericUIController {
     @FXML
     private VBox root;
@@ -24,11 +22,7 @@ public class EditCourseViewController extends GenericUIController {
         if(alert.getResult().getButtonData().isCancelButton()) {
             return;
         }
-        try {
-            courseFormFieldsController.deleteCourse();
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Fehler beim Löschen des Kurses!\n" + e.getMessage()).show();
-        }
+        courseFormFieldsController.deleteCourse();
         Main.getMainController().reload();
     }
 

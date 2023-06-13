@@ -26,7 +26,7 @@ public class NewStudentViewController extends GenericUIController {
         try {
             student.createStudent(Main.getDb(), Main.getDb().getConn());
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Ein Fehler beim Erstellen ist aufgetreten.\n" + e.getMessage()).show();
+            handleException(e, "Ein Fehler beim Erstellen ist aufgetreten: ");
             return;
         }
         Main.getMainController().reload();
@@ -39,7 +39,7 @@ public class NewStudentViewController extends GenericUIController {
         try {
             studentFormFieldsController.populate();
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Fehler beim Laden des Studenten.").show();
+            handleException(e, "Fehler beim Laden der Studenten: ");
         }
         stage.minWidthProperty().setValue(400);
     }

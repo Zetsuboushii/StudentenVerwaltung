@@ -28,7 +28,7 @@ public class NewCourseViewController extends GenericUIController {
             course.createCourse(Main.getDb(), Main.getDb().getConn());
             courseFormFieldsController.assignAllStudents(course);
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Ein Fehler beim Erstellen ist aufgetreten.\n" + e.getMessage()).show();
+            handleException(e, "Ein Fehler beim Erstellen ist aufgetreten: ");
             return;
         }
         Main.getMainController().reload();
@@ -39,11 +39,7 @@ public class NewCourseViewController extends GenericUIController {
     public void onAfterShow(Stage stage) throws Exception {
         super.onAfterShow(stage);
         courseFormFieldsController.onAfterShow(stage);
-        try {
-            courseFormFieldsController.populate();
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Fehler beim Laden des Studenten.").show();
-        }
+        courseFormFieldsController.populate();
         stage.minWidthProperty().setValue(400);
     }
 }

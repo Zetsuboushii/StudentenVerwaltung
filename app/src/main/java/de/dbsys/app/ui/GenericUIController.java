@@ -29,8 +29,12 @@ public abstract class GenericUIController implements  UIController{
         return stage;
     }
 
-    protected void handleException(Exception exc) {
+    protected void handleException(Exception exc, String message) {
         exc.printStackTrace();
-        new Alert(Alert.AlertType.ERROR, "Ein Fehler ist aufgetreten: " + exc).show();
+        new Alert(Alert.AlertType.ERROR, message + exc).show();
+    }
+
+    protected void handleException(Exception exc) {
+        handleException(exc, "Ein Fehler ist aufgetreten: ");
     }
 }

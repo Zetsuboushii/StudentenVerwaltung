@@ -9,7 +9,6 @@ import de.dbsys.app.ui.utils.comparators.FirstNameStudentComparator;
 import de.dbsys.app.ui.utils.comparators.NoCourseFirstStudentComparator;
 import de.dbsys.app.ui.utils.ui.StudentsListCellFactory;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
@@ -32,15 +31,16 @@ public class CourseFormFieldsController extends GenericUIController {
     private ListView<Student> lvAvailableStudents;
     @FXML
     private ListView<Student> lvAssignedStudents;
-    public Pair<String, String> getCourseData() {
-        return new Pair<>(tfCourseName.getText(), tfRoom.getText());
-    }
-    
-    public void populate() throws Exception {
+
+    public void populate() {
         if(course != null) {
             setCourseData();
         }
-        loadStudents();
+        try {
+            loadStudents();
+        } catch (Exception exc) {
+            handleException(exc, "Fehler beim Laden der Studenten: ");
+        }
     }
 
     public void setCourseData() {
@@ -54,29 +54,34 @@ public class CourseFormFieldsController extends GenericUIController {
         try {
             loadStudents();
         } catch (Exception exc) {
-            handleException(exc);
+            handleException(exc, "Fehler beim Laden der Studenten: ");
         }
     }
 
-    private void loadStudents() throws Exception {
+    private void loadStudents() {
         initListViews();
         Connection con = Main.getDb().getConn();
         DatabaseCrawler crawler = new DatabaseCrawler();
-        List<Student> allStudents = crawler.selectAllStudents(con);
-        List<Student> assignedStudents;
-        if(course != null) {
-            assignedStudents = course.getStudents(con).stream().sorted(new FirstNameStudentComparator()).toList();
-        } else {
-            assignedStudents = List.of();
+        try {
+            List<Student> allStudents = crawler.selectAllStudents(con);
+            List<Student> assignedStudents;
+            if (course != null) {
+                assignedStudents = course.getStudents(con).stream().sorted(new FirstNameStudentComparator()).toList();
+            } else {
+                assignedStudents = List.of();
+            }
+            List<Student> availableStudents = allStudents.stream()
+                    .filter(s -> !assignedStudents.contains(s))
+                    .sorted(new NoCourseFirstStudentComparator())
+                    .toList();
+            lvAvailableStudents.setCellFactory(new StudentsListCellFactory(true));
+            lvAvailableStudents.getItems().addAll(availableStudents);
+            lvAssignedStudents.setCellFactory(new StudentsListCellFactory(false));
+            lvAssignedStudents.getItems().addAll(assignedStudents);
+        } catch (Exception exc) {
+            handleException(exc, "Fehler beim Laden der Studenten: ");
+            initListViews();
         }
-        List<Student> availableStudents = allStudents.stream()
-                .filter(s -> !assignedStudents.contains(s))
-                .sorted(new NoCourseFirstStudentComparator())
-                .toList();
-        lvAvailableStudents.setCellFactory(new StudentsListCellFactory(true));
-        lvAvailableStudents.getItems().addAll(availableStudents);
-        lvAssignedStudents.setCellFactory(new StudentsListCellFactory(false));
-        lvAssignedStudents.getItems().addAll(assignedStudents);
     }
 
     private void initListViews() {
@@ -98,7 +103,7 @@ public class CourseFormFieldsController extends GenericUIController {
                 try {
                     student.editCourse(db, course);
                 } catch (SQLException e) {
-                    new Alert(Alert.AlertType.ERROR, "Ein Fehler bei der Änderunge ist aufgetreten.\n" + e.getMessage()).show();
+                    handleException(e, "Ein Fehler bei der Änderung ist aufgetreten: ");
                 }
             }
         });
@@ -120,7 +125,7 @@ public class CourseFormFieldsController extends GenericUIController {
                 try {
                     student.editCourse(db, null);
                 } catch (SQLException e) {
-                    new Alert(Alert.AlertType.ERROR, "Ein Fehler beim Ändern ist aufgetreten.\n" + e.getMessage()).show();
+                    handleException(e, "Fehler beim Ändern ist aufgetreten: ");
                 }
             }
             lvAvailableStudents.getItems().add(student);
@@ -142,7 +147,7 @@ public class CourseFormFieldsController extends GenericUIController {
                 course.editCname(db, tfCourseName.getText());
             }
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Ein Fehler beim Speichern ist aufgetreten.\n" + e.getMessage()).show();
+            handleException(e, "Fehler beim Speichern aufgetreten");
         }
     }
 
@@ -156,12 +161,16 @@ public class CourseFormFieldsController extends GenericUIController {
         );
     }
 
-    public void assignAllStudents(Course course) throws SQLException {
+    public void assignAllStudents(Course course) {
         if(!isComplete() || course == null) {
             throw new IllegalStateException("Form incomplete");
         }
         for(Student s : lvAssignedStudents.getItems()) {
-            s.editCourse(Main.getDb(), course);
+            try {
+                s.editCourse(Main.getDb(), course);
+            } catch (Exception exc) {
+                handleException(exc, "Fehler beim Speichern der Kursteilnehmer: ");
+            }
         }
     }
 
@@ -170,11 +179,15 @@ public class CourseFormFieldsController extends GenericUIController {
                 && tfRoom.getText() != null && !tfRoom.getText().isBlank();
     }
 
-    public void deleteCourse() throws SQLException {
+    public void deleteCourse() {
         if(course == null) {
             throw new IllegalStateException("Form incomplete");
         }
-        course.deleteCourse(Main.getDb());
+        try {
+            course.deleteCourse(Main.getDb());
+        } catch (Exception exc) {
+            handleException(exc, "Fehler beim Löschen des Kurses: ");
+        }
     }
 
     @Override

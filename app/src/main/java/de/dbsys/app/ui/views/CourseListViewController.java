@@ -33,7 +33,7 @@ public class CourseListViewController extends GenericUIController {
         try {
             populate();
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Kurse.\n" + e.getMessage()).show();
+            handleException(e, "Fehler beim Laden der Kurse: ");
         }
     }
 
@@ -66,7 +66,7 @@ public class CourseListViewController extends GenericUIController {
         try {
             populate();
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Kurse.\n" + e.getMessage()).show();
+            handleException(e, "Fehler beim Laden der Kurse: ");
         }
 
     }
@@ -77,7 +77,7 @@ public class CourseListViewController extends GenericUIController {
             try {
                 editCourseViewController.setVisible(false);
             } catch (Exception e) {
-                new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Kurse.\n" + e.getMessage()).show();
+                handleException(e, "Fehler beim Laden der Kurse: ");
             }
             return;
         }
@@ -85,7 +85,7 @@ public class CourseListViewController extends GenericUIController {
         try {
             editCourseViewController.setVisible(true);
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Kurse.\n" + e.getMessage()).show();
+            handleException(e, "Fehler beim Laden der Kurse: ");
         }
     }
 }

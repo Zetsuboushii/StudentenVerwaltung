@@ -13,7 +13,6 @@ import de.dbsys.app.ui.utils.ui.StudentsListCellFactory;
 import de.dbsys.app.ui.utils.ui.UiStyler;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
@@ -40,7 +39,7 @@ public class StudentListViewController extends GenericUIController {
         try {
             populate();
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Studenten.\n" + e.getMessage()).show();
+            handleException(e, "Fehler beim Laden der Studenten: ");
         }
     }
 
@@ -51,7 +50,7 @@ public class StudentListViewController extends GenericUIController {
         try {
             editStudentViewController.setVisible(false);
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Fehler beim aktualisiren der Elemente.\n" + e.getMessage()).show();
+            handleException(e, "Fehler beim Aktualisieren der Elemente: ");
         }
 
         UiStyler.makeSortBox(cbSort);
@@ -98,7 +97,7 @@ public class StudentListViewController extends GenericUIController {
         try {
             populate();
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Studenten.\n" + e.getMessage()).show();
+            handleException(e, "Fehler beim Laden der Studenten: ");
         }
 
     }
@@ -109,7 +108,7 @@ public class StudentListViewController extends GenericUIController {
             try {
                 editStudentViewController.setVisible(false);
             } catch (Exception e) {
-                new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Studenten.\n" + e.getMessage()).show();
+                handleException(e, "Fehler beim Laden der Studenten: ");
             }
             return;
         }
@@ -117,13 +116,13 @@ public class StudentListViewController extends GenericUIController {
         try {
             editStudentViewController.populate();
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Studenten.\n" + e.getMessage()).show();
+            handleException(e, "Fehler beim Laden der Studenten: ");
         }
         try {
             editStudentViewController.setVisible(true);
             editStudentViewController.populate();
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Studenten.\n" + e.getMessage()).show();
+            handleException(e, "Fehler beim Laden der Studenten: ");
         }
     }
 }

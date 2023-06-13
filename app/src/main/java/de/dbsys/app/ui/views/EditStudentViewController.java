@@ -45,7 +45,7 @@ public class EditStudentViewController extends GenericUIController {
         try {
             studentFormFieldsController.deleteStudent();
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Fehler beim Löschen des Studenten!\n" + e.getMessage()).show();
+            handleException(e, "Fehler beim Löschen des Studenten: ");
         }
         Main.getMainController().reload();
     }

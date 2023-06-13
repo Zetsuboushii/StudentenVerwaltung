@@ -7,7 +7,6 @@ import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.database.entities.Student;
 import de.dbsys.app.ui.GenericUIController;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -106,7 +105,7 @@ public class StudentFormFieldsController extends GenericUIController {
                 }
             }
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Ein Fehler ist beim Ändern aufgetreten.\n" + e.getMessage()).show();
+            handleException(e, "Fehler beim Ändern aufgetreten: ");
         }
     }
 
