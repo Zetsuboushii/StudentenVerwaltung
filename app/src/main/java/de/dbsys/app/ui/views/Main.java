@@ -16,6 +16,10 @@ public class Main extends Application {
         mainController = UILoader.showFXML("main", "Studierenden-Verwaltung");
     }
 
+    /**
+     * Returns the database connector with an open connection.
+     * @return the database connector
+     */
     public static DatabaseConnector getDb() {
         return db;
     }

@@ -27,6 +27,9 @@ public class MainController extends GenericUIController {
         courseListViewController.onAfterShow(stage);
     }
 
+    /**
+     * Reloads the list views with all students and courses from the database.
+     */
     public void reload() {
         studentListViewController.reload();
         courseListViewController.reload();

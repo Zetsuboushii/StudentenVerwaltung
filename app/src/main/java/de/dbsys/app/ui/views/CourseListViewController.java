@@ -29,6 +29,9 @@ public class CourseListViewController extends GenericUIController {
             new DHBWRoomCourseComparator()
     );
 
+    /**
+     * Reloads the list view with all courses from the database.
+     */
     public void reload() {
         try {
             populate();
@@ -37,13 +40,32 @@ public class CourseListViewController extends GenericUIController {
         }
     }
 
+    /**
+     * Populates the list view.
+     * @throws SQLException if an error occurs while querying the database
+     */
     public void populate() throws SQLException {
+        populateSortBox();
+
+        populateList();
+    }
+
+    /**
+     * Populates the sort box with all comparators.
+     */
+    private void populateSortBox() {
+        UiStyler.makeSortBox(cbSort);
         cbSort.getItems().clear();
         cbSort.getItems().addAll(comparators);
         cbSort.getSelectionModel().select(0);
-        UiStyler.makeSortBox(cbSort);
-        List<Course> courses = new DatabaseCrawler().selectAllCourses(Main.getDb().getConn());
+    }
 
+    /**
+     * Populates the list with all courses from the database.
+     * @throws SQLException if an error occurs while querying the database
+     */
+    private void populateList() throws SQLException {
+        List<Course> courses = new DatabaseCrawler().selectAllCourses(Main.getDb().getConn());
         lvElements.setCellFactory(new CourseListCellFactory());
         lvElements.getItems().clear();
         lvElements.getItems().addAll(courses);
@@ -71,6 +93,9 @@ public class CourseListViewController extends GenericUIController {
 
     }
 
+    /**
+     * Sets the selected course in the edit course view and shows or hides it appropriately.
+     */
     private void onSelectionChanged() {
         Course course = lvElements.getSelectionModel().getSelectedItem();
         if(course == null) {

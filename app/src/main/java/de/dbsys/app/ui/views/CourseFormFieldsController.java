@@ -42,7 +42,6 @@ public class CourseFormFieldsController extends GenericUIController {
             handleException(exc, "Fehler beim Laden der Studenten: ");
         }
     }
-
     public void setCourseData() {
         tfCourseName.setText(course.getcName());
         tfRoom.setText(course.getRoom());
@@ -137,6 +136,9 @@ public class CourseFormFieldsController extends GenericUIController {
         });
     }
 
+    /**
+     * Updates the database with changes in the form.
+     */
     public void save() {
         DatabaseConnector db = Main.getDb();
         try {
@@ -151,6 +153,10 @@ public class CourseFormFieldsController extends GenericUIController {
         }
     }
 
+    /**
+     * Creates a new course from the form data.
+     * @return The new course.
+     */
     public Course toNewCourse() {
         if(!isComplete()) {
             throw new IllegalStateException("Form incomplete");
@@ -174,11 +180,18 @@ public class CourseFormFieldsController extends GenericUIController {
         }
     }
 
+    /**
+     * Checks if the form is complete.
+     * @return True if the form is complete, false otherwise.
+     */
     public boolean isComplete() {
         return tfCourseName.getText() != null && !tfCourseName.getText().isBlank()
                 && tfRoom.getText() != null && !tfRoom.getText().isBlank();
     }
 
+    /**
+     * Deletes the course from the database.
+     */
     public void deleteCourse() {
         if(course == null) {
             throw new IllegalStateException("Form incomplete");
