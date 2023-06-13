@@ -11,6 +11,9 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.util.Objects;
 
+/**
+ * Creates list items for student list. Can visually indicate if a student is in a course.
+ */
 public class StudentsListCellFactory implements Callback<ListView<Student>, ListCell<Student>> {
     private final boolean indicateCourse;
 

@@ -3,6 +3,9 @@ package de.dbsys.app.ui;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
+/**
+ * Implements basic functionality for all Ui Controllers.
+ */
 public abstract class GenericUIController implements  UIController{
     protected Stage stage;
 
@@ -12,13 +15,22 @@ public abstract class GenericUIController implements  UIController{
     @Override
     public void onAfterShow(Stage stage) throws Exception {}
 
+    /**
+     * Sets the Component visible and calls the before and after show methods.
+     * @param visible Whether the component should be visible or not.
+     * @throws Exception If any error occurs while initializing.
+     */
     public void setVisible(boolean visible) throws Exception {
         onBeforeShow(null);
         setRootVisible(visible);
         onAfterShow(null);
     }
 
-    public void setRootVisible(boolean visible) {
+    /**
+     * Sets the components root element visible. Used by the setVisible method.
+     * @param visible Whether the component should be visible or not.
+     */
+    protected void setRootVisible(boolean visible) {
     }
 
     public void setStage(Stage stage) {

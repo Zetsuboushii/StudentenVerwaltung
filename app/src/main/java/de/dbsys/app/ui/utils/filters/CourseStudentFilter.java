@@ -6,6 +6,9 @@ import de.dbsys.app.database.entities.Student;
 
 import java.util.function.Predicate;
 
+/**
+ * Filters students by a specified course.
+ */
 public class CourseStudentFilter implements Predicate<Student> {
     private final Course course;
 

@@ -4,6 +4,9 @@ import de.dbsys.app.database.entities.Student;
 
 import java.util.function.Predicate;
 
+/**
+ * Displays all students.
+ */
 public class NoneStudentFilter implements Predicate<Student> {
     @Override
     public boolean test(Student student) {

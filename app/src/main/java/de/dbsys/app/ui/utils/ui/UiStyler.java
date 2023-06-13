@@ -6,6 +6,10 @@ import javafx.scene.shape.SVGPath;
 
 public class UiStyler {
 
+    /**
+     * Adds the sort icon to a ComboBox.
+     * @param cb ComboBox to add the icon to.
+     */
     public static void makeSortBox(ComboBox<?> cb) {
         Region arrow = (Region)cb.lookup(".arrow");
         SVGPath arrowShape = (SVGPath) arrow.getShape();
@@ -19,6 +23,10 @@ public class UiStyler {
         cb.layout();
     }
 
+    /**
+     * Adds the filter icon to a ComboBox.
+     * @param cb ComboBox to add the icon to.
+     */
     public static void makeFilterBox(ComboBox<?> cb) {
         Region arrow = (Region)cb.lookup(".arrow");
         SVGPath arrowShape = (SVGPath) arrow.getShape();

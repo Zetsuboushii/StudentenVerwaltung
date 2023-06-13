@@ -6,6 +6,9 @@ import javafx.scene.control.ListView;
 import javafx.util.Callback;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+/**
+ * Creates list items for course list.
+ */
 public class CourseListCellFactory implements Callback<ListView<Course>, ListCell<Course>> {
     @Override
     public ListCell<Course> call(ListView<Course> studentListView) {

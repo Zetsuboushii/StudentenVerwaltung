@@ -6,6 +6,9 @@ import de.dbsys.app.database.entities.Student;
 import java.util.Objects;
 import java.util.function.Predicate;
 
+/**
+ * Filters students that have no course.
+ */
 public class NoCourseStudentFilter implements Predicate<Student> {
     @Override
     public boolean test(Student student) {

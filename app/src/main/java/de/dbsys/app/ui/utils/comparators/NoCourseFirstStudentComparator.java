@@ -6,6 +6,9 @@ import de.dbsys.app.database.entities.Student;
 import java.util.Comparator;
 import java.util.Objects;
 
+/**
+ * Sorts students alphabetically by fist name and displays students with no course first.
+ */
 public class NoCourseFirstStudentComparator implements Comparator<Student> {
     @Override
     public int compare(Student s1, Student s2) {

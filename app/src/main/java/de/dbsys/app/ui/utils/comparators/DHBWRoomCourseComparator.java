@@ -6,6 +6,10 @@ import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Sorts courses by DHBW building and Room number.
+ * Example: 065A > 315A > 017B > 017C > 385C
+ */
 public class DHBWRoomCourseComparator implements Comparator<Course> {
     @Override
     public int compare(Course o1, Course o2) {

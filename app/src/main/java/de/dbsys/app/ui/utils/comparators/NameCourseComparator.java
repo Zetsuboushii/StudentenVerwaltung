@@ -4,6 +4,9 @@ import de.dbsys.app.database.entities.Course;
 
 import java.util.Comparator;
 
+/**
+ * Sorts courses alphabetically by name.
+ */
 public class NameCourseComparator implements Comparator<Course> {
     @Override
     public int compare(Course o1, Course o2) {

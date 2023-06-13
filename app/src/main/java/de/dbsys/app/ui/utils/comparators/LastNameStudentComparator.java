@@ -4,6 +4,9 @@ import de.dbsys.app.database.entities.Student;
 
 import java.util.Comparator;
 
+/**
+ * Sorts students alphabetically by last name.
+ */
 public class LastNameStudentComparator implements Comparator<Student> {
     @Override
     public int compare(Student o1, Student o2) {
