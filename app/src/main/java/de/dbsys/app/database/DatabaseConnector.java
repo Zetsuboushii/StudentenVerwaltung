@@ -68,6 +68,7 @@ public class DatabaseConnector {
         }
     }
 
+    // TODO: remove redundant return values
     public boolean update(String sql, Object pk, Object val) throws SQLException {
             PreparedStatement stmt = conn.prepareStatement(sql);
 

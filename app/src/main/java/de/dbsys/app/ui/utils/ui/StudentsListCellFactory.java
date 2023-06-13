@@ -38,6 +38,7 @@ public class StudentsListCellFactory implements Callback<ListView<Student>, List
                         return;
                     }
                     try {
+                        // TODO: i shouldn't need this (if the database worked...)
                         if(student.getCourse() == null || Objects.equals(student.getCourse().getcName(), "Empty Course")) {
                             throw new NoCourseException();
                         }

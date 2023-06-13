@@ -45,6 +45,7 @@ public class Student {
      *
      * @param conn Established DB connection
      */
+    // TODO: Don't handle SQLExceptions here, but in the calling method
     public void createStudent(DatabaseConnector dbc, Connection conn) throws SQLException {
         try {
             String sql = "INSERT INTO student (mNr, sname, fname, company, javaSkill, fk_course) VALUES (?, ?, ?, ?, ?, ?)";
@@ -172,6 +173,7 @@ public class Student {
         return company;
     }
 
+    // TODO: Exception is never thrown
     public Course getCourse() throws NoCourseException {
         if (course == null) {
             throw new NoCourseException();
