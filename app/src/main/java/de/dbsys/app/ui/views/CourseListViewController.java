@@ -69,6 +69,11 @@ public class CourseListViewController extends GenericUIController {
         lvElements.setCellFactory(new CourseListCellFactory());
         lvElements.getItems().clear();
         lvElements.getItems().addAll(courses);
+        try {
+            editCourseViewController.setVisible(false);
+        } catch (Exception e) {
+            handleException(e, "Fehler beim Aktualisieren der Liste: ");
+        }
     }
 
     @Override

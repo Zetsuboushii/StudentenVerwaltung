@@ -11,7 +11,7 @@
         </Menu>
     </MenuBar>
     <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
-        <Tab text="Studenten">
+        <Tab text="Studenten" onSelectionChanged="#onTabChanged">
             <fx:include fx:id="studentListView" source="student-list-view.fxml" />
         </Tab>
         <Tab text="Kurse">

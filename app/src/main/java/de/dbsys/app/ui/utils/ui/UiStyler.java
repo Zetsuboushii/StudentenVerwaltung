@@ -12,6 +12,9 @@ public class UiStyler {
      */
     public static void makeSortBox(ComboBox<?> cb) {
         Region arrow = (Region)cb.lookup(".arrow");
+        if(arrow == null) {
+            return;
+        }
         SVGPath arrowShape = (SVGPath) arrow.getShape();
         SVGPath sortShape = new SVGPath();
         // Source: https://icons.getbootstrap.com/icons/sort-down/
@@ -29,6 +32,9 @@ public class UiStyler {
      */
     public static void makeFilterBox(ComboBox<?> cb) {
         Region arrow = (Region)cb.lookup(".arrow");
+        if(arrow == null) {
+            return;
+        }
         SVGPath arrowShape = (SVGPath) arrow.getShape();
         SVGPath sortShape = new SVGPath();
         // Source: https://icons.getbootstrap.com/icons/funnel/

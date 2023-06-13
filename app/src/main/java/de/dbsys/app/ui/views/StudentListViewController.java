@@ -106,6 +106,11 @@ public class StudentListViewController extends GenericUIController {
         lvElements.getItems().clear();
         lvElements.getItems().addAll(students.stream().filter(cbFilter.getSelectionModel().getSelectedItem()).toList());
         lvElements.getItems().sort(cbSort.getSelectionModel().getSelectedItem());
+        try {
+            editStudentViewController.setVisible(false);
+        } catch (Exception e) {
+            handleException(e, "Fehler beim Aktualisieren der Elemente: ");
+        }
     }
 
     @Override

@@ -70,6 +70,15 @@ public class MainController extends GenericUIController {
     }
 
     @FXML
+    private void onTabChanged() {
+        if(studentListViewController == null || courseListViewController == null) {
+            return;
+        }
+        studentListViewController.reload();
+        courseListViewController.reload();
+    }
+
+    @FXML
     public void neuerStudierender() {
         try {
             UILoader.showFXML("new-student-view", "Neue:r Studierende:r");
