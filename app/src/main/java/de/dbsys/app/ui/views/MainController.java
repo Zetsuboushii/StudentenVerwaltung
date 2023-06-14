@@ -26,23 +26,10 @@ public class MainController extends GenericUIController {
     private void registerKeyboardShortcuts() {
         registerNewStudentKeyboardShortcut();
         registerNewCourseKeyboardShortcut();
-
-        KeyCodeCombination editStudent = new KeyCodeCombination(KeyCode.E, KeyCombination.SHORTCUT_DOWN);
-        Button btn = new Button("");
-        btn.setOnAction(e -> editAStudent());
-        stage.getScene().addMnemonic(new Mnemonic(btn, editStudent));
-    }
-
-    private void editAStudent() {
-        try {
-            UILoader.showFXML("edit-student-view", "Edit student");
-        } catch (Exception exc) {
-            handleException(exc);
-        }
     }
 
     private void registerNewStudentKeyboardShortcut() {
-        KeyCodeCombination newStudent = new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN);
+        KeyCodeCombination newStudent = new KeyCodeCombination(KeyCode.N, KeyCombination.META_DOWN);
         // Button just temporary until the shortcut can be sent to the existing button
         Button btn = new Button("");
         btn.setOnAction(e -> neuerStudierender());
