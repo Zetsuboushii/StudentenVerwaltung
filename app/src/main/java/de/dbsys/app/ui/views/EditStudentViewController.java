@@ -43,7 +43,11 @@ public class EditStudentViewController extends GenericUIController {
      * Save the students' data.
      */
     @FXML private void onSave() {
-        studentFormFieldsController.updateStudent();
+        if(!studentFormFieldsController.isComplete()) {
+            new Alert(Alert.AlertType.WARNING, "Bitte das Formular vollständig ausfüllen.").show();
+        } else {
+            studentFormFieldsController.updateStudent();
+        }
     }
 
     /**

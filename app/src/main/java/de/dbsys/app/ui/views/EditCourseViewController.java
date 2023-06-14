@@ -17,7 +17,11 @@ public class EditCourseViewController extends GenericUIController {
      */
     @FXML
     private void onSave() {
-        courseFormFieldsController.save();
+        if (!courseFormFieldsController.isComplete()) {
+            new Alert(Alert.AlertType.WARNING, "Bitte das Formular vollständig ausfüllen.").show();
+        } else {
+            courseFormFieldsController.save();
+        }
     }
 
     /**
