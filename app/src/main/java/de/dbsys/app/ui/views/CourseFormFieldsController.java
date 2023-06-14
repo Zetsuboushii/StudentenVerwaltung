@@ -31,6 +31,9 @@ public class CourseFormFieldsController extends GenericUIController {
     @FXML
     private ListView<Student> lvAssignedStudents;
 
+    /**
+     * Populate view with student and course data (if available).
+     */
     public void populate() {
         if(course != null) {
             setCourseData();
@@ -41,11 +44,20 @@ public class CourseFormFieldsController extends GenericUIController {
             handleException(exc, "Fehler beim Laden der Studenten: ");
         }
     }
+
+    /**
+     * Apply course data to view's fields.
+     */
     public void setCourseData() {
         tfCourseName.setText(course.getcName());
         tfRoom.setText(course.getRoom());
     }
 
+    /**
+     * Set the course of the view and update its fields.
+     *
+     * @param course new course
+     */
     public void setCourse(Course course) {
         this.course = course;
         setCourseData();
@@ -56,6 +68,9 @@ public class CourseFormFieldsController extends GenericUIController {
         }
     }
 
+    /**
+     * Load students from DB and update views.
+     */
     private void loadStudents() {
         initListViews();
         Connection con = Main.getDb().getConn();
@@ -82,6 +97,9 @@ public class CourseFormFieldsController extends GenericUIController {
         }
     }
 
+    /**
+     * Initialize/reset list views.
+     */
     private void initListViews() {
         lvAvailableStudents.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         lvAvailableStudents.getItems().clear();
@@ -89,6 +107,9 @@ public class CourseFormFieldsController extends GenericUIController {
         lvAssignedStudents.getItems().clear();
     }
 
+    /**
+     * Assign selected students to course.
+     */
     @FXML
     private void onAssign() {
         DatabaseConnector db = Main.getDb();
@@ -112,6 +133,9 @@ public class CourseFormFieldsController extends GenericUIController {
         });
     }
 
+    /**
+     * Unassign selected students from course.
+     */
     @FXML
     private void onUnassign() {
         DatabaseConnector db = Main.getDb();
@@ -166,6 +190,10 @@ public class CourseFormFieldsController extends GenericUIController {
         );
     }
 
+    /**
+     * Assign all students selected to be assigned to the course.
+     * @param course course to assign students to
+     */
     public void assignAllStudents(Course course) {
         if(!isComplete() || course == null) {
             throw new IllegalStateException("Form incomplete");
