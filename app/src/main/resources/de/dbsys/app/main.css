@@ -1,3 +1,7 @@
 .padded {
     -fx-padding: 20px;
 }
+
+.less-padded {
+    -fx-padding: 10px;
+}

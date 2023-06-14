@@ -7,8 +7,8 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="de.dbsys.app.ui.views.NewStudentViewController" styleClass="padded,form-vbox" stylesheets="@main.css,@forms.css">
     <fx:include fx:id="studentFormFields" source="student-form-fields.fxml" />
-    <HBox alignment="CENTER_RIGHT" styleClass="form-button-spacing">
-        <Button text="Cancel" onAction="#onCancel" />
-        <Button text="Save" onAction="#onSave" />
+    <HBox alignment="CENTER_LEFT" styleClass="form-button-spacing">
+        <Button text="Speichern" defaultButton="true" onAction="#onSave" />
+        <Button text="Abbrechen" cancelButton="true" onAction="#onCancel" />
     </HBox>
 </VBox>

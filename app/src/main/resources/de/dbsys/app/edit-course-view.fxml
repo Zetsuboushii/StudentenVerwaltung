@@ -3,12 +3,12 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.control.Button?>
-<VBox fx:id="root" xmlns="http://javafx.com/javafx"
+<VBox fx:id="root" styleClass="less-padded" spacing="10" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="de.dbsys.app.ui.views.EditCourseViewController">
     <fx:include source="course-form-fields.fxml" fx:id="courseFormFields" VBox.vgrow="ALWAYS" />
-    <HBox>
-        <Button text="Speichern" onAction="#onSave" />
+    <HBox spacing="10">
+        <Button text="Speichern" defaultButton="true" onAction="#onSave" />
         <Button text="Löschen" onAction="#onDelete" />
     </HBox>
 </VBox>
