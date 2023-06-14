@@ -11,11 +11,17 @@ import java.sql.SQLException;
 public class NewStudentViewController extends GenericUIController {
     @FXML private StudentFormFieldsController studentFormFieldsController;
 
+    /**
+     * Close the windows as the user wants to cancel.
+     */
     @FXML
     private void onCancel() {
         stage.close();
     }
 
+    /**
+     * Save the new student.
+     */
     @FXML
     private void onSave() {
         if(!studentFormFieldsController.isComplete()) {

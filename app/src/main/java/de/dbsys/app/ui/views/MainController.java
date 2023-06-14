@@ -23,11 +23,17 @@ public class MainController extends GenericUIController {
         courseListViewController.reload();
     }
 
+    /**
+     * Register keyboard shortcuts (for creating new students + courses).
+     */
     private void registerKeyboardShortcuts() {
         registerNewStudentKeyboardShortcut();
         registerNewCourseKeyboardShortcut();
     }
 
+    /**
+     * Register keyboard shortcuts for creating a new student.
+     */
     private void registerNewStudentKeyboardShortcut() {
         KeyCodeCombination newStudentMac = new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN);
         KeyCodeCombination newStudentWin = new KeyCodeCombination(KeyCode.L, KeyCombination.ALT_DOWN);
@@ -38,6 +44,9 @@ public class MainController extends GenericUIController {
         stage.getScene().addMnemonic(new Mnemonic(btn, newStudentMac));
     }
 
+    /**
+     * Register keyboard shortcuts for creating a new course.
+     */
     private void registerNewCourseKeyboardShortcut() {
         KeyCodeCombination newCourseMac = new KeyCodeCombination(KeyCode.K, KeyCombination.SHORTCUT_DOWN);
         KeyCodeCombination newCourseWin = new KeyCodeCombination(KeyCode.K, KeyCombination.ALT_DOWN);
@@ -57,6 +66,9 @@ public class MainController extends GenericUIController {
         courseListViewController.reload();
     }
 
+    /**
+     * Show new window for creating a new student.
+     */
     @FXML
     public void neuerStudierender() {
         try {
@@ -66,6 +78,9 @@ public class MainController extends GenericUIController {
         }
     }
 
+    /**
+     * Show new window creating a new course.
+     */
     @FXML
     public void neuerKurs() {
         try {
