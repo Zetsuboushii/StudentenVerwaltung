@@ -15,15 +15,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        mainController = UILoader.showFXML("main", "Studierenden-Verwaltung");
+        mainController = UILoader.showFXMLOnStage("main", stage, "Studierenden-Verwaltung");
         setIcon(stage);
     }
 
     private void setIcon(Stage stage) {
-        int[] resolutions = {16, 32, 64, 128, 256, 512};
-        for (int res : resolutions) {
-            stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/de/dbsys/app/AppIcon/Icon-" + res + ".png"))));
-        }
+        stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/de/dbsys/app/app-icon.png"))));
     }
 
     /**
