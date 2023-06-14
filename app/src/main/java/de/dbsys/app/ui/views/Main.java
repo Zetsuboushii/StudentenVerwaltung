@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class Main extends Application {
     private static DatabaseConnector db;
@@ -19,7 +20,10 @@ public class Main extends Application {
     }
 
     private void setIcon(Stage stage) {
-        stage.getIcons().add(new Image(Main.class.getResourceAsStream("/de/dbsys/app/appicon.jpg")));
+        int[] resolutions = {16, 32, 64, 128, 256, 512};
+        for (int res : resolutions) {
+            stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/de/dbsys/app/AppIcon/Icon-" + res + ".png"))));
+        }
     }
 
     /**
