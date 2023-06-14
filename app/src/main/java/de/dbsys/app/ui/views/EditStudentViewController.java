@@ -23,6 +23,10 @@ public class EditStudentViewController extends GenericUIController {
         studentFormFieldsController.setStudent(student);
     }
 
+    /**
+     * Populate the view with the student's data
+     * @throws SQLException if there's an error loading the data from the DB.
+     */
     public void populate() throws SQLException {
         studentFormFieldsController.populate();
     }
@@ -35,10 +39,20 @@ public class EditStudentViewController extends GenericUIController {
         studentFormFieldsController.setVisible(visible);
     }
 
+    /**
+     * Save the students' data.
+     */
     @FXML private void onSave() {
-        studentFormFieldsController.updateStudent();
+        if(!studentFormFieldsController.isComplete()) {
+            new Alert(Alert.AlertType.WARNING, "Bitte das Formular vollständig ausfüllen.").show();
+        } else {
+            studentFormFieldsController.updateStudent();
+        }
     }
 
+    /**
+     * Delete the student.
+     */
     @FXML private void onDelete() {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Soll der Student wirklich gelöscht werden?");
         confirm.showAndWait();
