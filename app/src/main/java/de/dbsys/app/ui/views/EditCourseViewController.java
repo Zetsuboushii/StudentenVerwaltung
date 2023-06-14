@@ -11,10 +11,22 @@ public class EditCourseViewController extends GenericUIController {
     private VBox root;
     @FXML
     private CourseFormFieldsController courseFormFieldsController;
+
+    /**
+     * Save course data.
+     */
     @FXML
     private void onSave() {
-        courseFormFieldsController.save();
+        if (!courseFormFieldsController.isComplete()) {
+            new Alert(Alert.AlertType.WARNING, "Bitte das Formular vollständig ausfüllen.").show();
+        } else {
+            courseFormFieldsController.save();
+        }
     }
+
+    /**
+     * After user's confirmation, delete course.
+     */
     @FXML
     private void onDelete() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Soll der Kurs wirklich gelöscht werden?\nDabei wird der Kurs aller zugeordneten Studenten entfernt!");
@@ -26,6 +38,10 @@ public class EditCourseViewController extends GenericUIController {
         Main.getMainController().reload();
     }
 
+    /**
+     * Set and populate course data.
+     * @param course course to show
+     */
     public void setCourse(Course course) {
         courseFormFieldsController.setCourse(course);
     }

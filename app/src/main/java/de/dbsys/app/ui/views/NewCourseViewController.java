@@ -12,11 +12,17 @@ public class NewCourseViewController extends GenericUIController {
     @FXML
     private CourseFormFieldsController courseFormFieldsController;
 
+    /**
+     * Close the window as the user wants to cancel.
+     */
     @FXML
     private void onCancel() {
         stage.close();
     }
 
+    /**
+     * Save the new course.
+     */
     @FXML
     private void onSave() {
         if(!courseFormFieldsController.isComplete()) {
