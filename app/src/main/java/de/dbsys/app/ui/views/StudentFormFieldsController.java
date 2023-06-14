@@ -116,15 +116,28 @@ public class StudentFormFieldsController extends GenericUIController {
      * Creates a new student with all values from the form.
      * @return the new student
      * @throws IllegalStateException if the form is incomplete
+     * @throws SQLException if an error occurs while calculating the mNr
      */
-    public Student toNewStudent() throws IllegalStateException {
+    public Student toNewStudent() throws IllegalStateException, SQLException {
         if(!isComplete()) {
             throw new IllegalStateException("Formular ist nicht vollständig.");
         }
+
         if(cbClass.getValue().getcName().equals("Kein Kurs")) {
-            return new Student((int)(Math.random()*10000), tfFirstName.getText(), tfLastName.getText(), tfCompany.getText(), (int) slJavaExp.getValue());
+            return new Student(calculateMNr(), tfFirstName.getText(), tfLastName.getText(), tfCompany.getText(), (int) slJavaExp.getValue());
         }
-        return new Student((int)(Math.random()*10000), tfFirstName.getText(), tfLastName.getText(), tfCompany.getText(), cbClass.getValue(), (int) slJavaExp.getValue());
+        return new Student(calculateMNr(), tfFirstName.getText(), tfLastName.getText(), tfCompany.getText(), cbClass.getValue(), (int) slJavaExp.getValue());
+    }
+
+    // This isn't pretty, but it removes the need for matriculation numbers to be unique in the ui
+    private int calculateMNr() throws SQLException {
+        List<Integer> students = new DatabaseCrawler().selectAllStudents(Main.getDb().getConn()).stream()
+                .map(Student::getmNr).toList();
+        int random = (int)(Math.random()*10000);
+        while(students.contains(random)) {
+            random = (int)(Math.random()*10000);
+        }
+        return random;
     }
 
     /**
