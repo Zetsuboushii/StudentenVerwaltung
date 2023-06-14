@@ -29,19 +29,23 @@ public class MainController extends GenericUIController {
     }
 
     private void registerNewStudentKeyboardShortcut() {
-        KeyCodeCombination newStudent = new KeyCodeCombination(KeyCode.N, KeyCombination.META_DOWN);
+        KeyCodeCombination newStudentMac = new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN);
+        KeyCodeCombination newStudentWin = new KeyCodeCombination(KeyCode.L, KeyCombination.ALT_DOWN);
         // Button just temporary until the shortcut can be sent to the existing button
         Button btn = new Button("");
         btn.setOnAction(e -> neuerStudierender());
-        stage.getScene().addMnemonic(new Mnemonic(btn, newStudent));
+        stage.getScene().addMnemonic(new Mnemonic(btn, newStudentWin));
+        stage.getScene().addMnemonic(new Mnemonic(btn, newStudentMac));
     }
 
     private void registerNewCourseKeyboardShortcut() {
-        KeyCodeCombination newCourse = new KeyCodeCombination(KeyCode.N, KeyCombination.SHIFT_DOWN, KeyCombination.SHORTCUT_DOWN);
+        KeyCodeCombination newCourseMac = new KeyCodeCombination(KeyCode.K, KeyCombination.SHORTCUT_DOWN);
+        KeyCodeCombination newCourseWin = new KeyCodeCombination(KeyCode.K, KeyCombination.ALT_DOWN);
         // Button just temporary until the shortcut can be sent to the existing button
         Button newCourseBtn = new Button("");
         newCourseBtn.setOnAction(e -> neuerKurs());
-        stage.getScene().addMnemonic(new Mnemonic(newCourseBtn, newCourse));
+        stage.getScene().addMnemonic(new Mnemonic(newCourseBtn, newCourseWin));
+        stage.getScene().addMnemonic(new Mnemonic(newCourseBtn, newCourseMac));
     }
 
     @FXML
