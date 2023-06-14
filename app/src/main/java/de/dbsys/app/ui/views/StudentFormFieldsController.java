@@ -129,7 +129,7 @@ public class StudentFormFieldsController extends GenericUIController {
         return new Student(calculateMNr(), tfFirstName.getText(), tfLastName.getText(), tfCompany.getText(), cbClass.getValue(), (int) slJavaExp.getValue());
     }
 
-    // This isn't pretty, but it removes the need for matriculation numbers to be unique in the ui
+    // This isn't pretty, but it removes the need for matriculation numbers to be handled in the ui
     private int calculateMNr() throws SQLException {
         List<Integer> students = new DatabaseCrawler().selectAllStudents(Main.getDb().getConn()).stream()
                 .map(Student::getmNr).toList();
