@@ -18,9 +18,15 @@ public class DatabaseConnector {
         connect();
     }
 
+    /**
+     * Establishes new SQL Driver Connection via JDBC's SQLite
+     *
+     * @throws SQLException
+     */
     public void connect() throws SQLException {
         conn = DriverManager.getConnection("jdbc:sqlite:app/public/studentDB.db");
 
+        // In case main tables don't exist, create them
         String courseDDL =
                 """
                 create table if not exists course
@@ -51,8 +57,6 @@ public class DatabaseConnector {
                         );
                 """;
 
-
-
         conn.createStatement().execute("PRAGMA foreign_keys = ON");
         conn.createStatement().execute(courseDDL);
         conn.createStatement().execute(studentDDL);
@@ -60,6 +64,11 @@ public class DatabaseConnector {
         System.out.println("Connection established.");
     }
 
+    /**
+     * Closes previously established connection
+     *
+     * @throws SQLException
+     */
     public void close() throws SQLException {
         if (conn != null) {
             conn.close();
@@ -68,6 +77,14 @@ public class DatabaseConnector {
         }
     }
 
+    /**
+     * Outsourced Update method to alter various data in tables
+     *
+     * @param sql                       SQL statement
+     * @param pk                        Primary Key of certain table
+     * @param val                       Updated value
+     * @throws SQLException
+     */
     public void update(String sql, Object pk, Object val) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement(sql);
 
@@ -87,6 +104,13 @@ public class DatabaseConnector {
         stmt.close();
     }
 
+    /**
+     * Outsourced Delete method to delete rows in tables
+     *
+     * @param sql               SQL statement
+     * @param pk                Primary Key of certain table
+     * @throws SQLException
+     */
     public void delete(String sql, Object pk) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement(sql);
         if (pk instanceof Integer) {

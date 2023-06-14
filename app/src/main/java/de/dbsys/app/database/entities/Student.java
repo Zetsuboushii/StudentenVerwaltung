@@ -145,6 +145,12 @@ public class Student {
         this.course = course;
     }
 
+    /**
+     * Removes the course from a student and updates java object values
+     *
+     * @param dbc   Established DB connector
+     * @throws SQLException
+     */
     public void removeCourse(DatabaseConnector dbc) throws SQLException {
         String sql = "UPDATE student SET fk_course = ? WHERE mNr = ?";
         dbc.update(sql, mNr, null);

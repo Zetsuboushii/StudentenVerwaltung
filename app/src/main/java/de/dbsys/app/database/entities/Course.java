@@ -48,7 +48,7 @@ public class Course {
 
     /**
      * Deletes Database entry in table course
-     * @param dbc
+     * @param dbc   Established DB connector
      */
     public void deleteCourse(DatabaseConnector dbc) throws SQLException{
         String sql = "DELETE FROM course WHERE cname = ?";
@@ -58,8 +58,8 @@ public class Course {
     /**
      * Edits course name of entry by its course name and updates java object values
      *
-     * @param dbc
-     * @param cName
+     * @param dbc   Established DB connector
+     * @param cName Course name
      */
     public void editCname(DatabaseConnector dbc, String cName) throws SQLException {
         String sql = "UPDATE course SET cName = ? WHERE cName IS ?";
@@ -70,8 +70,8 @@ public class Course {
     /**
      * Edits room of entry by its course name java object values
      *
-     * @param dbc
-     * @param room
+     * @param dbc   Established DB connector
+     * @param room  Course room
      */
     public void editRoom(DatabaseConnector dbc, String room) throws SQLException {
         String sql = "UPDATE course SET room = ? WHERE cName IS ?";
@@ -79,6 +79,11 @@ public class Course {
         this.room = room;
     }
 
+    /**
+     * Returns course name and if course name is not set it returns the String "empty course"
+     *
+     * @return  Course name or "Empty Course"
+     */
     public String getcName() {
         if (cName == null) {
             return "Empty Course";
@@ -86,10 +91,18 @@ public class Course {
         return cName;
     }
 
+
     public String getRoom() {
         return room;
     }
 
+    /**
+     * Returns the list of all students in a course
+     *
+     * @param conn  Established DB connection
+     * @return      list of students in a course
+     * @throws SQLException
+     */
     public List<Student> getStudents(Connection conn) throws SQLException{
         String sql = "SELECT mNr, sname, fname, company, fk_course, javaSkill FROM student WHERE fk_course = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
