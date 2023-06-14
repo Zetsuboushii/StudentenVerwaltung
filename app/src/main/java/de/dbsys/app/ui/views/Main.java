@@ -19,6 +19,9 @@ public class Main extends Application {
         setIcon(stage);
     }
 
+    /**
+     * @param stage Set application icon.
+     */
     private void setIcon(Stage stage) {
         stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/de/dbsys/app/app-icon.png"))));
     }
