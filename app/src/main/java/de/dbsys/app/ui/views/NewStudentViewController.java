@@ -28,11 +28,12 @@ public class NewStudentViewController extends GenericUIController {
             new Alert(Alert.AlertType.WARNING, "Bitte das Formular vollständig ausfüllen.").show();
             return;
         }
-        Student student = null;
+        Student student;
         try {
             student = studentFormFieldsController.toNewStudent();
         } catch (SQLException e) {
             handleException(e, "Fehler beim Erstellen des Studenten ist aufgetreten: ");
+            return;
         }
         try {
             student.createStudent(Main.getDb(), Main.getDb().getConn());

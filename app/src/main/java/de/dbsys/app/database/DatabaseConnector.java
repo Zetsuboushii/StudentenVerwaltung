@@ -68,47 +68,38 @@ public class DatabaseConnector {
         }
     }
 
-    // TODO: remove redundant return values
-    public boolean update(String sql, Object pk, Object val) throws SQLException {
-            PreparedStatement stmt = conn.prepareStatement(sql);
+    public void update(String sql, Object pk, Object val) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement(sql);
 
-            if (val instanceof String) {
-                stmt.setString(1, (String) val);
-            } else if (val instanceof Integer) {
-                stmt.setInt(1, (Integer) val);
-            }
+        if (val instanceof String) {
+            stmt.setString(1, (String) val);
+        } else if (val instanceof Integer) {
+            stmt.setInt(1, (Integer) val);
+        }
 
-            if (pk instanceof Integer) {
-                stmt.setInt(2, (int) pk);
-            } else if (pk instanceof String) {
-                stmt.setString(2, (String) pk);
-            }
+        if (pk instanceof Integer) {
+            stmt.setInt(2, (int) pk);
+        } else if (pk instanceof String) {
+            stmt.setString(2, (String) pk);
+        }
 
-            stmt.executeUpdate();
-            stmt.close();
-        System.out.println("Values updated.");
-        return true;
+        stmt.executeUpdate();
+        stmt.close();
     }
 
-    public boolean delete(String sql, Object pk) throws SQLException {
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            if (pk instanceof Integer) {
-                stmt.setInt(1, (int) pk);
-            } else if (pk instanceof String) {
-                stmt.setString(1, (String) pk);
-            }
-            stmt.executeUpdate();
-            stmt.close();
-        System.out.println("Student successfully deleted.");
-        return true;
+    public void delete(String sql, Object pk) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        if (pk instanceof Integer) {
+            stmt.setInt(1, (int) pk);
+        } else if (pk instanceof String) {
+            stmt.setString(1, (String) pk);
+        }
+        stmt.executeUpdate();
+        stmt.close();
     }
 
     public Connection getConn() {
         return conn;
-    }
-
-    public void main(String[] args) {
-
     }
 
 }
