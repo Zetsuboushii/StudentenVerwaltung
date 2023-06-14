@@ -19,8 +19,6 @@ public class DBTester {
 
     public static void main(String[] args) throws SQLException, NoCourseException {
 
-
-
         DatabaseConnector dbc = new DatabaseConnector();
         Connection conn = dbc.getConn();
 
@@ -45,7 +43,7 @@ public class DBTester {
 
         List<Student> listofc0students = c1.getStudents(conn);
         System.out.println("Students in c0");
-        for(Student s : listofc0students){
+        for (Student s : listofc0students) {
             System.out.println(s.getmNr() + ": " + s.getSname() + " " + s.getFname() + " " + "\n\tKurs: " + s.getCourse().getcName());
         }
 
@@ -58,22 +56,21 @@ public class DBTester {
 
         listofc0students = c1.getStudents(conn);
         System.out.println("Students in c0");
-        for(Student s : listofc0students){
+        for (Student s : listofc0students) {
             System.out.println(s.getmNr() + ": " + s.getSname() + " " + s.getFname() + " " + "\n\tKurs: " + s.getCourse().getcName());
         }
 
         s2.deleteStudent(dbc);
 
-
         s1.removeCourse(dbc);
 
         boolean exHappend = false;
-        try{
+        try {
             System.out.println(s1.getmNr() + ": " + s1.getSname() + " " + s1.getFname() + " " + "\n\tKurs: " + s1.getCourse().getcName());
-        }catch (NoCourseException e){
+        } catch (NoCourseException e) {
             exHappend = true;
         }
-        if(!exHappend){
+        if (!exHappend) {
             throw new RuntimeException("NO COURSE EXCEPTION NOT TRIGGERED");
         }
 

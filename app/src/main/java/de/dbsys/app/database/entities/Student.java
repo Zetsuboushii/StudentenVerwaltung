@@ -45,26 +45,19 @@ public class Student {
      *
      * @param conn Established DB connection
      */
-    // TODO: Don't handle SQLExceptions here, but in the calling method
     public void createStudent(DatabaseConnector dbc, Connection conn) throws SQLException {
-        try {
-            String sql = "INSERT INTO student (mNr, sname, fname, company, javaSkill, fk_course) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, mNr);
-            stmt.setString(2, sname);
-            stmt.setString(3, fname);
-            stmt.setString(4, company);
-            stmt.setInt(5, javaSkill);
-            stmt.setString(6, null);
-            stmt.executeUpdate();
-            stmt.close();
-            if (course != null) {
-                this.editCourse(dbc, course);
-            }
-        } catch (SQLException e) {
-            System.err.println(this.getClass().getName() + ": " + e.getMessage());
-            e.printStackTrace();
-            System.exit(0);
+        String sql = "INSERT INTO student (mNr, sname, fname, company, javaSkill, fk_course) VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, mNr);
+        stmt.setString(2, sname);
+        stmt.setString(3, fname);
+        stmt.setString(4, company);
+        stmt.setInt(5, javaSkill);
+        stmt.setString(6, null);
+        stmt.executeUpdate();
+        stmt.close();
+        if (course != null) {
+            this.editCourse(dbc, course);
         }
         System.out.println("Values successfully inserted.");
     }
@@ -153,7 +146,7 @@ public class Student {
 
     public void removeCourse(DatabaseConnector dbc) throws SQLException {
         String sql = "UPDATE student SET fk_course = ? WHERE mNr = ?";
-        dbc.update(sql,mNr,null);
+        dbc.update(sql, mNr, null);
         this.course = null;
     }
 
@@ -173,7 +166,6 @@ public class Student {
         return company;
     }
 
-    // TODO: Exception is never thrown
     public Course getCourse() throws NoCourseException {
         if (course == null) {
             throw new NoCourseException();

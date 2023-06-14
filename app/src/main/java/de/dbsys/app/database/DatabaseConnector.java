@@ -19,7 +19,7 @@ public class DatabaseConnector {
     }
 
     public void connect() throws SQLException {
-        conn = DriverManager.getConnection("jdbc:sqlite:public/studentDB.db");
+        conn = DriverManager.getConnection("jdbc:sqlite:app/public/studentDB.db");
 
         String courseDDL =
                 """
