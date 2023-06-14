@@ -9,9 +9,10 @@ Author:             Luke Grasser
 package de.dbsys.app.database.entities;
 
 import de.dbsys.app.database.DatabaseConnector;
-import de.dbsys.app.database.NoCourseException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class Student {
@@ -166,10 +167,10 @@ public class Student {
         return company;
     }
 
-    public Course getCourse() throws NoCourseException {
-        if (course == null) {
-            throw new NoCourseException();
-        }
+    /**
+     * @return the course or null if no course is set
+     */
+    public Course getCourse() {
         return course;
     }
 

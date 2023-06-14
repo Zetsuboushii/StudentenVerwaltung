@@ -2,7 +2,6 @@ package de.dbsys.app.ui.views;
 
 import de.dbsys.app.database.DatabaseConnector;
 import de.dbsys.app.database.DatabaseCrawler;
-import de.dbsys.app.database.NoCourseException;
 import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.database.entities.Student;
 import de.dbsys.app.ui.GenericUIController;
@@ -60,18 +59,10 @@ public class StudentFormFieldsController extends GenericUIController {
         DatabaseCrawler crawler = new DatabaseCrawler();
         List<Course> courses = crawler.selectAllCourses(conn);
         courses.forEach(course -> cbClass.getItems().add(course));
-        if(student != null) {
-            try {
-                // TODO: i shouldn't need this (if the database worked...)
-                if(student.getCourse() == null || Objects.equals(student.getCourse().getcName(), "Empty Course")) {
-                    throw new NoCourseException();
-                }
-                cbClass.getSelectionModel().select(student.getCourse());
-                return;
-            } catch (NoCourseException ignored) {
-            }
-        }
         cbClass.getSelectionModel().select(0);
+        if(student != null && student.getCourse() != null) {
+            cbClass.getSelectionModel().select(student.getCourse());
+        }
     }
 
     /**
@@ -92,7 +83,7 @@ public class StudentFormFieldsController extends GenericUIController {
                 student.editCompany(dbc, tfCompany.getText());
             if (student.getJavaSkill() != slJavaExp.getValue())
                 student.editJavaSkill(dbc, (int) slJavaExp.getValue());
-            try {
+            if(student.getCourse() != null) {
                 if (!Objects.equals(cbClass.getValue(), student.getCourse())) {
                     if (cbClass.getValue().getcName().equals("Kein Kurs")) {
                         student.editCourse(dbc, null);
@@ -100,8 +91,8 @@ public class StudentFormFieldsController extends GenericUIController {
                         student.editCourse(dbc, cbClass.getValue());
                     }
                 }
-            } catch (NoCourseException ignored) {
-                if (cbClass.getValue() != null) {
+            } else  {
+                if (!cbClass.getValue().getcName().equals("Kein Kurs")) {
                     student.editCourse(dbc, cbClass.getValue());
                 }
             }

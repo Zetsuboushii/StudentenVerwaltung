@@ -30,10 +30,10 @@ public class DatabaseCrawler {
             String sname = rs.getString("sname");
             String fname = rs.getString("fname");
             String company = rs.getString("company");
-            Course course = new Course(rs.getString("fk_course"));
+            String course = rs.getString("fk_course");
             int javaSkill = rs.getInt("javaSkill");
             if (course != null) {
-                ex_students.add(new Student(mNr, fname, sname, company, course, javaSkill));
+                ex_students.add(new Student(mNr, fname, sname, company, new Course(course), javaSkill));
             } else {
                 ex_students.add(new Student(mNr, fname, sname, company, javaSkill));
             }

@@ -1,6 +1,5 @@
 package de.dbsys.app.ui.utils.ui;
 
-import de.dbsys.app.database.NoCourseException;
 import de.dbsys.app.database.entities.Student;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -8,8 +7,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import org.kordamp.ikonli.javafx.FontIcon;
-
-import java.util.Objects;
 
 /**
  * Creates list items for student list. Can visually indicate if a student is in a course.
@@ -37,15 +34,10 @@ public class StudentsListCellFactory implements Callback<ListView<Student>, List
                     if(!indicateCourse) {
                         return;
                     }
-                    try {
-                        // TODO: i shouldn't need this (if the database worked...)
-                        if(student.getCourse() == null || Objects.equals(student.getCourse().getcName(), "Empty Course")) {
-                            throw new NoCourseException();
-                        }
+                    if(student.getCourse() != null) {
                         icon.setIconColor(new Color(1F/3, 1F/3, 1F/3, 1F));
                         setStyle("-fx-text-fill: #555555; -fx-font-style: italic");
                         setTooltip(new Tooltip("Aktueller Kurs: " + student.getCourse().getcName()));
-                    } catch (NoCourseException ignored) {
                     }
                 }
             }

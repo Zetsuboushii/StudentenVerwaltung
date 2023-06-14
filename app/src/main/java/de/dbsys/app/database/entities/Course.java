@@ -118,7 +118,7 @@ public class Course {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return Objects.equals(cName, course.cName) && Objects.equals(room, course.room);
+        return Objects.equals(cName, course.cName);
     }
 
     @Override

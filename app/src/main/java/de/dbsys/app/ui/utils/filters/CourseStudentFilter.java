@@ -1,6 +1,5 @@
 package de.dbsys.app.ui.utils.filters;
 
-import de.dbsys.app.database.NoCourseException;
 import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.database.entities.Student;
 
@@ -18,11 +17,7 @@ public class CourseStudentFilter implements Predicate<Student> {
 
     @Override
     public boolean test(Student student) {
-        try {
-            return student.getCourse().getcName().equals(course.getcName());
-        } catch (NoCourseException e) {
-            return false;
-        }
+        return student.getCourse() != null && student.getCourse().getcName().equals(course.getcName());
     }
 
     @Override
