@@ -24,7 +24,7 @@ public class DatabaseConnector {
      * @throws SQLException
      */
     public void connect() throws SQLException {
-        conn = DriverManager.getConnection("jdbc:sqlite:app/public/studentDB.db");
+        conn = DriverManager.getConnection("jdbc:sqlite:public/studentDB.db");
 
         // In case main tables don't exist, create them
         String courseDDL =
