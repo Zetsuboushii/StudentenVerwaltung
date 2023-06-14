@@ -3,6 +3,7 @@ package de.dbsys.app.ui.views;
 import de.dbsys.app.database.DatabaseConnector;
 import de.dbsys.app.ui.utils.UILoader;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
@@ -14,6 +15,11 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         mainController = UILoader.showFXML("main", "Studierenden-Verwaltung");
+        setIcon(stage);
+    }
+
+    private void setIcon(Stage stage) {
+        stage.getIcons().add(new Image(Main.class.getResourceAsStream("/de/dbsys/app/appicon.jpg")));
     }
 
     /**
