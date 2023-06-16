@@ -21,9 +21,13 @@ public abstract class GenericUIController implements  UIController{
      * @throws Exception If any error occurs while initializing.
      */
     public void setVisible(boolean visible) throws Exception {
-        onBeforeShow(null);
+        setVisible(visible, null);
+    }
+
+    public void setVisible(boolean visible, Stage stage) throws Exception {
+        onBeforeShow(stage);
         setRootVisible(visible);
-        onAfterShow(null);
+        onAfterShow(stage);
     }
 
     /**

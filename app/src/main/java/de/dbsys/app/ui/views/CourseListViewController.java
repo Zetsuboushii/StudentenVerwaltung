@@ -2,13 +2,11 @@ package de.dbsys.app.ui.views;
 
 import de.dbsys.app.database.DatabaseCrawler;
 import de.dbsys.app.database.entities.Course;
-import de.dbsys.app.ui.GenericUIController;
 import de.dbsys.app.ui.Main;
 import de.dbsys.app.ui.utils.comparators.DHBWRoomCourseComparator;
 import de.dbsys.app.ui.utils.comparators.NameCourseComparator;
 import de.dbsys.app.ui.utils.comparators.RoomCourseComparator;
 import de.dbsys.app.ui.utils.ui.CourseListCellFactory;
-import de.dbsys.app.ui.utils.ui.UiStyler;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -18,7 +16,7 @@ import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
 
-public class CourseListViewController extends GenericUIController {
+public class CourseListViewController extends ListViewController {
     @FXML private SplitPane root;
     @FXML
     private ComboBox<Comparator<Course>> cbSort;
@@ -31,21 +29,8 @@ public class CourseListViewController extends GenericUIController {
             new DHBWRoomCourseComparator()
     );
 
-    /**
-     * Reloads the list view with all courses from the database.
-     */
-    public void reload() {
-        try {
-            populate();
-        } catch (SQLException e) {
-            handleException(e, "Fehler beim Laden der Kurse: ");
-        }
-    }
 
-    /**
-     * Populates the list view.
-     * @throws SQLException if an error occurs while querying the database
-     */
+    @Override
     public void populate() throws SQLException {
         populateSortBox();
 
@@ -56,7 +41,7 @@ public class CourseListViewController extends GenericUIController {
      * Populates the sort box with all comparators.
      */
     private void populateSortBox() {
-        UiStyler.makeSortBox(cbSort);
+        makeSortBox(cbSort);
         cbSort.getItems().clear();
         cbSort.getItems().addAll(comparators);
         cbSort.getSelectionModel().select(0);
@@ -79,8 +64,7 @@ public class CourseListViewController extends GenericUIController {
     }
 
     @Override
-    public void onAfterShow(Stage stage) throws Exception {
-        super.onAfterShow(stage);
+    public void onBeforeShow(Stage stage) throws Exception {
         lvElements.getSelectionModel().getSelectedItems().addListener(
                 (ListChangeListener<Course>) c -> onSelectionChanged()
         );
@@ -92,12 +76,7 @@ public class CourseListViewController extends GenericUIController {
                 }
         );
         editCourseViewController.setVisible(false);
-        try {
-            populate();
-        } catch (SQLException e) {
-            handleException(e, "Fehler beim Laden der Kurse: ");
-        }
-
+        super.onBeforeShow(stage);
     }
 
     /**
@@ -114,6 +93,11 @@ public class CourseListViewController extends GenericUIController {
             return;
         }
         editCourseViewController.setCourse(course);
+        try {
+            editCourseViewController.populate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         try {
             editCourseViewController.setVisible(true);
         } catch (Exception e) {

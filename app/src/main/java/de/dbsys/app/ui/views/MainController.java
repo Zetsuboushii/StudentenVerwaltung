@@ -92,18 +92,22 @@ public class MainController extends GenericUIController {
 
     @Override
     public void onBeforeShow(Stage stage) {
+        System.out.println("MainController.onBeforeShow");
         registerKeyboardShortcuts();
     }
 
     @Override
-    public void onAfterShow(Stage stage) throws Exception {
-        super.onAfterShow(stage);
-        studentListViewController.onAfterShow(stage);
-        courseListViewController.onAfterShow(stage);
+    public void setVisible(boolean visible, Stage stage) throws Exception {
+        studentListViewController.setVisible(visible);
+        courseListViewController.setVisible(visible);
+        super.setVisible(visible, stage);
     }
 
     @Override
-    protected void setRootVisible(boolean visible) {
-        throw new UnsupportedOperationException("Not supported on controllers that are directly loaded onto scenes.");
+    public void onAfterShow(Stage stage) throws Exception {
+        reload();
     }
+
+    @Override
+    protected void setRootVisible(boolean visible) {}
 }

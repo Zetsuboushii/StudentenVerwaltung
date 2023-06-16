@@ -1,16 +1,36 @@
-package de.dbsys.app.ui.utils.ui;
+package de.dbsys.app.ui.views;
 
+import de.dbsys.app.ui.GenericUIController;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.SVGPath;
+import javafx.stage.Stage;
 
-public class UiStyler {
+import java.sql.SQLException;
+
+public abstract class ListViewController extends GenericUIController {
+    /**
+     * Reloads the list view with all data from the database.
+     */
+    public void reload() {
+        try {
+            populate();
+        } catch (SQLException e) {
+            handleException(e, "Fehler beim Laden der Kurse: ");
+        }
+    }
+
+    /**
+     * Populates the list view.
+     * @throws SQLException if an error occurs while querying the database
+     */
+    public abstract void populate() throws SQLException;
 
     /**
      * Adds the sort icon to a ComboBox.
      * @param cb ComboBox to add the icon to.
      */
-    public static void makeSortBox(ComboBox<?> cb) {
+    protected void makeSortBox(ComboBox<?> cb) {
         Region arrow = (Region)cb.lookup(".arrow");
         if(arrow == null) {
             return;
@@ -30,7 +50,7 @@ public class UiStyler {
      * Adds the filter icon to a ComboBox.
      * @param cb ComboBox to add the icon to.
      */
-    public static void makeFilterBox(ComboBox<?> cb) {
+    protected void makeFilterBox(ComboBox<?> cb) {
         Region arrow = (Region)cb.lookup(".arrow");
         if(arrow == null) {
             return;
@@ -44,5 +64,12 @@ public class UiStyler {
         arrow.setShape(sortShape);
         arrow.setMinSize(12, 12);
         cb.layout();
+    }
+
+    @Override
+    public void onBeforeShow(Stage stage) throws Exception {
+        System.out.println("ListViewController.onBeforeShow");
+        super.onBeforeShow(stage);
+        reload();
     }
 }

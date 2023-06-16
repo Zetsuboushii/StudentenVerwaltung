@@ -4,21 +4,19 @@ import de.dbsys.app.database.DatabaseConnector;
 import de.dbsys.app.database.DatabaseCrawler;
 import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.database.entities.Student;
-import de.dbsys.app.ui.GenericUIController;
 import de.dbsys.app.ui.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
-public class StudentFormFieldsController extends GenericUIController {
+public class StudentFormFieldsController extends FormFieldsController {
     @FXML
     private VBox root;
     @FXML
@@ -34,11 +32,9 @@ public class StudentFormFieldsController extends GenericUIController {
 
     private Student student;
 
-    /**
-     * Loads all required data from the database and populates form fields if a student is set.
-     * @throws SQLException if an error occurs while loading data from the database
-     */
+    @Override
     public void populate() throws SQLException {
+        System.out.println("StudentFormFieldsController.populate");
         populateCourses();
         if (student != null) {
             tfFirstName.setText(student.getFname());
@@ -46,6 +42,7 @@ public class StudentFormFieldsController extends GenericUIController {
             tfCompany.setText(student.getCompany());
             slJavaExp.setValue(student.getJavaSkill());
         }
+        addChangeListeners();
     }
 
     /**
@@ -53,6 +50,7 @@ public class StudentFormFieldsController extends GenericUIController {
      * @throws SQLException if an error occurs while loading data from the database
      */
     public void populateCourses() throws SQLException {
+        System.out.println("StudentFormFieldsController.populateCourses");
         cbClass.getItems().clear();
         cbClass.getItems().add(new Course("Kein Kurs"));
         cbClass.getSelectionModel().select(0);
@@ -61,16 +59,26 @@ public class StudentFormFieldsController extends GenericUIController {
         List<Course> courses = crawler.selectAllCourses(conn);
         courses.forEach(course -> cbClass.getItems().add(course));
         cbClass.getSelectionModel().select(0);
+        System.out.println("StudentFormFieldsController.populateCourses: " + courses.size());
+        System.out.println("StudentFormFieldsController.populateCourses: " + cbClass.getItems());
         if(student != null && student.getCourse() != null) {
             cbClass.getSelectionModel().select(student.getCourse());
         }
     }
 
     /**
-     * Updates the student in the database with all changes values.
-     * @throws IllegalStateException if the form is incomplete or no student is set
+     * Adds listeners to all form fields to detect changes.
      */
-    public void updateStudent() throws IllegalStateException {
+    private void addChangeListeners() {
+        cbClass.getSelectionModel().selectedItemProperty().addListener(getChangeCallback());
+        tfFirstName.textProperty().addListener(getChangeCallback());
+        tfLastName.textProperty().addListener(getChangeCallback());
+        tfCompany.textProperty().addListener(getChangeCallback());
+        slJavaExp.valueProperty().addListener(getChangeCallback());
+    }
+
+    @Override
+    public void save() throws IllegalStateException {
         if(!isComplete() || student == null) {
             throw new IllegalStateException("Formular ist nicht vollständig.");
         }
@@ -102,11 +110,8 @@ public class StudentFormFieldsController extends GenericUIController {
         }
     }
 
-    /**
-     * Deletes the student from the database.
-     * @throws IllegalStateException if no student is set
-     */
-    public void deleteStudent() throws SQLException {
+    @Override
+    public void delete() throws SQLException {
         if(student == null) {
             throw new IllegalStateException("Formular ist nicht vollständig.");
         }
@@ -141,10 +146,7 @@ public class StudentFormFieldsController extends GenericUIController {
         return random;
     }
 
-    /**
-     * Checks if the form is complete.
-     * @return true if the form is complete, false otherwise
-     */
+    @Override
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isComplete() {
         return
@@ -165,10 +167,5 @@ public class StudentFormFieldsController extends GenericUIController {
     @Override
     public void setRootVisible(boolean visible) {
         root.setVisible(visible);
-    }
-
-    @Override
-    public void onAfterShow(Stage stage) {
-        cbClass.getItems().clear();
     }
 }

@@ -4,7 +4,6 @@ import de.dbsys.app.database.DatabaseConnector;
 import de.dbsys.app.database.DatabaseCrawler;
 import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.database.entities.Student;
-import de.dbsys.app.ui.GenericUIController;
 import de.dbsys.app.ui.Main;
 import de.dbsys.app.ui.utils.comparators.FirstNameStudentComparator;
 import de.dbsys.app.ui.utils.comparators.NoCourseFirstStudentComparator;
@@ -19,7 +18,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public class CourseFormFieldsController extends GenericUIController {
+public class CourseFormFieldsController extends FormFieldsController {
     private Course course;
     @FXML
     private VBox root;
@@ -32,10 +31,14 @@ public class CourseFormFieldsController extends GenericUIController {
     @FXML
     private ListView<Student> lvAssignedStudents;
 
-    /**
-     * Populate view with student and course data (if available).
-     */
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    @Override
     public void populate() {
+        System.out.println("CourseFormFieldsController.populate");
         if(course != null) {
             setCourseData();
         }
@@ -44,6 +47,15 @@ public class CourseFormFieldsController extends GenericUIController {
         } catch (Exception exc) {
             handleException(exc, "Fehler beim Laden der Studenten: ");
         }
+        addChangeListeners();
+    }
+
+    /**
+     * Adds listeners to all form fields to detect changes.
+     */
+    private void addChangeListeners() {
+        tfCourseName.textProperty().addListener(getChangeCallback());
+        tfRoom.textProperty().addListener(getChangeCallback());
     }
 
     /**
@@ -52,21 +64,6 @@ public class CourseFormFieldsController extends GenericUIController {
     public void setCourseData() {
         tfCourseName.setText(course.getcName());
         tfRoom.setText(course.getRoom());
-    }
-
-    /**
-     * Set the course of the view and update its fields.
-     *
-     * @param course new course
-     */
-    public void setCourse(Course course) {
-        this.course = course;
-        setCourseData();
-        try {
-            loadStudents();
-        } catch (Exception exc) {
-            handleException(exc, "Fehler beim Laden der Studenten: ");
-        }
     }
 
     /**
@@ -114,6 +111,7 @@ public class CourseFormFieldsController extends GenericUIController {
     @FXML
     private void onAssign() {
         transferBetweenLists(lvAvailableStudents.getItems(), lvAssignedStudents.getItems(), lvAvailableStudents.getSelectionModel().getSelectedIndices());
+        runChangeCallback();
     }
 
     /**
@@ -122,6 +120,7 @@ public class CourseFormFieldsController extends GenericUIController {
     @FXML
     private void onUnassign() {
         transferBetweenLists(lvAssignedStudents.getItems(), lvAvailableStudents.getItems(), lvAssignedStudents.getSelectionModel().getSelectedIndices());
+        runChangeCallback();
     }
 
     /**
@@ -142,20 +141,15 @@ public class CourseFormFieldsController extends GenericUIController {
         itemsToRemove.forEach(fromList::remove);
     }
 
-    /**
-     * Updates the database with changes in the form.
-     */
-    public void save() {
+
+    @Override
+    public void save() throws SQLException {
         DatabaseConnector db = Main.getDb();
-        try {
-            if (!tfRoom.getText().equals(course.getRoom())) {
-                course.editRoom(db, tfRoom.getText());
-            }
-            if (!tfCourseName.getText().equals(course.getcName())) {
-                course.editCname(db, tfCourseName.getText());
-            }
-        } catch (SQLException e) {
-            handleException(e, "Fehler beim Speichern aufgetreten");
+        if (!tfRoom.getText().equals(course.getRoom())) {
+            course.editRoom(db, tfRoom.getText());
+        }
+        if (!tfCourseName.getText().equals(course.getcName())) {
+            course.editCname(db, tfCourseName.getText());
         }
         assignAllStudents(course);
         unassignAllStudents(course);
@@ -202,7 +196,7 @@ public class CourseFormFieldsController extends GenericUIController {
         }
         DatabaseConnector db = Main.getDb();
         for(Student s: lvAvailableStudents.getItems()) {
-            if (s.getCourse().equals(course)) {
+            if (s.getCourse() != null && s.getCourse().equals(course)) {
                 try {
                     s.editCourse(db, null);
                 } catch (Exception exc) {
@@ -212,10 +206,7 @@ public class CourseFormFieldsController extends GenericUIController {
         }
     }
 
-    /**
-     * Checks if the form is complete.
-     * @return True if the form is complete, false otherwise.
-     */
+    @Override
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isComplete() {
         return tfCourseName.getText() != null && !tfCourseName.getText().isBlank()
@@ -225,15 +216,11 @@ public class CourseFormFieldsController extends GenericUIController {
     /**
      * Deletes the course from the database.
      */
-    public void deleteCourse() {
+    public void delete() throws SQLException {
         if(course == null) {
             throw new IllegalStateException("Form incomplete");
         }
-        try {
-            course.deleteCourse(Main.getDb());
-        } catch (Exception exc) {
-            handleException(exc, "Fehler beim Löschen des Kurses: ");
-        }
+        course.deleteCourse(Main.getDb());
     }
 
     @Override

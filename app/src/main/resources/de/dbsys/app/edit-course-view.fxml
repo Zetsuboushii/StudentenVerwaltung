@@ -8,7 +8,7 @@
       fx:controller="de.dbsys.app.ui.views.EditCourseViewController">
     <fx:include source="course-form-fields.fxml" fx:id="courseFormFields" VBox.vgrow="ALWAYS" />
     <HBox spacing="10">
-        <Button text="Speichern" defaultButton="true" onAction="#onSave" />
+        <Button fx:id="btSave" text="Speichern" defaultButton="true" onAction="#onSave" />
         <Button text="Löschen" onAction="#onDelete" />
     </HBox>
 </VBox>

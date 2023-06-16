@@ -3,7 +3,6 @@ package de.dbsys.app.ui.views;
 import de.dbsys.app.database.DatabaseCrawler;
 import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.database.entities.Student;
-import de.dbsys.app.ui.GenericUIController;
 import de.dbsys.app.ui.Main;
 import de.dbsys.app.ui.utils.comparators.FirstNameStudentComparator;
 import de.dbsys.app.ui.utils.comparators.LastNameStudentComparator;
@@ -11,7 +10,6 @@ import de.dbsys.app.ui.utils.filters.CourseStudentFilter;
 import de.dbsys.app.ui.utils.filters.NoCourseStudentFilter;
 import de.dbsys.app.ui.utils.filters.NoneStudentFilter;
 import de.dbsys.app.ui.utils.ui.StudentsListCellFactory;
-import de.dbsys.app.ui.utils.ui.UiStyler;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -24,7 +22,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class StudentListViewController extends GenericUIController {
+public class StudentListViewController extends ListViewController {
     @FXML private SplitPane root;
     @FXML private ComboBox<Comparator<Student>> cbSort;
     @FXML private ComboBox<Predicate<Student>> cbFilter;
@@ -38,22 +36,8 @@ public class StudentListViewController extends GenericUIController {
             new LastNameStudentComparator()
     );
 
-    /**
-     * Reloads the list view with all students from the database.
-     */
-    public void reload() {
-        try {
-            populate();
-        } catch (SQLException e) {
-            handleException(e, "Fehler beim Laden der Studenten: ");
-        }
-    }
 
-
-    /**
-     * Populates the list view with all students from the database.
-     * @throws SQLException if an error occurs while querying the database
-     */
+    @Override
     public void populate() throws SQLException {
         loadStudents();
 
@@ -81,7 +65,7 @@ public class StudentListViewController extends GenericUIController {
      * Populates the sort box with all comparators.
      */
     private void populateSortBox() {
-        UiStyler.makeSortBox(cbSort);
+        makeSortBox(cbSort);
         cbSort.getItems().clear();
         cbSort.getItems().addAll(comparators);
         cbSort.getSelectionModel().select(0);
@@ -92,7 +76,7 @@ public class StudentListViewController extends GenericUIController {
      * @throws SQLException if an error occurs while querying the courses for filters
      */
     private void populateFilterBox() throws SQLException {
-        UiStyler.makeFilterBox(cbFilter);
+        makeFilterBox(cbFilter);
         cbFilter.getItems().clear();
         cbFilter.getItems().add(new NoneStudentFilter());
         cbFilter.getItems().add(new NoCourseStudentFilter());
@@ -117,15 +101,16 @@ public class StudentListViewController extends GenericUIController {
     }
 
     @Override
-    public void onAfterShow(Stage stage) throws Exception {
-        super.onAfterShow(stage);
+    public void onBeforeShow(Stage stage) throws Exception {
+        System.out.println("StudentListViewController.onBeforeShow");
         lvElements.getSelectionModel().getSelectedItems().addListener(
-                (ListChangeListener<Student>) c -> onSelectionChanged()
+                this::onSelectionChanged
         );
         cbSort.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    if(newValue != null)
+                    if(newValue != null) {
                         lvElements.getItems().sort(newValue);
+                    }
                 }
         );
         cbFilter.getSelectionModel().selectedItemProperty().addListener(
@@ -138,18 +123,13 @@ public class StudentListViewController extends GenericUIController {
                 }
         );
         editStudentViewController.setVisible(false);
-        try {
-            populate();
-        } catch (SQLException e) {
-            handleException(e, "Fehler beim Laden der Studenten: ");
-        }
-
+        super.onBeforeShow(stage);
     }
 
     /**
      * Sets the selected student in the edit student view and shows or hides it appropriately.
      */
-    private void onSelectionChanged() {
+    private void onSelectionChanged(ListChangeListener.Change<? extends Student> change) {
         Student student = lvElements.getSelectionModel().getSelectedItem();
         if(student == null) {
             try {
@@ -167,7 +147,6 @@ public class StudentListViewController extends GenericUIController {
         }
         try {
             editStudentViewController.setVisible(true);
-            editStudentViewController.populate();
         } catch (Exception e) {
             handleException(e, "Fehler beim Laden der Studenten: ");
         }

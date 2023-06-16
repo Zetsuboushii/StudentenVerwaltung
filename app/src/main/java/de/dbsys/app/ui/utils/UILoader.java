@@ -52,9 +52,8 @@ public class UILoader {
     public static <T extends GenericUIController> T showFXMLOnStage(String fxmlPath, Stage stage, String title) throws Exception {
         T controller = loadFXMLOnStage(fxmlPath, stage, title);
         controller.setStage(stage);
-        controller.onBeforeShow(stage);
+        controller.setVisible(true, stage);
         stage.show();
-        controller.onAfterShow(stage);
         return controller;
     }
 

@@ -8,7 +8,7 @@
       fx:controller="de.dbsys.app.ui.views.NewCourseViewController" styleClass="padded,form-vbox" stylesheets="@main.css,@forms.css">
     <fx:include fx:id="courseFormFields" source="course-form-fields.fxml" />
     <HBox alignment="CENTER_LEFT" styleClass="form-button-spacing" >
-        <Button text="Speichern" defaultButton="true" onAction="#onSave" />
+        <Button fx:id="btSave" text="Speichern" defaultButton="true" onAction="#onSave" />
         <Button text="Abbrechen" cancelButton="true" onAction="#onCancel" />
     </HBox>
 </VBox>
