@@ -77,6 +77,7 @@ public class CourseListViewController extends ListViewController {
                 }
         );
         editCourseViewController.setVisible(false);
+        editCourseViewController.registerOnSaveCallback(this::reload);
         super.onBeforeShow(stage);
 
         listSearchViewController.initialize(courses, cbSort.getSelectionModel().getSelectedItem());

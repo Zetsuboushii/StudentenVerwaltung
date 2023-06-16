@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 /**
  * UIController containing a search bar that is used to filter a list of elements (for use in a ListView).
+ * Nomenclature: filtering refers to only including elements of a given structure (e.g. course name), whereas searching refers to including all elements that contain a given string.
  * @param <T> Type of the elements in the list
  */
 public class ListSearchViewController<T> extends GenericUIController {
@@ -33,6 +34,9 @@ public class ListSearchViewController<T> extends GenericUIController {
      * Comparator specifying the sort order of the elements.
      */
     private Comparator<T> comparator;
+    /**
+     * Predicate for applying the filter option
+     */
     private Predicate<T> filter;
 
     public void setFilter(Predicate<T> filter) {

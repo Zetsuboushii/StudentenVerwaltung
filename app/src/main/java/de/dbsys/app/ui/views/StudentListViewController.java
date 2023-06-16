@@ -118,6 +118,7 @@ public class StudentListViewController extends ListViewController {
                     listSearchViewController.filterItems();
                 }
         );
+        editStudentViewController.registerOnSaveCallback(this::reload);
         editStudentViewController.setVisible(false);
         super.onBeforeShow(stage);
 
