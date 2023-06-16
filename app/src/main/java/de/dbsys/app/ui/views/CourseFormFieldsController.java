@@ -113,25 +113,7 @@ public class CourseFormFieldsController extends GenericUIController {
      */
     @FXML
     private void onAssign() {
-        DatabaseConnector db = Main.getDb();
-        List<Integer> indizes = lvAvailableStudents.getSelectionModel().getSelectedIndices();
-        // Assign student
-        indizes.forEach(idx -> {
-            Student student = lvAvailableStudents.getItems().get(idx);
-            lvAssignedStudents.getItems().add(student);
-            if(course != null) {
-                try {
-                    student.editCourse(db, course);
-                } catch (SQLException e) {
-                    handleException(e, "Ein Fehler bei der Änderung ist aufgetreten: ");
-                }
-            }
-        });
-        // Remove from available students
-        indizes.forEach(idx -> {
-            Student student = lvAvailableStudents.getItems().get(idx);
-            lvAvailableStudents.getItems().remove(student);
-        });
+        transferBetweenLists(lvAvailableStudents.getItems(), lvAssignedStudents.getItems(), lvAvailableStudents.getSelectionModel().getSelectedIndices());
     }
 
     /**
@@ -139,25 +121,25 @@ public class CourseFormFieldsController extends GenericUIController {
      */
     @FXML
     private void onUnassign() {
-        DatabaseConnector db = Main.getDb();
-        List<Integer> indizes = lvAssignedStudents.getSelectionModel().getSelectedIndices();
-        // Unassign student
-        indizes.forEach(idx -> {
-            Student student = lvAssignedStudents.getItems().get(idx);
-            if(course != null) {
-                try {
-                    student.editCourse(db, null);
-                } catch (SQLException e) {
-                    handleException(e, "Fehler beim Ändern ist aufgetreten: ");
-                }
-            }
-            lvAvailableStudents.getItems().add(student);
-        });
-        // Remove from assigned students
-        indizes.forEach(idx -> {
-            Student student = lvAssignedStudents.getItems().get(idx);
-            lvAssignedStudents.getItems().remove(student);
-        });
+        transferBetweenLists(lvAssignedStudents.getItems(), lvAvailableStudents.getItems(), lvAssignedStudents.getSelectionModel().getSelectedIndices());
+    }
+
+    /**
+     * Transfer items from one list to another.
+     * @param fromList List to transfer items from
+     * @param toList List to transfer items to
+     * @param indizes Indizes of items to transfer (regarding fromList, of course)
+     * @param <T> Type of items in lists
+     */
+    private <T> void transferBetweenLists(List<T> fromList, List<T> toList, List<Integer> indizes) {
+        List<T> itemsToTransfer = indizes.stream()
+                .map(fromList::get)
+                .toList();
+        toList.addAll(itemsToTransfer);
+        List<T> itemsToRemove = indizes.stream()
+                .map(fromList::get)
+                .toList();
+        itemsToRemove.forEach(fromList::remove);
     }
 
     /**
@@ -175,6 +157,8 @@ public class CourseFormFieldsController extends GenericUIController {
         } catch (SQLException e) {
             handleException(e, "Fehler beim Speichern aufgetreten");
         }
+        assignAllStudents(course);
+        unassignAllStudents(course);
     }
 
     /**
@@ -204,6 +188,26 @@ public class CourseFormFieldsController extends GenericUIController {
                 s.editCourse(Main.getDb(), course);
             } catch (Exception exc) {
                 handleException(exc, "Fehler beim Speichern der Kursteilnehmer: ");
+            }
+        }
+    }
+
+    /**
+     * Unassign all selected students from the course.
+     * @param course course to unassign students from
+     */
+    private void unassignAllStudents(Course course) {
+        if (!isComplete() || course == null) {
+            throw new IllegalStateException("Form incomplete");
+        }
+        DatabaseConnector db = Main.getDb();
+        for(Student s: lvAvailableStudents.getItems()) {
+            if (s.getCourse().equals(course)) {
+                try {
+                    s.editCourse(db, null);
+                } catch (Exception exc) {
+                    handleException(exc, "Fehler beim Speichern der Kursteilnehmer: ");
+                }
             }
         }
     }
