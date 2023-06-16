@@ -28,6 +28,7 @@ public class StudentListViewController extends ListViewController {
     @FXML private ComboBox<Predicate<Student>> cbFilter;
     @FXML private ListView<Student> lvElements;
     @FXML private EditStudentViewController editStudentViewController;
+    @FXML private ListSearchViewController<Student> listSearchViewController;
 
     private List<Student> students;
 
@@ -90,9 +91,8 @@ public class StudentListViewController extends ListViewController {
      */
     private void populateList() {
         lvElements.setCellFactory(new StudentsListCellFactory(false));
-        lvElements.getItems().clear();
-        lvElements.getItems().addAll(students.stream().filter(cbFilter.getSelectionModel().getSelectedItem()).toList());
-        lvElements.getItems().sort(cbSort.getSelectionModel().getSelectedItem());
+        listSearchViewController.setSourceItems(students);
+        listSearchViewController.filterItems();
         try {
             editStudentViewController.setVisible(false);
         } catch (Exception e) {
@@ -108,22 +108,21 @@ public class StudentListViewController extends ListViewController {
         );
         cbSort.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    if(newValue != null) {
-                        lvElements.getItems().sort(newValue);
-                    }
+                    listSearchViewController.setComparator(newValue);
+                    listSearchViewController.filterItems();
                 }
         );
         cbFilter.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    if(newValue != null && cbSort.getSelectionModel().getSelectedItem() != null) {
-                        lvElements.getItems().clear();
-                        lvElements.getItems().addAll(students.stream().filter(newValue).toList());
-                        lvElements.getItems().sort(cbSort.getSelectionModel().getSelectedItem());
-                    }
+                    listSearchViewController.setFilter(newValue);
+                    listSearchViewController.filterItems();
                 }
         );
         editStudentViewController.setVisible(false);
         super.onBeforeShow(stage);
+
+        listSearchViewController.initialize(students, cbSort.getSelectionModel().getSelectedItem());
+        lvElements.setItems(listSearchViewController.getFilteredItems());
     }
 
     /**

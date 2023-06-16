@@ -6,8 +6,8 @@
 <VBox alignment="TOP_CENTER" prefWidth="900" prefHeight="600" stylesheets="@main.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dbsys.app.ui.views.MainController">
     <MenuBar useSystemMenuBar="true">
         <Menu text="Neu">
-          <MenuItem onAction="#neuerStudierender" text="Studierende:r" />
-          <MenuItem onAction="#neuerKurs" text="Kurs" />
+          <MenuItem onAction="#newStudent" text="Studierende:r" />
+          <MenuItem onAction="#newCourse" text="Kurs" />
         </Menu>
     </MenuBar>
     <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">

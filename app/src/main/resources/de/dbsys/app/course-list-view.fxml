@@ -7,6 +7,7 @@
     <VBox>
         <HBox styleClass="less-padded" spacing="10">
             <ComboBox fx:id="cbSort" HBox.hgrow="ALWAYS" />
+            <fx:include source="list-search-view.fxml" fx:id="listSearchView" />
         </HBox>
         <ListView fx:id="lvElements" VBox.vgrow="ALWAYS" />
     </VBox>

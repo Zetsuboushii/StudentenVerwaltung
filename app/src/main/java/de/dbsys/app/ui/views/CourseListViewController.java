@@ -20,8 +20,10 @@ public class CourseListViewController extends ListViewController {
     @FXML private SplitPane root;
     @FXML
     private ComboBox<Comparator<Course>> cbSort;
+    private List<Course> courses;
     @FXML private ListView<Course> lvElements;
     @FXML private EditCourseViewController editCourseViewController;
+    @FXML private ListSearchViewController<Course> listSearchViewController;
 
     private final List<Comparator<Course>> comparators = List.of(
             new NameCourseComparator(),
@@ -52,10 +54,10 @@ public class CourseListViewController extends ListViewController {
      * @throws SQLException if an error occurs while querying the database
      */
     private void populateList() throws SQLException {
-        List<Course> courses = new DatabaseCrawler().selectAllCourses(Main.getDb().getConn());
+        this.courses = new DatabaseCrawler().selectAllCourses(Main.getDb().getConn());
         lvElements.setCellFactory(new CourseListCellFactory());
-        lvElements.getItems().clear();
-        lvElements.getItems().addAll(courses);
+        listSearchViewController.setSourceItems(courses);
+        listSearchViewController.filterItems();
         try {
             editCourseViewController.setVisible(false);
         } catch (Exception e) {
@@ -70,13 +72,15 @@ public class CourseListViewController extends ListViewController {
         );
         cbSort.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    if(newValue != null) {
-                        lvElements.getItems().sort(newValue);
-                    }
+                    listSearchViewController.setComparator(newValue);
+                    listSearchViewController.filterItems();
                 }
         );
         editCourseViewController.setVisible(false);
         super.onBeforeShow(stage);
+
+        listSearchViewController.initialize(courses, cbSort.getSelectionModel().getSelectedItem());
+        lvElements.setItems(listSearchViewController.getFilteredItems());
     }
 
     /**
