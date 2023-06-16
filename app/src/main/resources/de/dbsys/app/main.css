@@ -1,7 +1,11 @@
-.padded {
+.more-padded {
     -fx-padding: 20px;
 }
 
-.less-padded {
+.padded {
     -fx-padding: 10px;
+}
+
+.less-padded {
+    -fx-padding: 5px;
 }
