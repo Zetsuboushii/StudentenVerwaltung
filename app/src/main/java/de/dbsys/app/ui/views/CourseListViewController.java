@@ -3,6 +3,7 @@ package de.dbsys.app.ui.views;
 import de.dbsys.app.database.DatabaseCrawler;
 import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.ui.GenericUIController;
+import de.dbsys.app.ui.Main;
 import de.dbsys.app.ui.utils.comparators.DHBWRoomCourseComparator;
 import de.dbsys.app.ui.utils.comparators.NameCourseComparator;
 import de.dbsys.app.ui.utils.comparators.RoomCourseComparator;

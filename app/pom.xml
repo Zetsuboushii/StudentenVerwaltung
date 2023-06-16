@@ -86,7 +86,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>de.dbsys.app/de.dbsys.app.ui.views.Main</mainClass>
+              <mainClass>de.dbsys.app/de.dbsys.app.ui.Main</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
@@ -110,7 +110,7 @@
             <configuration>
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>de.dbsys.app.ui.views.Main</mainClass>
+                  <mainClass>de.dbsys.app.ui.Main</mainClass>
                 </transformer>
               </transformers>
             </configuration>

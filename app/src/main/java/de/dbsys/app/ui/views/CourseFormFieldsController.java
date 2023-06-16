@@ -5,6 +5,7 @@ import de.dbsys.app.database.DatabaseCrawler;
 import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.database.entities.Student;
 import de.dbsys.app.ui.GenericUIController;
+import de.dbsys.app.ui.Main;
 import de.dbsys.app.ui.utils.comparators.FirstNameStudentComparator;
 import de.dbsys.app.ui.utils.comparators.NoCourseFirstStudentComparator;
 import de.dbsys.app.ui.utils.ui.StudentsListCellFactory;

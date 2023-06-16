@@ -1,7 +1,8 @@
-package de.dbsys.app.ui.views;
+package de.dbsys.app.ui;
 
 import de.dbsys.app.database.DatabaseConnector;
 import de.dbsys.app.ui.utils.UILoader;
+import de.dbsys.app.ui.views.MainController;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -16,7 +17,19 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         mainController = UILoader.showFXMLOnStage("main", stage, "Studierenden-Verwaltung");
+        stage.setOnCloseRequest((a) -> {
+            try {
+                getDb().close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
         setIcon(stage);
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
     }
 
     /**

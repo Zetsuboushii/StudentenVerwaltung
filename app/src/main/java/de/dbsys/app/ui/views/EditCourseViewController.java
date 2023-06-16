@@ -2,6 +2,7 @@ package de.dbsys.app.ui.views;
 
 import de.dbsys.app.database.entities.Course;
 import de.dbsys.app.ui.GenericUIController;
+import de.dbsys.app.ui.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
