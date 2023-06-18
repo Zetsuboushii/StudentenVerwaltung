@@ -37,7 +37,7 @@ public class DatabaseCrawler {
             } else {
                 ex_students.add(new Student(mNr, fname, sname, company, javaSkill));
             }
-            System.out.println("Received data for student " + mNr + "\n");
+            System.out.println("Received data for student " + mNr);
         }
 
         return ex_students;
@@ -60,7 +60,7 @@ public class DatabaseCrawler {
             } else {
                 ex_courses.add(new Course(cName));
             }
-            System.out.println("Received data for course " + cName + "\n");
+            System.out.println("Received data for course " + cName);
         }
 
         return ex_courses;

@@ -22,7 +22,7 @@ public abstract class NewController extends GenericUIController {
     }
 
     /**
-     * Save the new course.
+     * Save the new element.
      */
     @FXML
     private void onSave() {

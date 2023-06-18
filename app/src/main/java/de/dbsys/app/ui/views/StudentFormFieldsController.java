@@ -34,7 +34,6 @@ public class StudentFormFieldsController extends FormFieldsController {
 
     @Override
     public void populate() throws SQLException {
-        System.out.println("StudentFormFieldsController.populate");
         populateCourses();
         if (student != null) {
             tfFirstName.setText(student.getFname());

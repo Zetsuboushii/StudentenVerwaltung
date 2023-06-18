@@ -102,7 +102,6 @@ public class StudentListViewController extends ListViewController {
 
     @Override
     public void onBeforeShow(Stage stage) throws Exception {
-        System.out.println("StudentListViewController.onBeforeShow");
         lvElements.getSelectionModel().getSelectedItems().addListener(
                 this::onSelectionChanged
         );

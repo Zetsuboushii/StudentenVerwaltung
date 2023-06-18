@@ -17,7 +17,6 @@ public abstract class EditController extends GenericUIController {
      * @throws SQLException if there's an error loading the data from the DB.
      */
     public void populate() throws SQLException {
-        System.out.println("EditController.populate()");
         getFormFieldsController().populate();
         btSave.setDisable(true);
         getFormFieldsController().onChange(() -> btSave.setDisable(!getFormFieldsController().isComplete()));
@@ -25,7 +24,6 @@ public abstract class EditController extends GenericUIController {
 
     @Override
     public void setVisible(boolean visible) throws Exception {
-        System.out.println("EditController.setVisible(" + visible + ")");
         getFormFieldsController().setVisible(visible);
         super.setVisible(visible);
     }

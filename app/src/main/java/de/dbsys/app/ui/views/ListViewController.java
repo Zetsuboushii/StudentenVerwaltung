@@ -68,7 +68,6 @@ public abstract class ListViewController extends GenericUIController {
 
     @Override
     public void onBeforeShow(Stage stage) throws Exception {
-        System.out.println("ListViewController.onBeforeShow");
         super.onBeforeShow(stage);
         reload();
     }

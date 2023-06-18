@@ -38,7 +38,6 @@ public class CourseFormFieldsController extends FormFieldsController {
 
     @Override
     public void populate() {
-        System.out.println("CourseFormFieldsController.populate");
         if(course != null) {
             setCourseData();
         }

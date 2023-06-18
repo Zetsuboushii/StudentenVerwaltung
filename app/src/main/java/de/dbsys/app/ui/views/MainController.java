@@ -92,7 +92,6 @@ public class MainController extends GenericUIController {
 
     @Override
     public void onBeforeShow(Stage stage) {
-        System.out.println("MainController.onBeforeShow");
         registerKeyboardShortcuts();
     }
 
