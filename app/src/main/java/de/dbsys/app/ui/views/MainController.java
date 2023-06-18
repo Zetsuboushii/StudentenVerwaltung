@@ -62,8 +62,7 @@ public class MainController extends GenericUIController {
         if(studentListViewController == null || courseListViewController == null) {
             return;
         }
-        studentListViewController.reload();
-        courseListViewController.reload();
+        reload();
     }
 
     /**
@@ -100,11 +99,6 @@ public class MainController extends GenericUIController {
         studentListViewController.setVisible(visible);
         courseListViewController.setVisible(visible);
         super.setVisible(visible, stage);
-    }
-
-    @Override
-    public void onAfterShow(Stage stage) throws Exception {
-        reload();
     }
 
     @Override

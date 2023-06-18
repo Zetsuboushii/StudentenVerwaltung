@@ -4,12 +4,12 @@
 <?import javafx.scene.layout.*?>
 
 <SplitPane fx:id="root" dividerPositions="0.33" fx:controller="de.dbsys.app.ui.views.StudentListViewController" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
-    <VBox >
+    <VBox fillWidth="true">
         <HBox styleClass="less-padded" spacing="10">
-            <ComboBox fx:id="cbSort" HBox.hgrow="ALWAYS" />
-            <ComboBox fx:id="cbFilter" HBox.hgrow="ALWAYS" />
-            <fx:include fx:id="listSearchView" source="list-search-view.fxml" />
+            <ComboBox fx:id="cbSort" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+            <ComboBox fx:id="cbFilter" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
         </HBox>
+        <fx:include fx:id="listSearchView" styleClass="less-padded" source="list-search-view.fxml" />
         <ListView fx:id="lvElements" VBox.vgrow="ALWAYS" />
     </VBox>
     <fx:include fx:id="editStudentView" source="edit-student-view.fxml" SplitPane.resizableWithParent="true" />

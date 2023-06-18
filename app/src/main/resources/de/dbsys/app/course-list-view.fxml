@@ -6,8 +6,8 @@
 <SplitPane fx:id="root" dividerPositions="0.33" fx:controller="de.dbsys.app.ui.views.CourseListViewController" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
     <VBox>
         <HBox styleClass="less-padded" spacing="10">
-            <ComboBox fx:id="cbSort" HBox.hgrow="ALWAYS" />
-            <fx:include source="list-search-view.fxml" fx:id="listSearchView" />
+            <ComboBox fx:id="cbSort" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+            <fx:include source="list-search-view.fxml" fx:id="listSearchView" HBox.hgrow="ALWAYS" />
         </HBox>
         <ListView fx:id="lvElements" VBox.vgrow="ALWAYS" />
     </VBox>

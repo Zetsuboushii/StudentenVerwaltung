@@ -6,5 +6,5 @@
 <HBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="de.dbsys.app.ui.views.ListSearchViewController">
-    <TextField fx:id="tfSearchString" promptText="Suche" onKeyTyped="#onApply"/>
+    <TextField fx:id="tfSearchString" promptText="Suche" onKeyTyped="#onApply" HBox.hgrow="ALWAYS"/>
 </HBox>
