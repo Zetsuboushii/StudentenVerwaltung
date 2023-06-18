@@ -39,7 +39,7 @@ public class MainController extends GenericUIController {
         KeyCodeCombination newStudentWin = new KeyCodeCombination(KeyCode.L, KeyCombination.ALT_DOWN);
         // Button just temporary until the shortcut can be sent to the existing button
         Button btn = new Button("");
-        btn.setOnAction(e -> neuerStudierender());
+        btn.setOnAction(e -> newStudent());
         stage.getScene().addMnemonic(new Mnemonic(btn, newStudentWin));
         stage.getScene().addMnemonic(new Mnemonic(btn, newStudentMac));
     }
@@ -52,7 +52,7 @@ public class MainController extends GenericUIController {
         KeyCodeCombination newCourseWin = new KeyCodeCombination(KeyCode.K, KeyCombination.ALT_DOWN);
         // Button just temporary until the shortcut can be sent to the existing button
         Button newCourseBtn = new Button("");
-        newCourseBtn.setOnAction(e -> neuerKurs());
+        newCourseBtn.setOnAction(e -> newCourse());
         stage.getScene().addMnemonic(new Mnemonic(newCourseBtn, newCourseWin));
         stage.getScene().addMnemonic(new Mnemonic(newCourseBtn, newCourseMac));
     }
@@ -70,7 +70,7 @@ public class MainController extends GenericUIController {
      * Show new window for creating a new student.
      */
     @FXML
-    public void neuerStudierender() {
+    public void newStudent() {
         try {
             UILoader.showFXML("new-student-view", "Neue:r Studierende:r");
         } catch (Exception exc) {
@@ -82,7 +82,7 @@ public class MainController extends GenericUIController {
      * Show new window creating a new course.
      */
     @FXML
-    public void neuerKurs() {
+    public void newCourse() {
         try {
             UILoader.showFXML("new-course-view", "Neuer Kurs");
         } catch (Exception exc) {

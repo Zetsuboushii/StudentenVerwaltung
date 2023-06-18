@@ -11,6 +11,7 @@ import java.sql.SQLException;
 public abstract class EditController extends GenericUIController {
     @FXML
     private Button btSave;
+    private Runnable onSaveCallback;
 
     /**
      * Populate the view with the data
@@ -29,6 +30,14 @@ public abstract class EditController extends GenericUIController {
     }
 
     /**
+     * Register a callback to be called when the save button is activated.
+     * @param callback Callback to call when the save button is activated.
+     */
+    public void registerOnSaveCallback(Runnable callback) {
+        onSaveCallback = callback;
+    }
+
+    /**
      * Save date element.
      */
     @FXML
@@ -38,7 +47,8 @@ public abstract class EditController extends GenericUIController {
         } else {
             try {
                 getFormFieldsController().save();
-            } catch (SQLException e) {
+                onSaveCallback.run();
+            } catch (Exception e) {
                 handleException(e, "Ein Fehler beim Speichern ist aufgetreten: ");
             }
         }
