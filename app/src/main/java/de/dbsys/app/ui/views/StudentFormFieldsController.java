@@ -49,7 +49,6 @@ public class StudentFormFieldsController extends FormFieldsController {
      * @throws SQLException if an error occurs while loading data from the database
      */
     public void populateCourses() throws SQLException {
-        System.out.println("StudentFormFieldsController.populateCourses");
         cbClass.getItems().clear();
         cbClass.getItems().add(new Course("Kein Kurs"));
         cbClass.getSelectionModel().select(0);
@@ -58,8 +57,6 @@ public class StudentFormFieldsController extends FormFieldsController {
         List<Course> courses = crawler.selectAllCourses(conn);
         courses.forEach(course -> cbClass.getItems().add(course));
         cbClass.getSelectionModel().select(0);
-        System.out.println("StudentFormFieldsController.populateCourses: " + courses.size());
-        System.out.println("StudentFormFieldsController.populateCourses: " + cbClass.getItems());
         if(student != null && student.getCourse() != null) {
             cbClass.getSelectionModel().select(student.getCourse());
         }
