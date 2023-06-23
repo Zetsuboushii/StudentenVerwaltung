@@ -12,34 +12,64 @@ import javafx.stage.Stage;
 
 
 public class MainController extends GenericUIController {
-    @Override
-    public void onBeforeShow(Stage stage) {
-        registerKeyboardShortcuts();
+    @FXML private StudentListViewController studentListViewController;
+    @FXML private CourseListViewController courseListViewController;
+
+    /**
+     * Reloads the list views with all students and courses from the database.
+     */
+    public void reload() {
+        studentListViewController.reload();
+        courseListViewController.reload();
     }
 
+    /**
+     * Register keyboard shortcuts (for creating new students + courses).
+     */
     private void registerKeyboardShortcuts() {
         registerNewStudentKeyboardShortcut();
         registerNewCourseKeyboardShortcut();
     }
 
+    /**
+     * Register keyboard shortcuts for creating a new student.
+     */
     private void registerNewStudentKeyboardShortcut() {
-        KeyCodeCombination newStudent = new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN);
+        KeyCodeCombination newStudentMac = new KeyCodeCombination(KeyCode.L, KeyCombination.SHORTCUT_DOWN);
+        KeyCodeCombination newStudentWin = new KeyCodeCombination(KeyCode.L, KeyCombination.ALT_DOWN);
         // Button just temporary until the shortcut can be sent to the existing button
         Button btn = new Button("");
-        btn.setOnAction(e -> neuerStudierender());
-        stage.getScene().addMnemonic(new Mnemonic(btn, newStudent));
+        btn.setOnAction(e -> newStudent());
+        stage.getScene().addMnemonic(new Mnemonic(btn, newStudentWin));
+        stage.getScene().addMnemonic(new Mnemonic(btn, newStudentMac));
     }
 
+    /**
+     * Register keyboard shortcuts for creating a new course.
+     */
     private void registerNewCourseKeyboardShortcut() {
-        KeyCodeCombination newCourse = new KeyCodeCombination(KeyCode.N, KeyCombination.SHIFT_DOWN, KeyCombination.SHORTCUT_DOWN);
+        KeyCodeCombination newCourseMac = new KeyCodeCombination(KeyCode.K, KeyCombination.SHORTCUT_DOWN);
+        KeyCodeCombination newCourseWin = new KeyCodeCombination(KeyCode.K, KeyCombination.ALT_DOWN);
         // Button just temporary until the shortcut can be sent to the existing button
         Button newCourseBtn = new Button("");
-        newCourseBtn.setOnAction(e -> neuerKurs());
-        stage.getScene().addMnemonic(new Mnemonic(newCourseBtn, newCourse));
+        newCourseBtn.setOnAction(e -> newCourse());
+        stage.getScene().addMnemonic(new Mnemonic(newCourseBtn, newCourseWin));
+        stage.getScene().addMnemonic(new Mnemonic(newCourseBtn, newCourseMac));
     }
 
     @FXML
-    public void neuerStudierender() {
+    private void onTabChanged() {
+        if(studentListViewController == null || courseListViewController == null) {
+            return;
+        }
+        reload();
+    }
+
+    /**
+     * Show new window for creating a new student.
+     */
+    @FXML
+    public void newStudent() {
         try {
             UILoader.showFXML("new-student-view", "Neue:r Studierende:r");
         } catch (Exception exc) {
@@ -47,12 +77,30 @@ public class MainController extends GenericUIController {
         }
     }
 
+    /**
+     * Show new window creating a new course.
+     */
     @FXML
-    public void neuerKurs() {
+    public void newCourse() {
         try {
             UILoader.showFXML("new-course-view", "Neuer Kurs");
         } catch (Exception exc) {
             handleException(exc);
         }
     }
+
+    @Override
+    public void onBeforeShow(Stage stage) {
+        registerKeyboardShortcuts();
+    }
+
+    @Override
+    public void setVisible(boolean visible, Stage stage) throws Exception {
+        studentListViewController.setVisible(visible);
+        courseListViewController.setVisible(visible);
+        super.setVisible(visible, stage);
+    }
+
+    @Override
+    protected void setRootVisible(boolean visible) {}
 }

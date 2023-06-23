@@ -1,22 +1,22 @@
 package de.dbsys.app.ui.views;
 
-import de.dbsys.app.ui.GenericUIController;
+import de.dbsys.app.database.entities.Student;
+import de.dbsys.app.ui.Main;
 import javafx.fxml.FXML;
-import javafx.stage.Stage;
 
-public class NewStudentViewController extends GenericUIController {
-    @FXML
-    private void onCancel() {
-        stage.close();
-    }
+import java.sql.SQLException;
 
-    @FXML
-    private void onSave() {
-        stage.close();
+public class NewStudentViewController extends NewController {
+    @FXML private StudentFormFieldsController studentFormFieldsController;
+
+    @Override
+    protected void createElement() throws SQLException {
+        Student student = studentFormFieldsController.toNewStudent();
+        student.createStudent(Main.getDb(), Main.getDb().getConn());
     }
 
     @Override
-    public void onAfterShow(Stage stage) {
-        stage.minWidthProperty().setValue(400);
+    protected FormFieldsController getFormFieldsController() {
+        return studentFormFieldsController;
     }
 }

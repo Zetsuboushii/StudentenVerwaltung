@@ -3,10 +3,43 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="de.dbsys.app.ui.views.CourseFormFieldsController"
-            prefHeight="400.0" prefWidth="600.0" styleClass="form-vbox" stylesheets="@forms.css">
-    <TextField promptText="Name" fx:id="tfCourseName" />
-    <TextField promptText="Raum" fx:id="tfRoom" />
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<VBox fx:id="root" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="de.dbsys.app.ui.views.CourseFormFieldsController" styleClass="form-vbox" stylesheets="@forms.css">
+    <GridPane styleClass="form-label-to-field-spacing" VBox.vgrow="ALWAYS">
+        <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints vgrow="ALWAYS" />
+        </rowConstraints>
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="0" text="Name" />
+        <TextField GridPane.columnIndex="2" GridPane.rowIndex="0" promptText="Name" fx:id="tfCourseName" />
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="1" text="Raum" />
+        <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" promptText="Raum" fx:id="tfRoom" />
+        <Label styleClass="form-students-header" GridPane.columnIndex="0" GridPane.rowIndex="3" text="Verfügbare Studenten" textAlignment="RIGHT" />
+        <Label styleClass="form-students-header" GridPane.columnIndex="2" GridPane.rowIndex="3" text="Studenten im Kurs" />
+        <ListView GridPane.columnIndex="0" GridPane.rowIndex="4" fx:id="lvAvailableStudents" />
+        <ListView GridPane.columnIndex="2" GridPane.rowIndex="4" fx:id="lvAssignedStudents" />
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="4" >
+            <Button fx:id="btnAssign" onAction="#onAssign" styleClass="invisible">
+                <graphic>
+                    <FontIcon iconLiteral="far-caret-square-right:32" styleClass="icon" />
+                </graphic>
+                <tooltip>
+                    <Tooltip text="Student zuweisen" />
+                </tooltip>
+            </Button>
+            <Button fx:id="btnUnassign" onAction="#onUnassign" styleClass="invisible" >
+                <graphic>
+                    <FontIcon iconLiteral="far-caret-square-left:32" styleClass="icon" />
+                </graphic>
+                <tooltip>
+                    <Tooltip text="Student entfernen" />
+                </tooltip>
+            </Button>
+        </VBox>
+    </GridPane>
 </VBox>

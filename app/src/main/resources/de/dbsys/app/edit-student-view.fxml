@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.Button?>
+<VBox fx:id="root" spacing="10" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="de.dbsys.app.ui.views.EditStudentViewController" styleClass="padded,form-label-to-field-spacing,form-vbox" stylesheets="@forms.css,@main.css">
+    <fx:include fx:id="studentFormFields" source="student-form-fields.fxml" VBox.vgrow="ALWAYS" />
+    <HBox spacing="10">
+        <Button fx:id="btSave" defaultButton="true" text="Speichern" onAction="#onSave" />
+        <Button fx:id="btDelete" text="Löschen" onAction="#onDelete" />
+    </HBox>
+</VBox>

@@ -8,6 +8,9 @@ Author:             Luke Grasser
 
 package de.dbsys.app.database;
 
+import de.dbsys.app.database.entities.Course;
+import de.dbsys.app.database.entities.Student;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -27,14 +30,14 @@ public class DatabaseCrawler {
             String sname = rs.getString("sname");
             String fname = rs.getString("fname");
             String company = rs.getString("company");
-            Course course = new Course(rs.getString("fk_course"));
+            String course = rs.getString("fk_course");
             int javaSkill = rs.getInt("javaSkill");
             if (course != null) {
-                ex_students.add(new Student(mNr, sname, fname, company, course, javaSkill));
+                ex_students.add(new Student(mNr, fname, sname, company, new Course(course), javaSkill));
             } else {
-                ex_students.add(new Student(mNr, sname, fname, company, javaSkill));
+                ex_students.add(new Student(mNr, fname, sname, company, javaSkill));
             }
-            System.out.println("Received data for student " + mNr + "\n");
+            System.out.println("Received data for student " + mNr);
         }
 
         return ex_students;
@@ -57,7 +60,7 @@ public class DatabaseCrawler {
             } else {
                 ex_courses.add(new Course(cName));
             }
-            System.out.println("Received data for course " + cName + "\n");
+            System.out.println("Received data for course " + cName);
         }
 
         return ex_courses;

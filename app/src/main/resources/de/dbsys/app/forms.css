@@ -6,5 +6,23 @@
 }
 
 .form-label-to-field-spacing {
-    -fx-spacing: 14;
+    -fx-spacing: 5;
+    -fx-hgap: 5;
+    -fx-vgap: 5;
+}
+
+.form-students-header {
+    -fx-padding: 20 0 0 0 ;
+}
+
+.button.invisible {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+.button.invisible:hover > .icon {
+    -fx-icon-color: #444444
+}
+.button.invisible:pressed > .icon {
+    -fx-icon-color: #aaaaaa
 }

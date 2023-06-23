@@ -1,16 +1,24 @@
 package de.dbsys.app.ui.views;
 
-import de.dbsys.app.ui.GenericUIController;
+import de.dbsys.app.database.entities.Course;
+import de.dbsys.app.ui.Main;
 import javafx.fxml.FXML;
 
-public class NewCourseViewController extends GenericUIController {
+import java.sql.SQLException;
+
+public class NewCourseViewController extends NewController {
     @FXML
-    private void onCancel() {
-        stage.close();
+    private CourseFormFieldsController courseFormFieldsController;
+
+    @Override
+    protected void createElement() throws SQLException {
+        Course course = courseFormFieldsController.toNewCourse();
+        course.createCourse(Main.getDb(), Main.getDb().getConn());
+        courseFormFieldsController.assignAllStudents(course);
     }
 
-    @FXML
-    private void onSave() {
-        stage.close();
+    @Override
+    protected FormFieldsController getFormFieldsController() {
+        return courseFormFieldsController;
     }
 }
